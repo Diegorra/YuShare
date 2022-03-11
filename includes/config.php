@@ -8,7 +8,7 @@ require_once __DIR__.'/Aplicacion.php';
 define('BD_HOST', 'localhost');
 define('BD_NAME', 'yushare');
 define('BD_USER', 'user');
-define('BD_PASS', '1234');
+define('BD_PASS', 'kyo(o_Vy-CespwT9');
 
 /**
  * Configuración del soporte de UTF-8, localización (idioma y país) y zona horaria
