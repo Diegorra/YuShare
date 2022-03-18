@@ -3,7 +3,7 @@
 /**
  * Clase que mantiene el estado global de la aplicación.
  */
-class Aplicacion
+class Aplication
 {
 	const ATTRIBUTO_SESSION_ATTRIBUTOS_PETICION = 'attsPeticion';
 
