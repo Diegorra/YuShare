@@ -88,8 +88,14 @@ body {font: normal 62.5%/1.7em "Lucida Grande", "Lucida Sans Unicode", "Lucida S
     text-align: center;
     margin-top: 15px;
 }
-    /*---FIN DE PIE---*/
 
+#logout  {
+    background: transparent;
+    color: white;
+    float: right;
+}
+
+/*---FIN DE PIE---*/
 body{
   background-color: black;
   background-size: cover;
@@ -158,6 +164,7 @@ div.texto_inicio {
         text-align: center;
 }
 
+
 .card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     max-width: 300px;
@@ -189,8 +196,24 @@ div.texto_inicio {
     color: #0400ff;
     
   }
-  
 
   button:hover, a:hover {
     opacity: 0.7;
+  }
+
+  .logout{
+        font-size: 22px;
+        color: #000;
+        background-color: #ffffff;
+        padding: 15px;
+        text-align: center;
+    }
+
+
+  /* editar perfil */
+
+  .editar h1 {
+    text-align: center;
+    color: white;
+    font-family: Times New Roman; 
   }

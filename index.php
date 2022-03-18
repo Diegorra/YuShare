@@ -21,8 +21,8 @@
     <h1><br>Películas de las que más se hablan</h1>
 
   	<div class="texto_inicio">
+  		  <a href="ejemploPelicula.php"><img src="images/peliculas/avengers.jpg" id="image_inicio" title="Avengers"></a>
   		  <img src="images/peliculas/star_wars.jpg" id="image_inicio" title="Star Wars">
-  		  <img src="images/peliculas/avengers.jpg" id="image_inicio" title="Avengers">
   		  <img src="images/peliculas/uncharted.jpg" id="image_inicio" title="Uncharted">
         <img src="images/peliculas/wayDown.jpg" id="image_inicio" title="Way Down">
         <img src="images/peliculas/clifford.jpg" id="image_inicio" title="Clifford">

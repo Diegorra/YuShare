@@ -7,7 +7,8 @@
   <body>
     <div class="pie">
         <img src="images/granlogo.png" width="200" height="50">
-        <p>© Copyright 2022</p>
+<!--         <a href="logout.php"><input type="button" id="logout" value="Cerrar sesión"></a>
+ -->    <p>© Copyright 2022</p>
     </div>
   </body>
 </html>

@@ -1,3 +1,15 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+
+<head>
+  <title>YouShare</title>
+  <link rel="stylesheet" type="text/css" href="style/style.css">
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="images/minilogo.png">
+</head>
+
+<body>
+
 <?php
 
 //Inicio del procesamiento

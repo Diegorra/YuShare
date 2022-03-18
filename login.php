@@ -1,4 +1,21 @@
-<?php
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+
+<head>
+  <title>YouShare</title>
+  <link rel="stylesheet" type="text/css" href="style/style.css">
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="images/minilogo.png">
+</head>
+
+<body>
+  <!-- CABECERA DE LA PÁGINA CON IMAGEN Y MENÚ -->
+  <?php
+    require("includes/comun/cabecera.php");
+    require("includes/comun/search.php")
+  ?>
+
+  <?php
 
 //Inicio del procesamiento
 

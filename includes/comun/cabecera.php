@@ -13,8 +13,9 @@
         require_once 'includes/config.php';
         ?>
         <div id="enlaces">
-            <a href="/index.php">Peliculas</a>
-            <a href="/perfil.php">Perfil</a>
+            <a href="login.php">Login</a>
+            <a href="index.php">Peliculas</a>
+            <a href="perfil.php">Perfil</a>
         </div>
     </div>
 </body>

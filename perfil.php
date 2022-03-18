@@ -8,16 +8,14 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/png" href="images/minilogo.png">
 </head>
-<?php
+    <?php
         require("includes/comun/cabecera.php");
-        //require("includes/comun/search.php");
+        require("includes/comun/search.php")
     ?>
 <body>
-    
-
     <h1>John Doe</h1>
     <div class="card">
-        <img src="/images/cara1.jpg" alt="Steven Spielberg" style="width:100%">
+        <img src="images/cara1.jpg" alt="Steven Spielberg" style="width:100%">
         <h1>Steven Spielberg</h1>
         <p class="title">Director</p>
     </div>
@@ -29,9 +27,8 @@
         <img src="images/peliculas/star_wars.jpg" id="image_inicio" title="Star Wars">
     </div>
 
-
     <div class="editarPerfil">
-        <a href="/editarPerfil.php">Editar perfil</a>
+        <a href="editarPerfil.php">Editar perfil</a>
     </div>
 </body>
 
