@@ -7,14 +7,14 @@ class Usuario
 
     private $name;
 
-    private $password;
+    private $passwd;
 
     private $role;
 
     private function __construct($name, $password, $role)
     {
         $this->name= $name;
-        $this->password = $password;
+        $this->passwd = $password;
         $this->role = $role;
     }
 
@@ -37,7 +37,7 @@ class Usuario
         if ($rs) {
             if ( $rs->num_rows == 1) {
                 $fila = $rs->fetch_assoc();
-                $user = new Usuario($fila['name'], $fila['password'], $fila['role']);
+                $user = new Usuario($fila['name'], $fila['passwd'], $fila['role']);
                 $user->id = $fila['id'];
                 $result = $user;
             }
@@ -76,7 +76,7 @@ class Usuario
     {
         $app = Aplication::getSingleton();
         $conn = $app->conexionBd();
-        $query=sprintf("INSERT INTO usuario(name, password, role) VALUES('%s', '%s', '%s')"
+        $query=sprintf("INSERT INTO usuario(name, passwd, role) VALUES('%s', '%s', '%s')"
             , $conn->real_escape_string($usuario->name)
             , $conn->real_escape_string($usuario->password)
             , $conn->real_escape_string($usuario->role));
@@ -94,7 +94,7 @@ class Usuario
         $result = false;
         $app = Aplication::getSingleton();
         $conn = $app->conexionBd();
-        $query=sprintf("UPDATE usuario U SET name = '%s', password='%s', role='%s' WHERE U.id=%i"
+        $query=sprintf("UPDATE usuario U SET name = '%s', passwd='%s', role='%s' WHERE U.id=%i"
             , $conn->real_escape_string($usuario->nombreUsuario)
             , $conn->real_escape_string($usuario->password)
             , $conn->real_escape_string($usuario->role)
@@ -151,12 +151,12 @@ class Usuario
 
     public function compruebaPassword($password)
     {
-        return password_verify($password, $this->password);
+        return password_verify($password, $this->passwd);
     }
 
     public function cambiaPassword($nuevoPassword)
     {
-        $this->password = self::hashPassword($nuevoPassword);
+        $this->passwd = self::hashPassword($nuevoPassword);
     }
     
     public function borrate()
