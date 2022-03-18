@@ -150,6 +150,14 @@ div.texto_inicio {
 
 /* perfil */
 
+.editarPerfil{
+        font-size: 22px;
+        color: #000;
+        background-color: #ffffff;
+        padding: 15px;
+        text-align: center;
+}
+
 .card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     max-width: 300px;
@@ -178,9 +186,11 @@ div.texto_inicio {
   a {
     text-decoration: none;
     font-size: 22px;
-    color: black;
+    color: #0400ff;
+    
   }
   
+
   button:hover, a:hover {
     opacity: 0.7;
   }

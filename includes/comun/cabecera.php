@@ -13,8 +13,8 @@
         require_once 'includes/config.php';
         ?>
         <div id="enlaces">
-            <a href="homePeliculas.php">Peliculas</a>
-            <a href="contacto.php">Contacto</a>
+            <a href="/index.php">Peliculas</a>
+            <a href="/perfil.php">Perfil</a>
         </div>
     </div>
 </body>

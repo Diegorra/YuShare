@@ -38,7 +38,7 @@
   </div>
   <!-- PIE DE PÁGINA -->
   <?php
-  require("includes/comun/pie.html")
+  require("includes/comun/pie.php")
   ?>
 </body>
 
