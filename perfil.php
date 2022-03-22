@@ -1,19 +1,10 @@
-<!-- Add icon library -->
-<!DOCTYPE html>
-<html lang="es" dir="ltr">
+<?php
 
-<head>
-  <title>YouShare</title>
-  <link rel="stylesheet" type="text/css" href="style/style.css">
-  <meta charset="UTF-8">
-  <link rel="icon" type="image/png" href="images/minilogo.png">
-</head>
-    <?php
-        require("includes/comun/cabecera.php");
-        require("includes/comun/search.php")
-    ?>
-<body>
-    <h1>John Doe</h1>
+require_once __DIR__.'/includes/config.php';
+
+$tituloPagina = 'Portada';
+$contenidoPrincipal=<<<EOS
+  <h1>John Doe</h1>
     <div class="card">
         <img src="images/cara1.jpg" alt="Steven Spielberg" style="width:100%">
         <h1>Steven Spielberg</h1>
@@ -30,6 +21,9 @@
     <div class="editarPerfil">
         <a href="editarPerfil.php">Editar perfil</a>
     </div>
-</body>
+  EOS;
 
-<?php require("includes/comun/pie.php")?>
+$params = ['tituloPagina' => $tituloPagina, 'contenidoPrincipal' => $contenidoPrincipal];
+$app->generaVista('/plantillas/plantilla.php', $params);
+
+

@@ -1,26 +1,36 @@
-<!DOCTYPE html>
-<html lang="es" dir="ltr">
-<head>
-  <title>YouShare</title>
-  <link rel="stylesheet" type="text/css" href="style/style.css">
-  <meta charset="UTF-8">
-  <link rel="icon" type="image/png" href="images/minilogo.png">
-</head>
-	<?php
-	    require("includes/comun/cabecera.php");
-	    require("includes/comun/search.php")
-  	?>
-<body>
-	  <div class ="editar">
-		<h1> Edita tu perfil </h1>
-		<fieldset>
+<?php
+
+require_once __DIR__.'/includes/config.php';
+
+$formSettings = new \es\ucm\fdi\aw\usuarios\FormularioSettings();
+$formSettings = $formSettings->gestiona();
+
+$tituloPagina = 'Portada';
+$contenidoPrincipal=<<<EOS
+    <div class ="editar">
+		<h1>Edita tu perfil</h1>
+		$formSettings
+	</div>		
+EOS;
+
+$params = ['tituloPagina' => $tituloPagina, 'contenidoPrincipal' => $contenidoPrincipal];
+$app->generaVista('/plantillas/plantilla.php', $params);
+
+
+
+/*
+<fieldset>
 			<legend>Datos del perfil</legend>
 				Nombre:<br> <input type="text" name="nom"><br>
 				Email:<br> <input type="text" name="email"><br>
 				Nombre de usuario:<br> <input type="text" name="user"><br>
 				Teléfono: <br> <input type="text" name="phone"><br>
 		</fieldset>
-	<input type="submit" name="aceptar">	
-	</form>
-</body>
-</html>
+	<input type="submit" name="aceptar">
+*/
+
+
+
+
+
+

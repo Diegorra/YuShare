@@ -1,20 +1,9 @@
-<!DOCTYPE html>
-<html lang="es" dir="ltr">
+<?php
 
-<head>
-  <title>YouShare</title>
-  <link rel="stylesheet" type="text/css" href="style/style.css">
-  <meta charset="UTF-8">
-  <link rel="icon" type="image/png" href="images/minilogo.png">
-</head>
+require_once __DIR__.'/includes/config.php';
 
-<body>
-  <!-- CABECERA DE LA PÁGINA CON IMAGEN Y MENÚ -->
-  <?php
-    require("includes/comun/cabecera.php");
-    require("includes/comun/search.php")
-  ?>
-
+$tituloPagina = 'Portada';
+$contenidoPrincipal=<<<EOS
   <div class ="pelicula">
     <h1> Vengadores: Era de Ultrón</h1> 
     <img src="images/peliculas/avengers.jpg" id="image_info" title="Avengers">
@@ -27,7 +16,11 @@
     <h2> Duración</h2>
     <p> 141 min </p>
   </div>
+  EOS;
+
+$params = ['tituloPagina' => $tituloPagina, 'contenidoPrincipal' => $contenidoPrincipal];
+$app->generaVista('/plantillas/plantilla.php', $params);
 
 
-</body>
-</html>
+
+

@@ -1,24 +1,12 @@
-<!DOCTYPE html>
-<html lang="es" dir="ltr">
+<?php
 
-<head>
-  <title>YouShare</title>
-  <link rel="stylesheet" type="text/css" href="style/style.css">
-  <meta charset="UTF-8">
-  <link rel="icon" type="image/png" href="images/minilogo.png">
-</head>
+require_once __DIR__.'/includes/config.php';
 
-<body>
-  <!-- CABECERA DE LA PÁGINA CON IMAGEN Y MENÚ -->
-  <?php
-    require("includes/comun/cabecera.php");
-    require("includes/comun/search.php")
-  ?>
-
-  <!-- AQUÍ VA EL CUERPO DE LA PÁGINA -->
+$tituloPagina = 'Portada';
+$contenidoPrincipal=<<<EOS
   <div class="cuerpo_peliculas">
 
-    <h1><br>Películas de las que más se hablan</h1>
+    <h1><br>Películas de las que más se habla</h1>
 
   	<div class="texto_inicio">
   		  <a href="ejemploPelicula.php"><img src="images/peliculas/avengers.jpg" id="image_inicio" title="Avengers"></a>
@@ -34,12 +22,11 @@
         <img src="images/peliculas/campeones.jpg" id="image_inicio" title="Campeones">
         <img src="images/peliculas/elmadrileño.jpg" id="image_inicio" title="El madrileño">
     </div>
-	   <br>
   </div>
-  <!-- PIE DE PÁGINA -->
-  <?php
-  require("includes/comun/pie.php")
-  ?>
-</body>
+  EOS;
 
-</html>
+$params = ['tituloPagina' => $tituloPagina, 'contenidoPrincipal' => $contenidoPrincipal];
+$app->generaVista('/plantillas/plantilla.php', $params);
+
+
+

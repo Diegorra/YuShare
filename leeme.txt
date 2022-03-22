@@ -1,3 +1,0 @@
-Funcionalidades implementadas:
-- Gestión de contenidos.
-- Gestión de usurios en la red social.

@@ -1,75 +1,69 @@
 <?php
-require_once __DIR__.'/Aplication.php';
+namespace es\ucm\fdi\aw\usuario;
+
+use es\ucm\fdi\aw\Aplicacion;
+use es\ucm\fdi\aw\MagicProperties;
 
 class Usuario
 {
-    private $id;
+    use MagicProperties;
 
-    private $name;
-
-    private $passwd;
-
-    private $role;
-
-    private function __construct($name, $password, $role)
+    
+    public static function login($nombreUsuario, $password)
     {
-        $this->name= $name;
-        $this->passwd = $password;
-        $this->role = $role;
-    }
-
-    public static function login($name, $password)
-    {
-        $usuario = self::buscaUsuario($name);
+        $usuario = self::buscaUsuario($nombreUsuario);
         if ($usuario && $usuario->compruebaPassword($password)) {
-            return $usuario;
+            return self::cargaRoles($usuario);
         }
         return false;
+    }
+    
+    public static function crea($nombreUsuario, $password, $nombre, $rol)
+    {
+        $user = new Usuario($nombreUsuario, self::hashPassword($password), $nombre);
+        $user->añadeRol($rol);
+        return $user->guarda();
     }
 
     public static function buscaUsuario($name)
     {
-        $app = Aplication::getSingleton();
-        $conn = $app->conexionBd();
-        $query = sprintf("SELECT * FROM usuario U WHERE U.name = '%s'", $conn->real_escape_string($name));
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $query = sprintf("SELECT * FROM usuario U WHERE U.name='%s'", $conn->real_escape_string($name));
         $rs = $conn->query($query);
         $result = false;
         if ($rs) {
-            if ( $rs->num_rows == 1) {
-                $fila = $rs->fetch_assoc();
-                $user = new Usuario($fila['name'], $fila['passwd'], $fila['role']);
-                $user->id = $fila['id'];
-                $result = $user;
+            $fila = $rs->fetch_assoc();
+            if ($fila) {
+                $result = new Usuario($fila['name'], $fila['password'], $fila['id']);
             }
             $rs->free();
         } else {
-            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
-            exit();
+            error_log("Error BD ({$conn->errno}): {$conn->error}");
         }
         return $result;
     }
 
-    public static function crea($name, $password, $role)
+    public static function buscaPorId($idUsuario)
     {
-        $user = self::buscaUsuario($name);
-        if ($user) {
-            return false;
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $query = sprintf("SELECT * FROM usuario WHERE id=%d", $idUsuario);
+        $rs = $conn->query($query);
+        $result = false;
+        if ($rs) {
+            $fila = $rs->fetch_assoc();
+            if ($fila) {
+                $result = new Usuario($fila['nombreUsuario'], $fila['password'], $fila['nombre'], $fila['id']);
+            }
+            $rs->free();
+        } else {
+            error_log("Error BD ({$conn->errno}): {$conn->error}");
         }
-        $user = new Usuario($name, self::hashPassword($password), $role);
-        return self::guarda($user);
+        return $result;
     }
     
     private static function hashPassword($password)
     {
         return password_hash($password, PASSWORD_DEFAULT);
-    }
-
-    public static function guarda($usuario)
-    {
-        if ($usuario->id !== null) {
-            return self::actualiza($usuario);
-        }
-        return self::inserta($usuario);
     }
 
     private static function inserta($usuario)
@@ -88,7 +82,7 @@ class Usuario
         }
         return $usuario;
     }
-    
+
     private static function actualiza($usuario)
     {
         $result = false;
@@ -112,7 +106,7 @@ class Usuario
         
         return $result;
     }
-   
+    
     private static function borra($usuario)
     {
         return self::borraPorId($usuario->id);
@@ -123,15 +117,34 @@ class Usuario
         if (!$idUsuario) {
             return false;
         } 
-
-        $app = Aplication::getSingleton();
-        $conn = $app->conexionBd();
-        $query = sprintf("DELETE FROM usuario U WHERE U.id = %d", $idUsuario);
+        /* Los roles se borran en cascada por la FK
+         * $result = self::borraRoles($usuario) !== false;
+         */
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $query = sprintf("DELETE FROM usuario U WHERE U.id = %d"
+            , $idUsuario
+        );
         if ( ! $conn->query($query) ) {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
             return false;
         }
         return true;
+    }
+
+    private $id;
+
+    private $name;
+
+    private $passwd;
+
+    private $role;
+
+    private function __construct($name, $passwd, $id = null, $role = [])
+    {
+        $this->id = $id;
+        $this->name = $name;
+        $this->passwd = $passwd;
+        $this->role = $role;
     }
 
     public function getId()
@@ -144,7 +157,7 @@ class Usuario
         return $this->name;
     }
 
-    public function getrole()
+    public function getRole()
     {
         return $this->role;
     }
@@ -157,6 +170,14 @@ class Usuario
     public function cambiaPassword($nuevoPassword)
     {
         $this->passwd = self::hashPassword($nuevoPassword);
+    }
+    
+    public function guarda()
+    {
+        if ($this->id !== null) {
+            return self::actualiza($this);
+        }
+        return self::inserta($this);
     }
     
     public function borrate()

@@ -1,16 +1,16 @@
 <?php
 
-//Inicio del procesamiento
 require_once __DIR__.'/includes/config.php';
-require_once __DIR__.'/includes/FormularioRegistro.php';
 
-$form = new FormularioRegistro();
-$htmlFormRegistro = $form->gestiona();
+$formRegistro = new \es\ucm\fdi\aw\usuarios\FormularioRegistro();
+$formRegistro = $formRegistro->gestiona();
+
 
 $tituloPagina = 'Registro';
-$contenidoPrincipal = <<<EOF
-		<h1>Registro de usuario</h1>
-		$htmlFormRegistro
+$contenidoPrincipal=<<<EOF
+  	<h1>Registro de usuario</h1>
+    $formRegistro
 EOF;
 
-include __DIR__.'/includes/plantillas/plantilla.php';
+$params = ['tituloPagina' => $tituloPagina, 'contenidoPrincipal' => $contenidoPrincipal];
+$app->generaVista('/plantillas/plantilla.php', $params);
