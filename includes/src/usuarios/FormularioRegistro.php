@@ -30,7 +30,7 @@ class FormularioRegistro extends Formulario
             </div>
             <div>
                 <label for="email">Email:</label>
-                <input id="email" type="text" name="email" value="$email" />
+                <input id="email" type="email" name="email" value="$email" />
                 {$erroresCampos['email']}
             </div>
             <div>
@@ -64,8 +64,7 @@ class FormularioRegistro extends Formulario
 
         $email = trim($datos['email'] ?? '');
         $email = filter_var($email, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        // || filter_var($email, FILTER_VALIDATE_EMAIL)
-        if ( ! $email) {
+        if ( ! $email || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $this->errores['email'] = 'El email tiene que ser un email válido.';
         }
 
