@@ -8,20 +8,19 @@
 -- Versión de PHP: 8.1.2
 
 
-CREATE TABLE usuario (
+CREATE TABLE IF NOT EXISTS `Usuario` (
     id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(20) NOT NULL,
+    userName VARCHAR(20) NOT NULL,
     passwd VARCHAR(256) NOT NULL,
     email VARCHAR(256) NOT NULL,
     image VARCHAR(256),
     enabled boolean NOT NULL,
-    role ENUM('ROLE_ADMIN', 'ROLE_USER'),
+    role ENUM('ADMIN_ROLE', 'USER_ROLE'),
     PRIMARY KEY (id),
-    UNIQUE (email),
-    UNIQUE (name)
+    UNIQUE (userName)
 );
 
-CREATE TABLE usuario_baneado(
+CREATE TABLE IF NOT EXISTS `UsuarioBaneado`(
     id INT NOT NULL,
     fecha datetime,
     PRIMARY KEY (id),
@@ -29,20 +28,20 @@ CREATE TABLE usuario_baneado(
 
 );
 
-CREATE TABLE pelicula (
+CREATE TABLE IF NOT EXISTS `Pelicula` (
     id INT NOT NULL AUTO_INCREMENT,
     iduser INT NOT NULL,
     titulo VARCHAR(256) NOT NULL,
     text VARCHAR(256) NOT NULL,
     genero ENUM('Acción', 'Aventuras', 'Comedia', 'Drama', 'Ciencia_Ficción', 'Musical', 'Documental'),
     año DATE,
-    src VARCHAR(256),
+    src VARCHAR(256) NOT NULL,
     numerototalLikes Int,
     PRIMARY KEY (id),
     FOREIGN KEY (iduser) REFERENCES usuario(id) ON DELETE CASCADE
 );
 
-CREATE TABLE comentario (
+CREATE TABLE IF NOT EXISTS `Comentario` (
     id INT NOT NULL AUTO_INCREMENT,
     idpubli INT NOT NULL,
     iduser INT NOT NULL,
@@ -52,7 +51,7 @@ CREATE TABLE comentario (
     FOREIGN KEY (iduser) REFERENCES usuario(id) ON DELETE CASCADE
 );
 
-CREATE TABLE amigo (
+CREATE TABLE IF NOT EXISTS `Amigo` (
     iduser1 INT NOT NULL,
     iduser2 INT NOT NULL,
     PRIMARY KEY (iduser1, iduser2),
@@ -60,7 +59,7 @@ CREATE TABLE amigo (
     FOREIGN KEY (iduser2) REFERENCES usuario(id) ON DELETE CASCADE
 );
 
-CREATE TABLE mensaje (
+CREATE TABLE IF NOT EXISTS `Mensaje` (
     id INT NOT NULL AUTO_INCREMENT,
     iduser1 INT NOT NULL,
     iduser2 INT NOT NULL,
