@@ -18,17 +18,17 @@ class FormularioSearch extends Formulario
     protected function generaCamposFormulario(&$datos)
     {
         // Se reutiliza el campo introducido previamente o se deja en blanco
-        $keyWords = $datos['keyWords'] ?? '';
+        $search_text = $datos['search_text'] ?? '';
 
         // Se generan los mensajes de error si existen.
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
-        $erroresCampos = self::generaErroresCampos(['keyWords'], $this->errores, 'span', array('class' => 'error'));
+        $erroresCampos = self::generaErroresCampos(['search_text'], $this->errores, 'span', array('class' => 'error'));
 
 
         $camposFormulario = <<<EOS
         $htmlErroresGlobales
-        <input type="text" size="40" maxlength="150" name="search_text" placeholder="What are you looking for?" id="search_text" value="$keyWords"/>
-        {$erroresCampos['keyWords']}
+        <input id="search_text" type="text" name="search_text" placeholder="What are you looking for?" value="$search_text"/>
+        {$erroresCampos['search_text']}
         <button type="submit" id="search_button">Search</button>
         EOS;
         return $camposFormulario;
@@ -41,17 +41,17 @@ class FormularioSearch extends Formulario
     {
         //$app = Aplicacion::getInstance();
         $this->errores = [];
-        $keyWords = trim($datos['keyWords'] ?? '');
-        $keyWords = filter_var($keyWords, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if ( ! $keyWords || empty($keyWords) ) {
-            $this->errores['keyWords'] = 'El nombre de usuario no puede estar vacío';
+        $search_text = trim($datos['search_text'] ?? '');
+        $search_text = filter_var($search_text, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        if ( ! $search_text || empty($search_text) ) {
+            $this->errores['search_text'] = 'El nombre de usuario no puede estar vacío';
         }
         
         /*
         $tituloPagina = 'Search';
         $contenidoPrincipal=<<<EOF
             <h1>Probando Search</h1>
-            <p>{$keyWords}</p>
+            <p>{$search_text}</p>
         EOF;
 
         $params = ['tituloPagina' => $tituloPagina, 'contenidoPrincipal' => $contenidoPrincipal];
