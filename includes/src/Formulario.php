@@ -166,7 +166,7 @@ abstract class Formulario
         $opcionesPorDefecto = array('action' => null, 'method' => 'POST', 'class' => null, 'enctype' => null, 'urlRedireccion' => null, 'formId' => '');
         $opciones = array_merge($opcionesPorDefecto, $opciones);
 
-        $this->formId = $tipoFormulario.$opciones['formId'];
+        $this->formId = $opciones['formId'];
         $this->action = $opciones['action'];
         $this->method = $opciones['method'];
         $this->classAtt = $opciones['class'];

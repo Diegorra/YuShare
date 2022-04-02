@@ -15,7 +15,9 @@ $mensajes = mensajesPeticionAnterior();
 <div id="contenedor">
 <?php
 $params['app']->doInclude('/vistas/comun/cabecera.php');
-$params['app']->doInclude('/vistas/comun/search.php');
+if($params['tituloPagina'] === 'Portada'){
+	$params['app']->doInclude('/vistas/comun/search.php');
+}
 ?>
 	<main>
 		<article>
