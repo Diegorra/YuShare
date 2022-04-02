@@ -5,18 +5,19 @@ namespace es\ucm\fdi\aw\usuarios;
 use es\ucm\fdi\aw\Aplicacion;
 use es\ucm\fdi\aw\Formulario;
 
-class FormularioLogout extends Formulario
+class FormularioSearch extends Formulario
 {
     public function __construct() {
-        parent::__construct('formLogout', [
-            'action' =>  Aplicacion::getInstance()->resuelve('/logout.php'),
-            'urlRedireccion' => Aplicacion::getInstance()->resuelve('/index.php')]);
+        parent::__construct('formSearch', [
+            'action' =>  Aplicacion::getInstance()->resuelve('/search.php'),
+            'urlRedireccion' => Aplicacion::getInstance()->resuelve('/resultSearch.php')]);
     }
 
     protected function generaCamposFormulario(&$datos)
     {
         $camposFormulario = <<<EOS
-            <button class="enlace" type="submit">(salir)</button>
+            <input type="text" size="40" maxlength="150" name="search_text" placeholder="What are you looking for?" id="search_text" />
+            <button type="submit" id="search_button">Search</button>
         EOS;
         return $camposFormulario;
     }

@@ -10,6 +10,8 @@ use es\ucm\fdi\aw\usuarios\Usuario;
  */
 class Aplicacion
 {
+    const BUFFER_SIZE = 4096;
+
     const ATRIBUTOS_PETICION = 'attsPeticion';
 
     private static $instancia;
@@ -236,13 +238,15 @@ class Aplicacion
 
     public function generaVista(string $rutaVista, &$params)
     {
-        $this->compruebaInstanciaInicializada();
-        $params['app'] = $this;
-        if (mb_strlen($rutaVista) > 0 && mb_substr($rutaVista, 0, 1) !== '/') {
-            $rutaVista = '/' . $rutaVista;
-        }
-        $rutaVista = "/vistas{$rutaVista}";
-        $this->doIncludeInterna($rutaVista, $params);
+         $this->compruebaInstanciaInicializada();
++        ob_start(null, self::BUFFER_SIZE);
+         $params['app'] = $this;
+         if (mb_strlen($rutaVista) > 0 && mb_substr($rutaVista, 0, 1) !== '/') {
+             $rutaVista = '/' . $rutaVista;
+         }
+         $rutaVista = "/vistas{$rutaVista}";
+         $this->doIncludeInterna($rutaVista, $params);
++        ob_end_flush();
     }
 
     public function login(Usuario $user)
