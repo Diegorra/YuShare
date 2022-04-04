@@ -50,8 +50,8 @@ class FormularioSearch extends Formulario
         }
         
         if (count($this->errores) === 0) {
-            $usuario = Usuario::buscaUsuario($search_text);
-            $peliculas = Pelicula::buscaPelicula($search_text);
+            $usuario = Usuario::buscaUsuarios($search_text);
+            $peliculas = Pelicula::buscaPeliculas($search_text);
         }
 
         /*

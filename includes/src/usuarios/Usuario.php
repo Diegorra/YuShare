@@ -27,6 +27,24 @@ class Usuario
         return $user->guarda();
     }
 
+    /**
+     * Devuelve todos los usuarios cuyo nombre de usuario contiene $nombreUsuario
+     */
+    public static function buscaUsuarios($nombreUsuario)
+    {
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $query = sprintf("SELECT * FROM Usuarios U WHERE U.userName LIKE '%s'", $conn->real_escape_string($nombreUsuario));
+        $rs = $conn->query($query);
+        $result = false;
+        if ($rs) {
+            $result = $rs->fetch_all();
+            $rs->free();
+        } else {
+            error_log("Error BD ({$conn->errno}): {$conn->error}");
+        }
+        return $result;
+    }
+
     public static function buscaUsuario($nombreUsuario)
     {
         $conn = Aplicacion::getInstance()->getConexionBd();
