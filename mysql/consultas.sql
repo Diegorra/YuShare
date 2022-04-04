@@ -4,9 +4,6 @@ VALUES (100, 'gomez', 'patat@s', 'gomez@gmail.com', 'https://www.google.com/url?
 INSERT INTO Usuario (id, userName, passwd, email, image, enabled, role)
 VALUES (101, 'garcia', 'algodon', 'garcia@gmail.com', 'https://www.google.com/search?q=fotos+personas&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiE9d2vyff2AhUG6RoKHXoUCn0Q_AUoAXoECAEQAw&biw=1280&bih=601&dpr=1.5#imgrc=rImC3JAHSU72HM', true, 'USER_ROLE');
 
-ALTER TABLE Pelicula
-ADD trailer VARCHAR(256) NOT NULL
-
 INSERT INTO Pelicula (id, iduser, titulo, text, genero, año, src, numerototalLikes, trailer)
 VALUES (1, 100, 'Clifford el gran perro rojo', 'El amor de una niña por su muñeco llamado Clifford hace que el perro crezca en tamaño.', 
 	'Aventuras', '2021-12-03', 'https://pics.filmaffinity.com/Clifford_el_gran_perro_rojo-215673664-large.jpg', 100000, 
