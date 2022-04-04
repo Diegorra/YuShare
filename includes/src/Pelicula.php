@@ -35,4 +35,31 @@ class Pelicula
         return $result;
     }
 
+    //subir pelicula
+
+    private function __construct($idUsuario, $titulo, $text, $genero, $src, $trailer)
+    {
+        $this->id = $id;
+        $this->idUsuario = $idUsuario;
+        $this->titulo = $titulo;
+        $this->text = $text;
+        $this->genero = $genero;
+        $this->src = $src;
+        $this->trailer = $trailer;
+        $this->año = date("Y-m-d");
+    }
+
+   public static function conseguirPeliculas()
+    {
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $query = sprintf("SELECT titulo, text, genero, año, src, numerototalLikes, trailer FROM Pelicula");
+        $rs = $conn->query($query);
+        if ($rs) {
+            $result = $rs->fetch_all();
+            $rs->free();
+        } else {
+            error_log("Error BD ({$conn->errno}): {$conn->error}");
+        }
+        return $result;
+    }
 }
