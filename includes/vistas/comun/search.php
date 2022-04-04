@@ -1,7 +1,7 @@
 
 <?php
 
-use es\ucm\fdi\aw\usuarios\FormularioSearch;
+use es\ucm\fdi\aw\FormularioSearch;
 
 function barraSearch()
 {
