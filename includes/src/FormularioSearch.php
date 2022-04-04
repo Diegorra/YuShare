@@ -41,7 +41,7 @@ class FormularioSearch extends Formulario
      */
     protected function procesaFormulario(&$datos)
     {
-        //$app = Aplicacion::getInstance();
+        $app = Aplicacion::getInstance();
         $this->errores = [];
         $search_text = trim($datos['search_text'] ?? '');
         $search_text = filter_var($search_text, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -50,7 +50,7 @@ class FormularioSearch extends Formulario
         }
         
         if (count($this->errores) === 0) {
-            $usuario = Usuario::buscaUsuarios($search_text);
+            $usuarios = Usuario::buscaUsuarios($search_text);
             $peliculas = Pelicula::buscaPeliculas($search_text);
         }
 
@@ -65,11 +65,12 @@ class FormularioSearch extends Formulario
         return $app->generaVista('/plantillas/plantilla.php', $params);
         
         
-        /* 
-        $mensajes = ['Hasta pronto !'];
-        $app->putAtributoPeticion('mensajes', $mensajes);
+        */ 
+        //$mensajes = ['Hasta pronto !'];
+        $app->putAtributoPeticion('usuarios', $usuarios);
+        $app->putAtributoPeticion('peliculas', $peliculas);
         $result = $app->resuelve('/resultSearch.php');
 
-        return $result;*/
+        return $result;
     }
 }

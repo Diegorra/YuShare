@@ -33,7 +33,7 @@ class Usuario
     public static function buscaUsuarios($nombreUsuario)
     {
         $conn = Aplicacion::getInstance()->getConexionBd();
-        $query = sprintf("SELECT * FROM Usuarios U WHERE U.userName LIKE '%s'", $conn->real_escape_string($nombreUsuario));
+        $query = sprintf("SELECT * FROM Usuario U WHERE U.userName LIKE '%s'", $conn->real_escape_string($nombreUsuario));
         $rs = $conn->query($query);
         $result = false;
         if ($rs) {
