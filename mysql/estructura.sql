@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS `Pelicula` (
     año DATE,
     src VARCHAR(256) NOT NULL,
     numerototalLikes Int,
+    trailer VARCHAR(256>) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (iduser) REFERENCES usuario(id) ON DELETE CASCADE
 );

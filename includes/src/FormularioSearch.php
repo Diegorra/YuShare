@@ -1,9 +1,11 @@
 <?php
 
-namespace es\ucm\fdi\aw\usuarios;
+namespace es\ucm\fdi\aw;
 
 use es\ucm\fdi\aw\Aplicacion;
 use es\ucm\fdi\aw\Formulario;
+use es\ucm\fdi\aw\usuarios\Usuario;
+use es\ucm\fdi\aw\Pelicula;
 
 class FormularioSearch extends Formulario
 {
@@ -47,6 +49,11 @@ class FormularioSearch extends Formulario
             $this->errores['search_text'] = 'El nombre de usuario no puede estar vacío';
         }
         
+        if (count($this->errores) === 0) {
+            $usuario = Usuario::buscaUsuario($search_text);
+            $peliculas = Pelicula::buscaPelicula($search_text);
+        }
+
         /*
         $tituloPagina = 'Search';
         $contenidoPrincipal=<<<EOF
@@ -58,7 +65,7 @@ class FormularioSearch extends Formulario
         return $app->generaVista('/plantillas/plantilla.php', $params);
         
         
-        /*
+        /* 
         $mensajes = ['Hasta pronto !'];
         $app->putAtributoPeticion('mensajes', $mensajes);
         $result = $app->resuelve('/resultSearch.php');
