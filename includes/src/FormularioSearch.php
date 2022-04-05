@@ -53,24 +53,8 @@ class FormularioSearch extends Formulario
             $usuarios = Usuario::buscaUsuarios($search_text);
             $peliculas = Pelicula::buscaPeliculas($search_text);
         }
-
-        /*
-        $tituloPagina = 'Search';
-        $contenidoPrincipal=<<<EOF
-            <h1>Probando Search</h1>
-            <p>{$search_text}</p>
-        EOF;
-
-        $params = ['tituloPagina' => $tituloPagina, 'contenidoPrincipal' => $contenidoPrincipal];
-        return $app->generaVista('/plantillas/plantilla.php', $params);
-        
-        
-        */ 
-        //$mensajes = ['Hasta pronto !'];
         $app->putAtributoPeticion('usuarios', $usuarios);
         $app->putAtributoPeticion('peliculas', $peliculas);
-        $result = $app->resuelve('/resultSearch.php');
-
-        return $result;
     }
 }
+

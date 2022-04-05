@@ -1,26 +1,5 @@
-CREATE USER 'Maria'@'%' IDENTIFIED VIA mysql_native_password USING '***';GRANT ALL PRIVILEGES ON *.* TO 'Maria'@'%' REQUIRE NONE WITH GRANT OPTION MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;GRANT ALL PRIVILEGES ON `yushare`.* TO 'Maria'@'%';
+--user='admin'
+--password='admin'
+CREATE USER 'admin'@'%' IDENTIFIED VIA mysql_native_password USING '***';GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%' REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
 
 
-
-# Privilegios para `root`@`127.0.0.1`
-
-GRANT ALL PRIVILEGES ON *.* TO `root`@`127.0.0.1` WITH GRANT OPTION;
-
-
-# Privilegios para `root`@`::1`
-
-GRANT ALL PRIVILEGES ON *.* TO `root`@`::1` WITH GRANT OPTION;
-
-
-# Privilegios para `root`@`localhost`
-
-GRANT ALL PRIVILEGES ON *.* TO `root`@`localhost` WITH GRANT OPTION;
-
-GRANT PROXY ON ''@'%' TO 'root'@'localhost' WITH GRANT OPTION;
-
-
-# Privilegios para `user`@`%`
-
-GRANT USAGE ON *.* TO `user`@`%` IDENTIFIED BY PASSWORD '*3FBBCCBA32BEA07FC4B0741A8F5909D9A53FE64E';
-
-GRANT ALL PRIVILEGES ON `yushare`.* TO `user`@`%`;

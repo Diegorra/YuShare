@@ -5,8 +5,8 @@
  */
 define('BD_HOST', 'localhost');
 define('BD_NAME', 'yushare');
-define('BD_USER', 'user');
-define('BD_PASS', 'kyo(o_Vy-CespwT9');
+define('BD_USER', 'admin');
+define('BD_PASS', 'admin');
 
 /**
  * Parámetros de configuración utilizados para generar las URLs y las rutas a ficheros en la aplicación

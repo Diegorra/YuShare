@@ -1,7 +1,5 @@
 <?php
 $params['app']->doInclude('/vistas/helpers/plantilla.php');
-$usuarios = $params['app']->getAtributoPeticion('usuarios');
-$peliculas = $params['app']->getAtributoPeticion('peliculas');
 ?>
 <!DOCTYPE html>
 <html lang="es" dir="ltr">
@@ -12,24 +10,26 @@ $peliculas = $params['app']->getAtributoPeticion('peliculas');
 	<link rel="icon" type="image/png" href="images/minilogo.png">
 </head>
 <body>
-<div id="contenedor">
+<div id="contenedor3">
 <?php
 $params['app']->doInclude('/vistas/comun/cabecera.php');
-if($params['tituloPagina'] === 'Portada'){
-	$params['app']->doInclude('/vistas/comun/search.php');
-}
+$params['app']->doInclude('/vistas/comun/search.php');
 ?>
 	<main>
 		<article>
 			<?php
-                if($usuarios === null || $peliculas === null){
-                    echo "<p>No se han encontrado resultados :(</p>"
+                if(($params['usuarios'] === null && $params['peliculas'] === null) || count($params['usuarios']) == 0 && count($params['peliculas']) == 0){
+                    echo "<p>No se han encontrado resultados :(</p>";
                 }else{
-                    foreach ($usuarios as $usuario) {
-                        echo "<p>{$usuario.getNombreUsuario()}</p>";
+                    foreach ($params['usuarios'] as $usuario) {
+                        foreach ($usuario as $value) {
+                            echo"<p>{$value}</p>";
+                        }
                     }
-                    foreach($peliculas as $pelicula){
-                        echo "<p>{$pelicula.getTitulo()}</p>";
+                    foreach($params['peliculas'] as $pelicula){
+                        foreach ($pelicula as $value) {
+                            echo"<p>{$value}</p>";
+                        }
                     }
                 }
             ?>
