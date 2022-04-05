@@ -33,11 +33,13 @@ class Usuario
     public static function buscaUsuarios($nombreUsuario)
     {
         $conn = Aplicacion::getInstance()->getConexionBd();
-        $query = sprintf("SELECT * FROM Usuario U WHERE U.userName LIKE '%s'", $conn->real_escape_string($nombreUsuario));
+        $query = sprintf("SELECT * FROM Usuario U WHERE U.userName LIKE '%%%s%%'", $conn->real_escape_string($nombreUsuario));
         $rs = $conn->query($query);
-        $result = false;
+        $result = [];
         if ($rs) {
-            $result = $rs->fetch_all();
+            while($fila = $rs->fetch_assoc()) {
+                $result[] = new Usuario($fila['id'], $fila['userName'], $fila['passwd'], $fila['email']);
+            }
             $rs->free();
         } else {
             error_log("Error BD ({$conn->errno}): {$conn->error}");

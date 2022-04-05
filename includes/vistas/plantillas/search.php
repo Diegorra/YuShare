@@ -22,14 +22,10 @@ $params['app']->doInclude('/vistas/comun/search.php');
                     echo "<p>No se han encontrado resultados :(</p>";
                 }else{
                     foreach ($params['usuarios'] as $usuario) {
-                        foreach ($usuario as $value) {
-                            echo"<p>{$value}</p>";
-                        }
+                        echo"<p>{$usuario->getNombreUsuario()}</p>";
                     }
                     foreach($params['peliculas'] as $pelicula){
-                        foreach ($pelicula as $value) {
-                            echo"<p>{$value}</p>";
-                        }
+                        echo"<p>{$pelicula->getTitulo()}</p>";
                     }
                 }
             ?>

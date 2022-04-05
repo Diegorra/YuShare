@@ -16,7 +16,31 @@ class Pelicula
     private $año;
     private $src;
     private $numLikes;
+    private $trailer;
     private $contador = 13;
+    
+
+
+    /**
+     * Constructor
+    */
+    private function __construct($id, $idUsuario, $titulo, $text, $genero, $año, $src, $numLikes, $trailer)
+    {
+        $this->id = $id;
+        $this->idUsuario = $idUsuario;
+        $this->titulo = $titulo;
+        $this->text = $text;
+        $this->genero = $genero;
+        $this->año = $año;
+        $this->src = $src;
+        $this->numLikes = $numLikes;
+        $this->trailer = $trailer;
+    }
+
+     public function getTitulo()
+    {
+        return $this->titulo;
+    }
 
     /**
      * Devuelve todas las películas cuyo título contiene $nombrePelicula
@@ -24,11 +48,13 @@ class Pelicula
     public static function buscaPeliculas($nombrePelicula)
     {
         $conn = Aplicacion::getInstance()->getConexionBd();
-        $query = sprintf("SELECT * FROM Pelicula P WHERE P.titulo LIKE '%s'", $conn->real_escape_string($nombrePelicula));
+        $query = sprintf("SELECT * FROM Pelicula P WHERE P.titulo LIKE '%%%s%%'", $conn->real_escape_string($nombrePelicula));
         $rs = $conn->query($query);
-        $result = false;
+        $result = [];
         if ($rs) {
-            $result = $rs->fetch_all();
+            while($fila = $rs->fetch_assoc()) {
+                $result[] = new Pelicula($fila['id'], $fila['iduser'], $fila['titulo'], $fila['text'], $fila['genero'], $fila['año'], $fila['src'], $fila['numerototalLikes'], $fila['trailer']);
+            }
             $rs->free();
         } else {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
