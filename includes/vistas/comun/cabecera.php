@@ -2,6 +2,8 @@
 
 use es\ucm\fdi\aw\Aplicacion;
 use es\ucm\fdi\aw\usuarios\FormularioLogout;
+use es\ucm\fdi\aw\FormularioPelicula;
+
 
 function menu()
 {
@@ -9,7 +11,7 @@ function menu()
     $app = Aplicacion::getInstance();
     if ($app->usuarioLogueado()) {
         $nombreUsuario = $app->nombreUsuario();
-
+        // formulario peli va aqui
         $formLogout = new FormularioLogout();
         $htmlLogout = $formLogout->gestiona();
         $perfilUrl = $app->resuelve('/perfil.php');
@@ -17,8 +19,12 @@ function menu()
     } else {
         $loginUrl = $app->resuelve('/login.php');
         $registroUrl = $app->resuelve('/registro.php');
+        $subirPelicula = $app->resuelve('/uploadMovie.php');
+
         $html = <<<EOS
-        <a href="{$loginUrl}">Login</a> <a href="{$registroUrl}">Registro</a>
+        <a href="{$loginUrl}">Login</a> 
+        <a href="{$registroUrl}">Registro</a>
+        <a href="{$subirPelicula}"> Subir pelicula</a>
       EOS;
     }
 
