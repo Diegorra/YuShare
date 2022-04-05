@@ -5,14 +5,7 @@ use es\ucm\fdi\aw\Pelicula;
 
 $tituloPagina = 'Portada';
 $peliculas=Pelicula::conseguirPeliculas();
-$contenidoPrincipal = <<<EOS
-foreach (peliculas as $valor)
-    echo valor["titulo"];
-
-
-EOS;
-
-
+$contenidoPrincipal = 'dilo tata';
 
 
 $params = ['tituloPagina' => $tituloPagina, 'contenidoPrincipal' => $contenidoPrincipal];
