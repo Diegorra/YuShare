@@ -16,6 +16,7 @@ class Pelicula
     private $año;
     private $src;
     private $numLikes;
+    private $contador = 13;
 
     /**
      * Devuelve todas las películas cuyo título contiene $nombrePelicula
@@ -37,9 +38,10 @@ class Pelicula
 
     //subir pelicula
 
-    private function __construct($idUsuario, $titulo, $text, $genero, $src, $trailer)
+    private function create($idUsuario, $titulo, $text, $genero, $src, $trailer)
     {
-        $this->id = $id;
+        $this->id = $contador;
+        $contador++;
         $this->idUsuario = $idUsuario;
         $this->titulo = $titulo;
         $this->text = $text;
@@ -47,6 +49,16 @@ class Pelicula
         $this->src = $src;
         $this->trailer = $trailer;
         $this->año = date("Y-m-d");
+        $this->numLikes = 0;
+
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $sql = "INSERT INTO pelicula (id, iduser, titulo, text, genero, año, src, numerototalLikes, trailer) VALUES ($this->id, $this->idUsuario, $this->titulo, $this->text, $this->genero, $this->año, $this->src, $this->numLikes, $this->trailer)";
+        if (mysqli_query($conn, $sql)) {
+              echo "Se ha añadido correctamente la película";
+        } else {
+              echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        }
+
     }
 
    public static function conseguirPeliculas()
