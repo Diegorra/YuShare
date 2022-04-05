@@ -11,7 +11,7 @@ function menu()
     $app = Aplicacion::getInstance();
     if ($app->usuarioLogueado()) {
         $nombreUsuario = $app->nombreUsuario();
-        // formulario peli va aqui
+        // formulario peli va aqui en la version final
         $formLogout = new FormularioLogout();
         $htmlLogout = $formLogout->gestiona();
         $perfilUrl = $app->resuelve('/perfil.php');

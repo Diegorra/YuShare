@@ -17,10 +17,7 @@ class Pelicula
     private $src;
     private $numLikes;
     private $trailer;
-    private $contador = 13;
     
-
-
     /**
      * Constructor
     */
@@ -45,6 +42,7 @@ class Pelicula
     /**
      * Devuelve todas las películas cuyo título contiene $nombrePelicula
     */
+
     public static function buscaPeliculas($nombrePelicula)
     {
         $conn = Aplicacion::getInstance()->getConexionBd();
@@ -64,34 +62,30 @@ class Pelicula
 
     //subir pelicula
 
-    private function create($idUsuario, $titulo, $text, $genero, $src, $trailer)
+    public static function subirPelicula($idUsuario, $titulo, $text, $genero, $src, $trailer)
     {
-        $this->id = $contador;
+        $year = date("Y-m-d");
+        static $contador = 13;
+        $peli = new Pelicula($contador, $idUsuario, $titulo, $text, $genero, $year, $src, 0, $trailer);
         $contador++;
-        $this->idUsuario = $idUsuario;
-        $this->titulo = $titulo;
-        $this->text = $text;
-        $this->genero = $genero;
-        $this->src = $src;
-        $this->trailer = $trailer;
-        $this->año = date("Y-m-d");
-        $this->numLikes = 0;
-
         $conn = Aplicacion::getInstance()->getConexionBd();
-        $sql = "INSERT INTO pelicula (id, iduser, titulo, text, genero, año, src, numerototalLikes, trailer) VALUES ($this->id, $this->idUsuario, $this->titulo, $this->text, $this->genero, $this->año, $this->src, $this->numLikes, $this->trailer)";
-        if (mysqli_query($conn, $sql)) {
+        $sql = "INSERT INTO pelicula (id, iduser, titulo, text, genero, año, src, numerototalLikes, trailer) VALUES ($peli->id, $peli->idUsuario, '$peli->titulo', '$peli->text', '$peli->genero', $peli->año, '$peli->src', 0, '$peli->trailer')";
+        if ($conn->query($sql) === TRUE) {
               echo "Se ha añadido correctamente la película";
         } else {
-              echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+              error_log("Error BD ({$conn->errno}): {$conn->error}");
         }
 
     }
+
+    //obtiene pelicula para mostrarla
 
    public static function conseguirPeliculas()
     {
         $conn = Aplicacion::getInstance()->getConexionBd();
         $query = sprintf("SELECT titulo, text, genero, año, src, numerototalLikes, trailer FROM Pelicula");
         $rs = $conn->query($query);
+        $result = [];
         if ($rs) {
             $result = $rs->fetch_all();
             $rs->free();

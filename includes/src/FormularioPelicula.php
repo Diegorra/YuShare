@@ -5,7 +5,6 @@ use es\ucm\fdi\aw\Aplicacion;
 use es\ucm\fdi\aw\Formulario;
 use es\ucm\fdi\aw\Pelicula;
 
-
 class FormularioPelicula extends Formulario
 {
     public function __construct() {
@@ -96,28 +95,29 @@ class FormularioPelicula extends Formulario
 
         $genero = trim($datos['genero'] ?? '');
         $genero = filter_var($genero, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if ( ! $genero ) {
-            $this->errores['genero'] = 'Introduce un género para la película. Los géneros disponibles son: acción, aventuras, comedia, drama, ciencia_ficcion, musical, documental.';
+        if ( ! $genero || ($genero !== "Acción" && $genero !== "Aventuras" && $genero !== "Comedia" && $genero !== "Drama" && $genero !== "Ciencia_Ficción"
+            && $genero !== "Musical" && $genero !== "Documental")) {
+            $this->errores['genero'] = 'Introduce un género para la película. Los géneros disponibles son: Acción, Aventuras, Comedia, Drama, Ciencia_Ficción, Musical, Documental.';
         }
 
         $src = trim($datos['src'] ?? '');
         $src = filter_var($src, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if ( ! $src) {
+        if ( ! $src || empty($src)) {
             $this->errores['src'] = 'Introduce un link de imagen para el cartel de la película';
         }
 
         $trailer = trim($datos['trailer'] ?? '');
         $trailer = filter_var($trailer, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if ( ! $trailer) {
+        if ( ! $trailer || empty($trailer)) {
             $this->errores['trailer'] = 'Introduce un link de un vídeo para el trailer de la película';
         }
 
         if (count($this->errores) === 0) {
-            $pelicula = Pelicula::buscaPeliculas();
+            $pelicula = Pelicula::buscaPeliculas($titulo);
             if ($pelicula) {
                 $this->errores[] = "La película ya existe";
             } else {
-                $pelicula = Pelicula::create($idUsuario, $titulo, $sinopsis, $genero, $src, $trailer);
+                $pelicula = Pelicula::subirPelicula($idUsuario, $titulo, $sinopsis, $genero, $src, $trailer);
                 $app = Aplicacion::getInstance();
             }
         }
