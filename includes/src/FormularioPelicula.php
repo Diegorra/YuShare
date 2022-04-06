@@ -22,7 +22,7 @@ class FormularioPelicula extends Formulario
 
         // Se generan los mensajes de error si existen.
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
-        $erroresCampos = self::generaErroresCampos(['idUsuario', 'titulo', 'sinopsis', 'genero', 'src', 'trailer'], $this->errores, 'span', array('class' => 'error'));
+        $erroresCampos = self::generaErroresCampos(['notLogged', 'idUsuario', 'titulo', 'sinopsis','genero', 'src', 'trailer'], $this->errores, 'span', array('class' => 'error'));
 
         $html = <<<EOF
         $htmlErroresGlobales
@@ -75,6 +75,10 @@ class FormularioPelicula extends Formulario
     {
         $this->errores = [];
 
+/*        if(!Aplicacion::getInstance()->usuarioLogueado()) {
+            $this->errores['notLogged'] = "No ha iniciado sesión";
+        }*/
+
         $idUsuario = trim($datos['idUsuario'] ?? '');
         $idUsuario = filter_var($idUsuario, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         if ( ! $idUsuario) {
@@ -95,8 +99,8 @@ class FormularioPelicula extends Formulario
 
         $genero = trim($datos['genero'] ?? '');
         $genero = filter_var($genero, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if ( ! $genero || ($genero !== "Acción" && $genero !== "Aventuras" && $genero !== "Comedia" && $genero !== "Drama" && $genero !== "Ciencia_Ficción"
-            && $genero !== "Musical" && $genero !== "Documental")) {
+        if ( ! $genero || ($genero != "Aventuras" && $genero != "Comedia" && $genero != "Drama" && $genero != "Terror"
+            && $genero != "Musical" && $genero != "Documental")) {
             $this->errores['genero'] = 'Introduce un género para la película. Los géneros disponibles son: Acción, Aventuras, Comedia, Drama, Ciencia_Ficción, Musical, Documental.';
         }
 

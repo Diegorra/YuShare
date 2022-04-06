@@ -127,7 +127,7 @@ div.texto_inicio {
 /*---pelicula ejemplo---*/
 
 .pelicula h1 {
-    text-align: center;
+    text-align: left;
     color: white;
     font-size:  25px;
     font-family: Times New Roman;
@@ -217,3 +217,13 @@ div.texto_inicio {
     color: white;
     font-family: Times New Roman; 
   }
+
+
+.groupCategory__itemsContent-29Lv {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    width: 100%;
+    justify-content: left;
+    background-color: transparent;
+}
