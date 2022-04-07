@@ -129,21 +129,20 @@ div.texto_inicio {
 .pelicula h1 {
     text-align: left;
     color: white;
-    font-size:  25px;
-    font-family: Times New Roman;
+    font-size: 45px;
+    font-family: monospace;
 }
 
 .pelicula h2 {
-    text-decoration: underline;
     color: white;
-    font-size:  25px;
-    font-family: Times New Roman;
+    font-size:  20px;
+    font-family: monospace;
 }
 
 .pelicula p {
     color: white;
     font-size: 15px;
-    font-family: Times New Roman;
+    font-family: monospace;
     line-height: 30px;
 }
 
@@ -217,13 +216,3 @@ div.texto_inicio {
     color: white;
     font-family: Times New Roman; 
   }
-
-
-.groupCategory__itemsContent-29Lv {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    width: 100%;
-    justify-content: left;
-    background-color: transparent;
-}
