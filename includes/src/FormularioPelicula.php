@@ -75,10 +75,6 @@ class FormularioPelicula extends Formulario
     {
         $this->errores = [];
 
-/*        if(!Aplicacion::getInstance()->usuarioLogueado()) {
-            $this->errores['notLogged'] = "No ha iniciado sesión";
-        }*/
-
         $idUsuario = trim($datos['idUsuario'] ?? '');
         $idUsuario = filter_var($idUsuario, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         if ( ! $idUsuario) {

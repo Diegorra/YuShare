@@ -144,7 +144,7 @@ class Pelicula
                 $contenido =<<<EOS
                     <br>
                     <tr>
-                    <div class="groupCategory__itemsContent-29Lv"> <td> {$field1name} </td>
+                    <td> <div class="texto_inicio"> {$field1name} </td>
                     <td> <img src="{$field3name}" id="image_inicio" ></td>
                     </div>
                     </tr>
