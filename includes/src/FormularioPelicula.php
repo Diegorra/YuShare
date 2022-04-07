@@ -22,7 +22,7 @@ class FormularioPelicula extends Formulario
 
         // Se generan los mensajes de error si existen.
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
-        $erroresCampos = self::generaErroresCampos(['notLogged', 'idUsuario', 'titulo', 'sinopsis','genero', 'src', 'trailer'], $this->errores, 'span', array('class' => 'error'));
+        $erroresCampos = self::generaErroresCampos(['idUsuario', 'titulo', 'sinopsis','genero', 'file', 'trailer'], $this->errores, 'span', array('class' => 'error'));
 
         $html = <<<EOF
         $htmlErroresGlobales
@@ -51,12 +51,10 @@ class FormularioPelicula extends Formulario
                 {$erroresCampos['genero']}
 
             </div>
-            <div>
-                <label for="src">Cartel: </label>
-                <input id="src" type="src" name="src" />
-                {$erroresCampos['src']}
-
-            </div>
+                <form action="" method="POST" enctype="multipart/form-data">
+                     <input type="file" name="image" />
+                     <input type="submit"/>
+                </form>
             <div>
                 <label for="trailer">Trailer: </label>
                 <input id="trailer" type="trailer" name="trailer" />
@@ -100,10 +98,17 @@ class FormularioPelicula extends Formulario
             $this->errores['genero'] = 'Introduce un género para la película. Los géneros disponibles son: Acción, Aventuras, Comedia, Drama, Ciencia_Ficción, Musical, Documental.';
         }
 
-        $src = trim($datos['src'] ?? '');
-        $src = filter_var($src, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if ( ! $src || empty($src)) {
-            $this->errores['src'] = 'Introduce un link de imagen para el cartel de la película';
+        $file_name = $_FILES['image']['name'];
+        $file_size = $_FILES['image']['size'];
+        $file_tmp = $_FILES['image']['tmp_name'];
+        $file_type = $_FILES['image']['type'];
+
+        if(isset($_FILES['image'])){
+          $file_ext= strtolower(end(explode('.',$_FILES['image']['name'])));
+          $expensions= array("jpeg","jpg","png");
+          if(in_array($file_ext,$expensions) === false){
+                $this->errores['file'] ="extension not allowed, please choose a JPEG or PNG file.";
+            }
         }
 
         $trailer = trim($datos['trailer'] ?? '');
@@ -118,6 +123,7 @@ class FormularioPelicula extends Formulario
                 $this->errores[] = "La película ya existe";
             } else {
                 $pelicula = Pelicula::subirPelicula($idUsuario, $titulo, $sinopsis, $genero, $src, $trailer);
+                move_uploaded_file($file_tmp,"images/peliculas/".$file_name);
                 $app = Aplicacion::getInstance();
             }
         }
