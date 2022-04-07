@@ -96,6 +96,7 @@ body {font: normal 62.5%/1.7em "Lucida Grande", "Lucida Sans Unicode", "Lucida S
 }
 
 /*---FIN DE PIE---*/
+
 body{
   background-color: black;
   background-size: cover;
@@ -106,8 +107,13 @@ body{
 .cuerpo_peliculas{
     margin-top:70px;
     height: auto;
-    text-align: center;
+    text-align: left;
     color: white;
+}
+
+.indexPeliculas {
+  display: inline-flex;
+  justify-content: space-between;
 }
 
 div.texto_inicio {
@@ -118,7 +124,8 @@ div.texto_inicio {
 }
 
 #image_inicio {
-    text-align: center;
+    display: inline;
+    text-align: left;
     width: 220px;
     height: 360px;
     padding: 3px;
@@ -152,6 +159,16 @@ div.texto_inicio {
     height: 400px;
     padding:  10px;
 }
+
+.galeria {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 300px;
+}
+.galeria-imagen {
+    border: 1px solid;
+}
+
 
 /* perfil */
 
