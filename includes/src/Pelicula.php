@@ -137,11 +137,12 @@ class Pelicula
    public static function conseguirPeliculas(){
         $conn = Aplicacion::getInstance()->getConexionBd();
         $query = sprintf("SELECT titulo, src FROM Pelicula");
+        $contenido = "";
         if ($result = $conn->query($query)) {
             while ($row = $result->fetch_assoc()) {
                 $field1name = $row["titulo"];
                 $field3name = $row["src"];
-                $contenido =<<<EOS
+                $htmlPeli =<<<EOS
                     <br>
                     <tr>
                     <td> <div class="texto_inicio"> {$field1name} </td>
@@ -149,12 +150,13 @@ class Pelicula
                     </div>
                     </tr>
                 EOS;
-                print $contenido;
+                $contenido .= $htmlPeli;
             }
             $result->free();
             
         } else {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
         }
+        return $contenido;
     }
 }
