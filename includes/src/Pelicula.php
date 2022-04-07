@@ -104,33 +104,29 @@ class Pelicula
 
     //obtiene pelicula para mostrarla
 
-   public static function todaInfoPeliculas()
+   public static function todaInfoPeliculas($id)
     {
         $conn = Aplicacion::getInstance()->getConexionBd();
-        $query = sprintf("SELECT titulo, text, genero, src, numerototalLikes, trailer FROM Pelicula");
-        if ($result = $conn->query($query)) {
-            while ($row = $result->fetch_assoc()) {
-                $field1name = $row["titulo"];
-                $field2name = $row["genero"];
-                $field3name = $row["src"];
-                $field4name = $row["numerototalLikes"];
-                $field5name = $row["trailer"]; 
-                $contenido = <<<EOS
-                    <p> {$field1name} </p>  
-                    <p> Género: {$field2name} </p> 
-                    <iframe width="200" height="315" 
-                    src="{$field3name}" frameborder="0"></iframe>
-                    <iframe width="560" height="315" 
-                    src="{$field5name}" frameborder="0" allowfullscreen></iframe> 
-                    <p> Likes: {$field4name} </p>
-                EOS;  
-                $result->free();
-                return $contenido; 
-            }
-            
+        $query = sprintf("SELECT titulo, text, genero, src, numerototalLikes, trailer FROM Pelicula WHERE id = $id");
+        
+        $result = $conn->query($query);
+        if ($result->num_rows > 0){
+            $reg = $result->fetch_assoc();
+            $contenido = <<<EOF
+                <div class ="pelicula">
+                    <h1>{$reg['titulo']}</h1>
+                    <h2><small>Género: {$reg['genero']}</small></h2>
+                    <h2><small>Sinopsis: {$reg['text']}</small></h2>
+                    <h2><small>Likes: {$reg['numerototalLikes']}</small></h2>
+                    <p><img src="{$reg['src']}"id="image_info"></p>
+                    <p><iframe width="560" height="315" src="{$reg['trailer']}" frameborder="0" allowfullscreen></iframe></p>
+                </div>
+            EOF;
+            $result->free();
         } else {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
         }
+        return $contenido;
     }
 
 
@@ -143,12 +139,11 @@ class Pelicula
                 $field1name = $row["titulo"];
                 $field3name = $row["src"];
                 $htmlPeli =<<<EOS
-                    <br>
-                    <tr>
-                    <td> <div class="texto_inicio"> {$field1name} </td>
-                    <td> <img src="{$field3name}" id="image_inicio" ></td>
-                    </div>
-                    </tr>
+                    <div class="indexPeliculas"></div> 
+                    <img src="{$field3name}"
+
+                        
+                     id="image_inicio">
                 EOS;
                 $contenido .= $htmlPeli;
             }
