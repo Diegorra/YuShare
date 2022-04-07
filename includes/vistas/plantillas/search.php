@@ -13,7 +13,7 @@ $params['app']->doInclude('/vistas/helpers/plantilla.php');
 <div id="contenedor3">
 <?php
 $params['app']->doInclude('/vistas/comun/cabecera.php');
-$params['app']->doInclude('/vistas/comun/search.php');
+$params['app']->doInclude('/vistas/comun/searchBar.php');
 ?>
 	<main>
 		<article>
