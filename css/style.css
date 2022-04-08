@@ -119,8 +119,9 @@ body{
 div.texto_inicio {
     text-align: center;
     color: white;
-    font-size: 60%;
     font-family: Calibri;
+    font-size: 45px;
+    font-family: monospace;
 }
 
 #image_inicio {
