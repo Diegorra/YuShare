@@ -51,10 +51,11 @@ class FormularioPelicula extends Formulario
                 {$erroresCampos['genero']}
 
             </div>
+            <div>
                 <form action="" method="POST" enctype="multipart/form-data">
-                     <input type="file" name="image" />
-                     <input type="submit"/>
+                <input type="file" name="image" />
                 </form>
+            </div>
             <div>
                 <label for="trailer">Trailer: </label>
                 <input id="trailer" type="trailer" name="trailer" />

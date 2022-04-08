@@ -116,11 +116,23 @@ body{
   justify-content: space-between;
 }
 
+#button_title {
+    background-color: white;
+    border: none;
+    color: black;
+    width:220px;
+    height:50px;
+    text-align: center;
+    font-size: 16px;
+    font-family: monospace;
+    position:absolute;
+}
+
 div.texto_inicio {
     text-align: center;
     color: white;
-    font-size: 60%;
-    font-family: Calibri;
+    font-size: 45px;
+    font-family: monospace;
 }
 
 #image_inicio {
@@ -128,7 +140,6 @@ div.texto_inicio {
     text-align: left;
     width: 220px;
     height: 360px;
-    padding: 3px;
 }
 
 /*---pelicula ejemplo---*/
@@ -160,16 +171,6 @@ div.texto_inicio {
     padding:  10px;
 }
 
-.galeria {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: 300px;
-}
-.galeria-imagen {
-    border: 1px solid;
-}
-
-
 /* perfil */
 
 .editarPerfil{
@@ -193,7 +194,7 @@ div.texto_inicio {
     font-size: 18px;
   }
   
-  button {
+button {
     border: none;
     outline: 0;
     display: inline-block;
@@ -204,14 +205,14 @@ div.texto_inicio {
     cursor: pointer;
     width: 100%;
     font-size: 18px;
-  }
-  
-  a {
+}
+
+a {
     text-decoration: none;
     font-size: 22px;
     color: #0400ff;
     
-  }
+}
 
   button:hover, a:hover {
     opacity: 0.7;

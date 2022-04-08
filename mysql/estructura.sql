@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `Pelicula` (
     titulo VARCHAR(256) NOT NULL,
     text VARCHAR(256) NOT NULL,
     genero ENUM('Aventuras', 'Comedia', 'Drama', 'Terror', 'Musical', 'Documental'),
-    src VARCHAR(256) NOT NULL,
+    src VARCHAR(256),
     numerototalLikes Int,
     trailer VARCHAR(256) NOT NULL,
     PRIMARY KEY (id),
