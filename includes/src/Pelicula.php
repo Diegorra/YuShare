@@ -59,13 +59,11 @@ class Pelicula
     }
 
     //subir pelicula
-    //variable estatica
-
     public static function subirPelicula($idUsuario, $titulo, $text, $genero, $trailer)
     {
         $conn = Aplicacion::getInstance()->getConexionBd();
         static $numero = 12;
-        $numero++;
+        $numero++; 
         $peli = new Pelicula($numero, $idUsuario, $titulo, $text, $genero, $src, 0, $trailer); 
         $sql = "INSERT INTO pelicula (id, iduser, titulo, text, genero, src, numerototalLikes, trailer) VALUES ($peli->id, $peli->idUsuario, '$peli->titulo', '$peli->text', '$peli->genero', '$peli->src', 0, '$peli->trailer')";
         if ($conn->query($sql) === TRUE) {
@@ -76,7 +74,7 @@ class Pelicula
         
     }
 
-    //obtiene pelicula para mostrarla
+    //obtiene pelicula a través del id para mostrar toda la información
 
    public static function todaInfoPeliculas($id)
     {
@@ -114,10 +112,7 @@ class Pelicula
                 $field3name = $row["src"];
                 $htmlPeli =<<<EOS
                     <div class="indexPeliculas"></div> 
-                    <img src="{$field3name}"
-
-                        
-                     id="image_inicio">
+                    <img src="{$field3name}" id="image_inicio">
                 EOS;
                 $contenido .= $htmlPeli;
             }
