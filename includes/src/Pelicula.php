@@ -37,32 +37,6 @@ class Pelicula
         return $this->titulo;
     }
 
-     public function getSrc()
-    {
-        return $this->src;
-    }
-
-     public function getGenero()
-    {
-        return $this->genero;
-    }
-
-     public function getTrailer()
-    {
-        return $this->trailer;
-    }
-
-     public function getNumLikes()
-    {
-        return $this->numLikes;
-    }
-
-
-     public function getText()
-    {
-        return $this->text;
-    }
-
     /**
      * Devuelve todas las películas cuyo título contiene $nombrePelicula
     */
@@ -87,19 +61,19 @@ class Pelicula
     //subir pelicula
     //variable estatica
 
-    public static function subirPelicula($idUsuario, $titulo, $text, $genero, $src, $trailer)
+    public static function subirPelicula($idUsuario, $titulo, $text, $genero, $trailer)
     {
-        $year = curdate();
-        static $contador = 12;
-        $contador = $contador + 1;
-        $peli = new Pelicula($contador, $idUsuario, $titulo, $text, $genero, $src, 0, $trailer);
-                $conn = Aplicacion::getInstance()->getConexionBd();
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        static $numero = 12;
+        $numero++;
+        $peli = new Pelicula($numero, $idUsuario, $titulo, $text, $genero, $src, 0, $trailer); 
         $sql = "INSERT INTO pelicula (id, iduser, titulo, text, genero, src, numerototalLikes, trailer) VALUES ($peli->id, $peli->idUsuario, '$peli->titulo', '$peli->text', '$peli->genero', '$peli->src', 0, '$peli->trailer')";
         if ($conn->query($sql) === TRUE) {
               echo "Se ha añadido correctamente la película";
         } else {
               error_log("Error BD ({$conn->errno}): {$conn->error}");
         }
+        
     }
 
     //obtiene pelicula para mostrarla
