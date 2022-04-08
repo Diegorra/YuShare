@@ -32,10 +32,105 @@ class Pelicula
         $this->trailer = $trailer;
     }
 
-     public function getTitulo()
+    //Getters y Setters
+    //-------------------------------------------------------------------------------------------------------
+    public function getTitulo()
     {
         return $this->titulo;
     }
+
+    
+    //-------------------------------------------------------------------------------------------------------
+
+    
+    public static function crea($idUsuario, $titulo, $text, $genero, $src, $trailer)
+    {
+        $peli = new Pelicula(null, $idUsuario, $titulo, $text, $genero, $src, 0, $trailer);
+        return $peli->guarda();
+    }
+    
+    public function guarda()
+    {
+        if ($this->id !== null) {
+            return self::actualiza($this);
+        }
+        return self::inserta($this);
+    }
+    
+    public function borrate()
+    {
+        if ($this->id !== null) {
+            return self::borra($this);
+        }
+        return false;
+    }
+        
+    private static function inserta($pelicula)
+    {
+        $result = false;
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $query=sprintf("INSERT INTO Pelicula (iduser, titulo, text, genero, src, numerototalLikes, trailer) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')"
+            , $conn->real_escape_string($pelicula->idUsuario)
+            , $conn->real_escape_string($pelicula->titulo)
+            , $conn->real_escape_string($pelicula->text)
+            , $conn->real_escape_string($pelicula->genero)
+            , $conn->real_escape_string($pelicula->src)
+            , $conn->real_escape_string($pelicula->numLikes)
+            , $conn->real_escape_string($pelicula->trailer)
+        );
+        if ( $conn->query($query) ) {
+            $pelicula->id = $conn->insert_id;
+            $result = $pelicula;
+        } else {
+            error_log("Error BD ({$conn->errno}): {$conn->error}");
+        }
+        return $result;
+    }
+
+    private static function actualiza($pelicula)
+    {
+        $result = false;
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $query=sprintf("UPDATE Pelicula P SET titulo= '%s', genero='%s', numerototalLikes='%s' WHERE P.id=%d"
+            , $conn->real_escape_string($pelicula->titulo)
+            , $conn->real_escape_string($pelicula->genero)
+            , $conn->real_escape_string($pelicula->numerototalLikes)
+            , $pelicula->id
+        );
+
+        if (!$conn->query($query) ) {
+            error_log("Error BD ({$conn->errno}): {$conn->error}");
+        } else {
+            $result = $pelicula;
+        }
+        
+        return $result;
+    }
+    
+    private static function borra($pelicula)
+    {
+        return self::borraPorId($pelicula->id);
+    }
+    
+    private static function borraPorId($idPelicula)
+    {
+        if (!$idPelicula) {
+            return false;
+        } 
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $query = sprintf("DELETE FROM Pelicula P WHERE P.id = %d"
+            , $idPelicula
+        );
+        if ( ! $conn->query($query) ) {
+            error_log("Error BD ({$conn->errno}): {$conn->error}");
+            return false;
+        }
+        return true;
+    }
+
+    
+    //-------------------------------------------------------------------------------------------------------
+
 
     /**
      * Devuelve todas las películas cuyo título contiene $nombrePelicula
@@ -58,25 +153,10 @@ class Pelicula
         return $result;
     }
 
-    //subir pelicula
-    public static function subirPelicula($idUsuario, $titulo, $text, $genero, $trailer)
-    {
-        $conn = Aplicacion::getInstance()->getConexionBd();
-        static $numero = 12;
-        $numero++; 
-        $peli = new Pelicula($numero, $idUsuario, $titulo, $text, $genero, $src, 0, $trailer); 
-        $sql = "INSERT INTO pelicula (id, iduser, titulo, text, genero, src, numerototalLikes, trailer) VALUES ($peli->id, $peli->idUsuario, '$peli->titulo', '$peli->text', '$peli->genero', '$peli->src', 0, '$peli->trailer')";
-        if ($conn->query($sql) === TRUE) {
-              echo "Se ha añadido correctamente la película";
-        } else {
-              error_log("Error BD ({$conn->errno}): {$conn->error}");
-        }
-        
-    }
-
+    
     //obtiene pelicula a través del id para mostrar toda la información
 
-   public static function todaInfoPeliculas($id)
+    public static function todaInfoPeliculas($id)
     {
         $conn = Aplicacion::getInstance()->getConexionBd();
         $query = sprintf("SELECT titulo, text, genero, src, numerototalLikes, trailer FROM Pelicula WHERE id = $id");

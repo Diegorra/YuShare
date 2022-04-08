@@ -123,7 +123,7 @@ class FormularioPelicula extends Formulario
             if ($pelicula) {
                 $this->errores[] = "La película ya existe";
             } else {
-                $pelicula = Pelicula::subirPelicula($idUsuario, $titulo, $sinopsis, $genero, $src, $trailer);
+                $pelicula = Pelicula::crea($idUsuario, $titulo, $sinopsis, $genero, $src, $trailer);
                 move_uploaded_file($file_tmp,"images/peliculas/".$file_name);
                 $app = Aplicacion::getInstance();
             }
