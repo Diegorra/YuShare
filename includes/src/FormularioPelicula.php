@@ -8,7 +8,10 @@ use es\ucm\fdi\aw\Pelicula;
 class FormularioPelicula extends Formulario
 {
     public function __construct() {
-        parent::__construct('formUpload', ['urlRedireccion' => Aplicacion::getInstance()->resuelve('/index.php')]);
+        parent::__construct('formUpload', 
+        [
+            'enctype' => "multipart/form-data",
+            'urlRedireccion' => Aplicacion::getInstance()->resuelve('/index.php')]);
     }
     
     protected function generaCamposFormulario(&$datos)
@@ -35,30 +38,29 @@ class FormularioPelicula extends Formulario
             </div>
             <div>
                 <label for="titulo">Titulo: </label>
-                <input id="titulo" type="titulo" name="titulo" />
+                <input id="titulo" type="text" name="titulo" />
                 {$erroresCampos['titulo']}
 
             </div>
             <div>
                 <label for="sinopsis">Sinopsis: </label>
-                <input id="sinopsis" type="sinopsis" name="sinopsis" />
+                <input id="sinopsis" type="text" name="sinopsis" />
                 {$erroresCampos['sinopsis']}
 
             </div>
             <div>
                 <label for="genero">Género: </label>
-                <input id="genero" type="genero" name="genero" />
+                <input id="genero" type="text" name="genero" />
                 {$erroresCampos['genero']}
 
             </div>
             <div>
-                <form action="" method="POST" enctype="multipart/form-data">
-                <input type="file" name="image" />
-                </form>
+                <input type="file" id="file" name="file" />
+                {$erroresCampos['file']}
             </div>
             <div>
                 <label for="trailer">Trailer: </label>
-                <input id="trailer" type="trailer" name="trailer" />
+                <input id="trailer" type="text" name="trailer" />
                 {$erroresCampos['trailer']}
 
             </div>
@@ -66,6 +68,10 @@ class FormularioPelicula extends Formulario
                 <button type="submit" name="registro">Subir película</button>
             </div>
         </fieldset>
+        <script>
+
+        </script>
+
         EOF;
         return $html;
     }
@@ -98,20 +104,22 @@ class FormularioPelicula extends Formulario
             && $genero != "Musical" && $genero != "Documental")) {
             $this->errores['genero'] = 'Introduce un género para la película. Los géneros disponibles son: Acción, Aventuras, Comedia, Drama, Ciencia_Ficción, Musical, Documental.';
         }
-
-        $file_name = $_FILES['image']['name'];
-        $file_size = $_FILES['image']['size'];
-        $file_tmp = $_FILES['image']['tmp_name'];
-        $file_type = $_FILES['image']['type'];
-
-        if(isset($_FILES['image'])){
-          $file_ext= strtolower(end(explode('.',$_FILES['image']['name'])));
-          $expensions= array("jpeg","jpg","png");
-          if(in_array($file_ext,$expensions) === false){
+        
+        $file_name = $_FILES['file']['name'];
+        $file_size = $_FILES['file']['size'];
+        $file_tmp = $_FILES['file']['tmp_name'];
+        $file_type = $_FILES['file']['type'];
+        $file = "images/peliculas/".$file_name;
+        //$this->errores['file'] = "Nombre: ".$_FILES['file']['name'];
+        
+        if(isset($_FILES['file'])){
+            $file_ext= strtolower(end(explode('.',$_FILES['file']['name'])));
+            $expensions= array("jpeg","jpg","png");
+            if(in_array($file_ext,$expensions) === false){
                 $this->errores['file'] ="extension not allowed, please choose a JPEG or PNG file.";
             }
         }
-
+    
         $trailer = trim($datos['trailer'] ?? '');
         $trailer = filter_var($trailer, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         if ( ! $trailer || empty($trailer)) {
@@ -119,13 +127,12 @@ class FormularioPelicula extends Formulario
         }
 
         if (count($this->errores) === 0) {
-            $pelicula = Pelicula::buscaPeliculas($titulo);
+            $pelicula = Pelicula::buscaPelicula($titulo);
             if ($pelicula) {
                 $this->errores[] = "La película ya existe";
             } else {
-                $pelicula = Pelicula::crea($idUsuario, $titulo, $sinopsis, $genero, $src, $trailer);
-                move_uploaded_file($file_tmp,"images/peliculas/".$file_name);
-                $app = Aplicacion::getInstance();
+                $pelicula = Pelicula::crea($idUsuario, $titulo, $sinopsis, $genero, $file, $trailer);
+                move_uploaded_file($file_tmp, $file);
             }
         }
     }
