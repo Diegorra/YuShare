@@ -82,6 +82,24 @@ class Usuario
         }
         return $result;
     }
+
+    public static function buscaPorEmail($emailusuario)
+    {
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $query = sprintf("SELECT * FROM Usuario WHERE email=%d", $emailusuario);
+        $rs = $conn->query($query);
+        $result = false;
+        if ($rs) {
+            $fila = $rs->fetch_assoc();
+            if ($fila) {
+                $result = new Usuario($fila['id'], $fila['userName'], $fila['passwd'], $fila['email']);
+            }
+            $rs->free();
+        } else {
+            error_log("Error BD ({$conn->errno}): {$conn->error}");
+        }
+        return $result;
+    }
     
     private static function hashPassword($password)
     {
@@ -119,6 +137,25 @@ class Usuario
             , $conn->real_escape_string($usuario->userName)
             , $conn->real_escape_string($usuario->email)
             , $conn->real_escape_string($usuario->passwd)
+            , $usuario->id
+        );
+
+        if (!$conn->query($query) ) {
+            error_log("Error BD ({$conn->errno}): {$conn->error}");
+        } else {
+            $result = $usuario;
+        }
+        
+        return $result;
+    }
+
+    private static function actualizaSetting($nombre, $email)
+    {
+        $result = false;
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $query=sprintf("UPDATE Usuario U SET userName = '%s', email='%s' WHERE U.id=%d"
+            , $conn->real_escape_string($usuario->userName)
+            , $conn->real_escape_string($usuario->email)
             , $usuario->id
         );
 

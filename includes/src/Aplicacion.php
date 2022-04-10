@@ -256,6 +256,8 @@ class Aplicacion
         $_SESSION['nombre'] = $user->getNombreUsuario();
         $_SESSION['idUsuario'] = $user->getId();
         $_SESSION['role'] = $user->getRole();
+        $_SESSION['email'] = $user->getEmail();
+
     }
 
     public function logout()
@@ -266,7 +268,7 @@ class Aplicacion
         unset($_SESSION['nombre']);
         unset($_SESSION['idUsuario']);
         unset($_SESSION['role']);
-
+        unset($_SESSION['email']);
 
         session_destroy();
         session_start();
@@ -282,6 +284,12 @@ class Aplicacion
     {
         $this->compruebaInstanciaInicializada();
         return $_SESSION['nombre'] ?? '';
+    }
+
+    public function emailUsuario()
+    {
+        $this->compruebaInstanciaInicializada();
+        return $_SESSION['email'] ?? '';
     }
 
     public function idUsuario()
