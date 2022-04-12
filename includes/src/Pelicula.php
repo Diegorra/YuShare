@@ -203,15 +203,15 @@ class Pelicula
 
    public static function conseguirPeliculas(){
         $conn = Aplicacion::getInstance()->getConexionBd();
-        $query = sprintf("SELECT titulo, src FROM Pelicula");
+        $query = sprintf("SELECT id, src FROM Pelicula");
         $contenido = "";
         if ($result = $conn->query($query)) {
             while ($row = $result->fetch_assoc()) {
-                $field1name = $row["titulo"];
-                $field3name = $row["src"];
+                $id = $row["id"];
+                $cartel = $row["src"];
                 $htmlPeli =<<<EOS
                     <div class="indexPeliculas"></div> 
-                    <img src="{$field3name}" id="image_inicio">
+                    <img src="{$cartel}" id="image_inicio">
                 EOS;
                 $contenido .= $htmlPeli;
             }
