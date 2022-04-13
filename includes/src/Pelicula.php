@@ -171,7 +171,33 @@ class Pelicula
         }
         return $result;
     }
-
+    
+    //para mostrar en el perfil las películas asociadas a un usuario
+    public static function peliculasPerfil($idUsuario)
+    {
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $query = sprintf("SELECT * FROM Pelicula P WHERE P.iduser=$idUsuario");
+        $contenido = "";
+        $rs = $conn->query($query);
+        $result = [];
+        if($rs){
+            while($fila = $rs->fetch_assoc()){
+                $result[]=new Pelicula($fila['id'], $fila['iduser'], $fila['titulo'], $fila['text'], $fila['genero'], $fila['src'], $fila['numerototalLikes'], $fila['trailer']);
+                $src=$fila['src'];
+                $titulo=$fila['titulo'];
+                $cont = <<<EOS
+                <div class="indexPeliculas"></div> 
+                <img src="{$src}" id="image_inicio">
+                EOS;
+                $contenido .=$cont;
+            }
+            $rs->free();
+        } else {
+            error_log("Error BD ({$conn->errno}): {$conn->error}");
+        }
+        return $contenido;
+        
+    }
     
     //obtiene pelicula a través del id para mostrar toda la información
 
