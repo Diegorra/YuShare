@@ -197,7 +197,7 @@ class Usuario
         $this->userName = $userName;
         $this->passwd = $passwd;
         $this->email = $email;
-        $this->image = "/images/defaultProfile.jpg";
+        $this->image = "images/defaultProfile.jpg";
         $this->role = 2;
     }
 
