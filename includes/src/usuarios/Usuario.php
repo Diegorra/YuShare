@@ -211,7 +211,7 @@ class Usuario
         $this->userName = $userName;
         $this->passwd = $passwd;
         $this->email = $email;
-        $this->image = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fproplayers.eu%2Fen%2Fprofile%2F24027&psig=AOvVaw00hnehvpRagRxh37rkARI8&ust=1648628253550000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCPiH7f7w6vYCFQAAAAAdAAAAABAJ";
+        $this->image = "https://i.pinimg.com/600x315/ee/60/0b/ee600b5178e4f1648fd1e8623f049611.jpg";
         $this->role = 2;
     }
 
