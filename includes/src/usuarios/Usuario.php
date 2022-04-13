@@ -129,43 +129,29 @@ class Usuario
     }
    
     
-    private static function actualiza($usuario)
+    private static function actualiza($usuario, $nombre, $email, $password)
     {
         $result = false;
         $conn = Aplicacion::getInstance()->getConexionBd();
-        $query=sprintf("UPDATE Usuario U SET userName = '%s', email='%s', passwd='%s' WHERE U.id=%d"
-            , $conn->real_escape_string($usuario->userName)
-            , $conn->real_escape_string($usuario->email)
-            , $conn->real_escape_string($usuario->passwd)
-            , $usuario->id
+        $query=sprintf("UPDATE Usuario SET userName='%s', passwd='%s', email='%s', image='%s', role='%s' WHERE id=%d"
+            , $conn->real_escape_string($nombre)
+            , $conn->real_escape_string($password)
+            , $conn->real_escape_string($email)
+            , $conn->real_escape_string($usuario->image)
+            , $conn->real_escape_string($usuario->role)
+            , $conn->real_escape_string($usuario->id)
         );
-
-        if (!$conn->query($query) ) {
-            error_log("Error BD ({$conn->errno}): {$conn->error}");
-        } else {
+        if ( $conn->query($query) ) {
             $result = $usuario;
+        } else {
+            error_log("Error BD ({$conn->errno}): {$conn->error}");
         }
-        
         return $result;
     }
 
-    private static function actualizaSetting($nombre, $email)
+    public static function actualizaSetting ($usuario, $nombre, $email)
     {
-        $result = false;
-        $conn = Aplicacion::getInstance()->getConexionBd();
-        $query=sprintf("UPDATE Usuario U SET userName = '%s', email='%s' WHERE U.id=%d"
-            , $conn->real_escape_string($usuario->userName)
-            , $conn->real_escape_string($usuario->email)
-            , $usuario->id
-        );
-
-        if (!$conn->query($query) ) {
-            error_log("Error BD ({$conn->errno}): {$conn->error}");
-        } else {
-            $result = $usuario;
-        }
-        
-        return $result;
+        Usuario::actualiza($usuario, $nombre, $email, $usuario->passwd);
     }
    
     

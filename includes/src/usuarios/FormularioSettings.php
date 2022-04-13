@@ -46,7 +46,7 @@ class FormularioSettings extends Formulario{
             </div>
             <div>
                 <label for="password2">Repetir nueva contraseña:</label>
-                <input id="password2" type="password2" name="password2" />
+                <input id="password2" type="password" name="password2" />
                 {$erroresCampos['password2']}
             </div>
             <div>
@@ -70,13 +70,13 @@ class FormularioSettings extends Formulario{
         $nombreUsuarioForm = trim($datos['nombreUsuario'] ?? '');
         $nombreUsuarioForm = filter_var($nombreUsuarioForm, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         
-        if ($nombreUsuario !== $nombreUsuarioForm && $nombreUsuarioForm !=='') { //Ha cambiado el nombre
+        if ($nombreUsuarioForm !=='') { //Ha cambiado el nombre
             //$this->errores['nombreUsuario'] = 'El nombre de usuario no puede estar vacío';
             
             //Se busca si el nombre exitse
             $newNombreUsuarioForm = Usuario::buscaUsuario($nombreUsuarioForm); 
             
-            if ($newNombreUsuarioForm) {
+            if ($newNombreUsuarioForm && $nombreUsuario !== $nombreUsuarioForm) {
                 $this->errores[] = "El usuario ya existe (nombre)";
             }
             else{
@@ -84,7 +84,7 @@ class FormularioSettings extends Formulario{
             }
         }
 
-        echo '<pre>' . print_r($nombreUsuario, TRUE) . '</pre>';
+        echo '<pre>' . print_r($nombreUsuario !== $nombreUsuarioForm, TRUE) . '</pre>';
         echo '<pre>' . print_r($nombreUsuarioForm, TRUE) . '</pre>';
 
         $emailUsuarioForm = trim($datos['email'] ?? '');
@@ -97,9 +97,9 @@ class FormularioSettings extends Formulario{
             //$this->errores['nombreUsuario'] = 'El nombre de usuario no puede estar vacío';
             
             //Se busca si el nombre exitse
-            $emailUsuarioForm = Usuario::buscaUsuario($emailUsuarioForm); 
+            $newEmailUsuarioForm = Usuario::buscaUsuario($emailUsuarioForm); 
             
-            if ($emailUsuarioForm) {
+            if ($newEmailUsuarioForm) {
                 $this->errores[] = "El usuario ya existe (email)";
             }
             else{
@@ -110,7 +110,10 @@ class FormularioSettings extends Formulario{
         $password = trim($datos['password'] ?? '');
         $password = filter_var($password, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-        if($password)
+        if($password !== ''){
+            $cambiarPassword = false;
+        }
+        else
         {
             if (mb_strlen($password) < 5 ) {
                 $this->errores['password'] = 'El password tiene que tener una longitud de al menos 5 caracteres.';
@@ -118,17 +121,16 @@ class FormularioSettings extends Formulario{
 
             $password2 = trim($datos['password2'] ?? '');
             $password2 = filter_var($password2, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            if ( ! $password2 || $password != $password2 ) {
+            if ( !$password2 || $password !== $password2 ) {
                 $this->errores['password2'] = 'Los passwords deben coincidir';
             }
         }
-        else{
-            $cambiarPassword = true;
-        }
+
        
 
 
-        if (count($this->errores) === 0) {
+        if (count($this->errores) === 0) 
+        {
 
             if($cambiarNombre)
             {
@@ -148,26 +150,27 @@ class FormularioSettings extends Formulario{
                 $newEmail = $_SESSION['email'];
             }
 
+            $usuario = Usuario::buscaUsuario($nombreUsuario);
+
             if($cambiarPassword)
             {
                 $newPass = $password;
-                $newUsuario = Usuario::crea($newNombre, $newPass, $newEmail);
-
-                $newUsuario = Usuario::actualiza($newUsuario);
+                //$newUsuario = Usuario::crea($usuario, $newNombre, $newPass, $newEmail);
+                echo '<pre>' . print_r("password cambias", TRUE) . '</pre>';
+                $newUsuario = Usuario::actualiza($usuario, $newNombre, $newEmail, $newPass);
             }
             else{
-                $newUsuario = Usuario::actualizaSetting($newNombre, $newEmail);
+                $newUsuario = Usuario::actualizaSetting($usuario, $newNombre, $newEmail);
             }
 
-   
             
-
-            $usuario = Usuario::actualiza($newUsuario); 
-            
-            if ($usuario) {
+            if ($newUsuario) {
                 $app = Aplicacion::getInstance();
-                $app->login($usuario);
+                $app->login($newUsuario);
             }
+        }
+        else{
+
         }
 
 
