@@ -101,7 +101,7 @@ class Usuario
         return $result;
     }
     
-    private static function hashPassword($password)
+    public static function hashPassword($password)
     {
         return password_hash($password, PASSWORD_DEFAULT);
     }
@@ -129,7 +129,7 @@ class Usuario
     }
    
     
-    private static function actualiza($usuario, $nombre, $email, $password)
+    public static function actualiza($usuario, $nombre, $email, $password)
     {
         $result = false;
         $conn = Aplicacion::getInstance()->getConexionBd();

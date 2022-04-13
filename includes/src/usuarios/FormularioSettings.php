@@ -59,10 +59,12 @@ class FormularioSettings extends Formulario{
 
     protected function procesaFormulario(&$datos)
     {
+        $this->errores = [];
+
         $nombreUsuario = $_SESSION['nombre'] ?? '';
         $emailUsuario = $_SESSION['email'] ?? '';
 
-        $this->errores = [];
+
         $cambiarNombre = false;
         $cambiarEmail = false;
         $cambiarPassword = false;
@@ -84,8 +86,9 @@ class FormularioSettings extends Formulario{
             }
         }
 
-        echo '<pre>' . print_r($nombreUsuario !== $nombreUsuarioForm, TRUE) . '</pre>';
-        echo '<pre>' . print_r($nombreUsuarioForm, TRUE) . '</pre>';
+       // echo '<pre>' . print_r($nombreUsuario !== $nombreUsuarioForm, TRUE) . '</pre>';
+        //echo '<pre>' . print_r($nombreUsuarioForm, TRUE) . '</pre>';
+        //echo '<pre>' . print_r($$password === $password2, TRUE) . '</pre>';
 
         $emailUsuarioForm = trim($datos['email'] ?? '');
         $emailUsuarioForm = filter_var($emailUsuarioForm, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -110,7 +113,7 @@ class FormularioSettings extends Formulario{
         $password = trim($datos['password'] ?? '');
         $password = filter_var($password, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-        if($password !== ''){
+        if($password === ''){
             $cambiarPassword = false;
         }
         else
@@ -123,6 +126,9 @@ class FormularioSettings extends Formulario{
             $password2 = filter_var($password2, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             if ( !$password2 || $password !== $password2 ) {
                 $this->errores['password2'] = 'Los passwords deben coincidir';
+            }
+            else{
+                $cambiarPassword = true;
             }
         }
 
@@ -156,8 +162,7 @@ class FormularioSettings extends Formulario{
             {
                 $newPass = $password;
                 //$newUsuario = Usuario::crea($usuario, $newNombre, $newPass, $newEmail);
-                echo '<pre>' . print_r("password cambias", TRUE) . '</pre>';
-                $newUsuario = Usuario::actualiza($usuario, $newNombre, $newEmail, $newPass);
+                $newUsuario = Usuario::actualiza($usuario, $newNombre, $newEmail, Usuario::hashPassword($newPass));
             }
             else{
                 $newUsuario = Usuario::actualizaSetting($usuario, $newNombre, $newEmail);
