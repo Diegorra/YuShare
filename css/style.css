@@ -135,11 +135,35 @@ div.texto_inicio {
     font-family: monospace;
 }
 
+div.texto_perfil {
+    margin-top: 100px;
+    text-align: center;
+    color: white;
+    font-size: 25px;
+    font-family: monospace;
+}
+
 #image_inicio {
     display: inline;
     text-align: left;
     width: 220px;
     height: 360px;
+}
+
+#image_usuario {
+    text-indent: 200px;
+    display: inline;
+    text-align: left;
+    width: 220px;
+    height: 360px;
+}
+
+#image_perfil {
+    float: left;
+    width:150px;
+    height:150px;
+    border-radius:75px;
+    border:5px solid #666;
 }
 
 /*---pelicula ejemplo---*/
@@ -187,6 +211,11 @@ div.texto_inicio {
     max-width: 300px;
     margin: auto;
     text-align: center;
+    float: left;
+  }
+
+  .cardRightText{
+      text-indent: 30px;
   }
   
   .title {
