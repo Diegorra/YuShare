@@ -11,8 +11,9 @@ $contenidoPrincipal=<<<EOS
   <h1>.</h1>
     <div class='card'>
         <img src='{$usuario->getImage()}' id="image_perfil">
-        <br>
-        <a href= "editarPerfil.php"> Editar perfil</a>
+
+        <br><br><br><br><br><br><br><br><br><br>
+        <a href= "editarPerfil.php" class="botonEditarPerfil"> Editar perfil</a>
         </div>
         <div class='cardRightText'>
           <h1>{$usuario->getNombreUsuario()}</h1>
