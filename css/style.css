@@ -158,6 +158,7 @@ div.texto_perfil {
     height: 360px;
 }
 
+
 #image_perfil {
     float: left;
     width:150px;
@@ -207,12 +208,26 @@ div.texto_perfil {
 
 
 .card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 10px 0 rgba(255, 255, 255, 0.2);
     max-width: 300px;
     margin: auto;
     text-align: center;
     float: left;
   }
+
+  .botonEditarPerfil {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 4px;
+    color: white;
+    background-color: rgb(60, 60, 60);
+    text-align: center;
+    cursor: pointer;
+    width: 95%;
+    font-size: 18px;
+  }
+
 
   .cardRightText{
       text-indent: 30px;
