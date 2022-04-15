@@ -176,7 +176,7 @@ class Pelicula
     public static function peliculasPerfil($idUsuario)
     {
         $conn = Aplicacion::getInstance()->getConexionBd();
-        $query = sprintf("SELECT * FROM Pelicula P WHERE P.iduser=$idUsuario");
+        $query = sprintf("SELECT * FROM Pelicula P WHERE P.iduser='%s'", $conn->real_escape_string($idUsuario));
         $contenido = "";
         $rs = $conn->query($query);
         $result = [];
@@ -204,7 +204,7 @@ class Pelicula
     public static function todaInfoPeliculas($id)
     {
         $conn = Aplicacion::getInstance()->getConexionBd();
-        $query = sprintf("SELECT titulo, text, genero, src, numerototalLikes, trailer FROM Pelicula WHERE id = $id");
+        $query = sprintf("SELECT titulo, text, genero, src, numerototalLikes, trailer FROM Pelicula WHERE id = '%s'", $conn->real_escape_string($id));
         
         $result = $conn->query($query);
         if ($result->num_rows > 0){

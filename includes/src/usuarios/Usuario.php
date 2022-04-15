@@ -68,7 +68,7 @@ class Usuario
     public static function buscaPorId($idUsuario)
     {
         $conn = Aplicacion::getInstance()->getConexionBd();
-        $query = sprintf("SELECT * FROM Usuario WHERE id=%d", $idUsuario);
+        $query = sprintf("SELECT * FROM Usuario WHERE id='%s'", $conn->real_escape_string($idUsuario));
         $rs = $conn->query($query);
         $result = false;
         if ($rs) {
@@ -86,7 +86,7 @@ class Usuario
     public static function buscaPorEmail($emailusuario)
     {
         $conn = Aplicacion::getInstance()->getConexionBd();
-        $query = sprintf("SELECT * FROM Usuario WHERE email=%d", $emailusuario);
+        $query = sprintf("SELECT * FROM Usuario WHERE email='%s'", $conn->real_escape_string($emailusuario));
         $rs = $conn->query($query);
         $result = false;
         if ($rs) {
