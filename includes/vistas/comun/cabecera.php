@@ -17,9 +17,9 @@ function menu()
         $perfilUrl = $app->resuelve('/perfil.php');
         $html = "<a href='{$perfilUrl}'>Perfil </a> $htmlLogout";
     } else {
+        $subirPelicula = $app->resuelve('/uploadMovie.php');
         $loginUrl = $app->resuelve('/login.php');
         $registroUrl = $app->resuelve('/registro.php');
-        $subirPelicula = $app->resuelve('/uploadMovie.php');
 
         $html = <<<EOS
         <a href="{$loginUrl}">Login</a> 

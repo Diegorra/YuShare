@@ -1,8 +1,10 @@
+--Contraseña: 12345
 INSERT INTO Usuario (id, userName, passwd, email, image, enabled, role)
-VALUES (100, 'gomez', 'patat@s', 'gomez@gmail.com', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.contrareplica.mx%2Fnota-Inteligencia-artificial-da-la-posibilidad-de-ver-a-personas-que-no-existen201919220&psig=AOvVaw1IarMeF9Dwi7ZIDX-XV0vV&ust=1649069337287000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCJCdl5nc9_YCFQAAAAAdAAAAABAD', true, 'USER_ROLE');
+VALUES (100, 'diego', '$2y$10$seKspBx5eZ32ThdWk5/PFuEZ3TvuoTxcjnJBvNnVHcO.qN3RXdDFW', 'die@ucm.es', 'images/defaultProfile.jpg', true, 'USER_ROLE');
 
+--Contraseña: rafita
 INSERT INTO Usuario (id, userName, passwd, email, image, enabled, role)
-VALUES (101, 'garcia', 'algodon', 'garcia@gmail.com', 'https://www.google.com/search?q=fotos+personas&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiE9d2vyff2AhUG6RoKHXoUCn0Q_AUoAXoECAEQAw&biw=1280&bih=601&dpr=1.5#imgrc=rImC3JAHSU72HM', true, 'USER_ROLE');
+VALUES (101, 'rafa123', '$2y$10$bzXdIlWw4DxDwI3XD5U8beZ0pRGUuU99ig42VuJ.cHukDp./iad.q', 'rafa@ucm.es', 'images/defaultProfile.jpg', true, 'USER_ROLE');
 
 INSERT INTO Pelicula (id, iduser, titulo, text, genero, src, numerototalLikes, trailer)
 VALUES (1, 100, 'Clifford el gran perro rojo', 'El amor de una niña por su muñeco llamado Clifford hace que el perro crezca en tamaño.', 
