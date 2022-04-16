@@ -23,7 +23,7 @@ class Usuario
     
     public static function crea($nombreUsuario, $password, $email)
     {
-        $user = new Usuario(null, $nombreUsuario, self::hashPassword($password), $email);
+        $user = new Usuario(null, $nombreUsuario, self::hashPassword($password), $email, "images/defaultProfile.jpg", self::USER_ROLE);
         return $user->guarda();
     }
 
@@ -38,7 +38,7 @@ class Usuario
         $result = [];
         if ($rs) {
             while($fila = $rs->fetch_assoc()) {
-                $result[] = new Usuario($fila['id'], $fila['userName'], $fila['passwd'], $fila['email']);
+                $result[] = new Usuario($fila['id'], $fila['userName'], $fila['passwd'], $fila['email'], $fila['image'], $fila['role']);
             }
             $rs->free();
         } else {
@@ -56,7 +56,7 @@ class Usuario
         if ($rs) {
             $fila = $rs->fetch_assoc();
             if ($fila) {
-                $result = new Usuario($fila['id'], $fila['userName'], $fila['passwd'], $fila['email']);
+                $result = new Usuario($fila['id'], $fila['userName'], $fila['passwd'], $fila['email'], $fila['image'], $fila['role']);
             }
             $rs->free();
         } else {
@@ -74,7 +74,7 @@ class Usuario
         if ($rs) {
             $fila = $rs->fetch_assoc();
             if ($fila) {
-                $result = new Usuario($fila['id'], $fila['userName'], $fila['passwd'], $fila['email']);
+                $result = new Usuario($fila['id'], $fila['userName'], $fila['passwd'], $fila['email'], $fila['image'], $fila['role']);
             }
             $rs->free();
         } else {
@@ -92,7 +92,7 @@ class Usuario
         if ($rs) {
             $fila = $rs->fetch_assoc();
             if ($fila) {
-                $result = new Usuario($fila['id'], $fila['userName'], $fila['passwd'], $fila['email']);
+                $result = new Usuario($fila['id'], $fila['userName'], $fila['passwd'], $fila['email'], $fila['image'], $fila['role']);
             }
             $rs->free();
         } else {
@@ -129,7 +129,7 @@ class Usuario
     }
    
     
-    public static function actualiza($usuario, $nombre, $email, $password)
+    public static function actualiza($usuario, $nombre, $image, $email, $password)
     {
         $result = false;
         $conn = Aplicacion::getInstance()->getConexionBd();
@@ -137,7 +137,7 @@ class Usuario
             , $conn->real_escape_string($nombre)
             , $conn->real_escape_string($password)
             , $conn->real_escape_string($email)
-            , $conn->real_escape_string($usuario->image)
+            , $conn->real_escape_string($image)
             , $conn->real_escape_string($usuario->role)
             , $conn->real_escape_string($usuario->id)
         );
@@ -149,9 +149,9 @@ class Usuario
         return $result;
     }
 
-    public static function actualizaSetting ($usuario, $nombre, $email)
+    public static function actualizaSetting ($usuario, $nombre, $email, $image)
     {
-        Usuario::actualiza($usuario, $nombre, $email, $usuario->passwd);
+        Usuario::actualiza($usuario, $nombre, $image, $email, $usuario->passwd);
     }
    
     
@@ -191,14 +191,14 @@ class Usuario
 
     private $role;
 
-    private function __construct($id, $userName, $passwd, $email)
+    private function __construct($id, $userName, $passwd, $email, $image, $role)
     {
         $this->id = $id;
         $this->userName = $userName;
         $this->passwd = $passwd;
         $this->email = $email;
-        $this->image = "images/defaultProfile.jpg";
-        $this->role = 2;
+        $this->image = $image;
+        $this->role = $role;
     }
 
     public function getId()
