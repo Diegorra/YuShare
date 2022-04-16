@@ -3,34 +3,44 @@
 require_once __DIR__.'/includes/config.php';
 use es\ucm\fdi\aw\Pelicula;
 use es\ucm\fdi\aw\usuarios\Usuario;
-$usuario = Usuario::buscaUsuario($app->nombreUsuario());
-$peliculasUsuario = Pelicula::peliculasPerfil($app->idUsuario());
-$tituloPagina = 'Perfil';
-$contenidoPrincipal=<<<EOS
-  <h1>.</h1>
-  <h1>.</h1>
-    <div class='card'>
-        <img src='{$usuario->getImage()}' id="image_perfil">
 
-        <br><br><br><br><br><br><br><br><br><br>
-        <a href= "editarPerfil.php" class="botonEditarPerfil"> Editar perfil</a>
-        </div>
-        <div class='cardRightText'>
-          <h1>{$usuario->getNombreUsuario()}</h1>
-          <h1>{$usuario->getEmail()}</h1>
-          <p class="title">Director</p>
-        </div>
+
+$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+$usuario = Usuario::buscaPorId($id);
+$peliculasUsuario = Pelicula::peliculasPerfil($app->idUsuario());
+
+if($usuario->getId() == $app->idUsuario()){
+  $settings = "<a href= 'editarPerfil.php' class='botonEditarPerfil'> Editar perfil</a>";
+}else{
+  $settings = "";
+}
+
+$tituloPagina = 'Perfil';
+$contenidoPrincipal=<<<EOD
+  <h1>.</h1>
+  <h1>.</h1>
+  <div class='card'>
+    <img src='{$usuario->getImage()}' id="image_perfil">
+    <br><br><br><br><br><br><br><br><br><br>
+    {$settings}
+  </div>
+  
+  <div class='cardRightText'>
+    <h1>{$usuario->getNombreUsuario()}</h1>
+    <h1>{$usuario->getEmail()}</h1>
+    <p class="title">Director</p>
+  </div>
         
     
-    <div class="texto_perfil">
+  <div class="texto_perfil">
     <p> Tus películas: </p>
-      $peliculasUsuario
-    </div>
+    $peliculasUsuario
+  </div>
   
   
   
 
-  EOS;
+  EOD;
 
 
 $params = ['tituloPagina' => $tituloPagina, 'contenidoPrincipal' => $contenidoPrincipal];

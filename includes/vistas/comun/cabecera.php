@@ -11,11 +11,19 @@ function menu()
     $app = Aplicacion::getInstance();
     if ($app->usuarioLogueado()) {
         $nombreUsuario = $app->nombreUsuario();
+        
         // formulario peli va aqui en la version final
         $formLogout = new FormularioLogout();
         $htmlLogout = $formLogout->gestiona();
-        $perfilUrl = $app->resuelve('/perfil.php');
-        $html = "<a href='{$perfilUrl}'>Perfil </a> $htmlLogout";
+        
+        $perfilUrl = $app->buildUrl('/perfil.php', ['id'=> $app->idUsuario()]);
+        
+        $html = <<<EOS
+        <ul id="navlist">
+            <li><a href='{$perfilUrl}'>$nombreUsuario</a></li>
+            <li>$htmlLogout</li>
+        </ul>
+        EOS;
     } else {
         $subirPelicula = $app->resuelve('/uploadMovie.php');
         $loginUrl = $app->resuelve('/login.php');

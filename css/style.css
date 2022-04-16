@@ -278,3 +278,9 @@ a {
     color: white;
     font-family: Times New Roman; 
   }
+
+#navlist li {
+    display: inline;
+    list-style-type: none;
+    padding-right: 20px;
+}
