@@ -13,16 +13,15 @@ function menu()
         $nombreUsuario = $app->nombreUsuario();
         
         // formulario peli va aqui en la version final
-        $formLogout = new FormularioLogout();
-        $htmlLogout = $formLogout->gestiona();
+        //$formLogout = new FormularioLogout();
+        //$htmlLogout = $formLogout->gestiona();
         
         $perfilUrl = $app->buildUrl('/perfil.php', ['id'=> $app->idUsuario()]);
-        
+        $logout = $app->resuelve('/logout.php');
+
         $html = <<<EOS
-        <ul id="navlist">
-            <li><a href='{$perfilUrl}'>$nombreUsuario</a></li>
-            <li>$htmlLogout</li>
-        </ul>
+            <a href='{$perfilUrl}'>$nombreUsuario</a>
+            <a href='{$logout}'>LogOut</a>
         EOS;
     } else {
         $subirPelicula = $app->resuelve('/uploadMovie.php');
