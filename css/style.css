@@ -116,6 +116,10 @@ body{
   justify-content: space-between;
 }
 
+.botonBorrar {
+    color:  black;
+}
+
 #button_title {
     background-color: white;
     border: none;

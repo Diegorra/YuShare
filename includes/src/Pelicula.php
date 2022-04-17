@@ -185,9 +185,11 @@ class Pelicula
                 $result[]=new Pelicula($fila['id'], $fila['iduser'], $fila['titulo'], $fila['text'], $fila['genero'], $fila['src'], $fila['numerototalLikes'], $fila['trailer']);
                 $src=$fila['src'];
                 $titulo=$fila['titulo'];
+                $id = $fila['id'];
+                $peliculaUrl = ('./peliIndv.php?id=' . $id);
                 $cont = <<<EOS
                 <div class="indexPeliculas"></div> 
-                <img src="{$src}" id="image_inicio">
+                <a href="{$peliculaUrl}"><img src="{$src}" id="image_inicio">
                 EOS;
                 $contenido .=$cont;
             }
@@ -200,12 +202,10 @@ class Pelicula
     }
     
     //obtiene pelicula a través del id para mostrar toda la información
-
-    public static function todaInfoPeliculas($id)
-    {
+    public static function todaInfoPeliculas($id){ 
         $conn = Aplicacion::getInstance()->getConexionBd();
-        $query = sprintf("SELECT titulo, text, genero, src, numerototalLikes, trailer FROM Pelicula WHERE id = '%s'", $conn->real_escape_string($id));
-        
+        $query = sprintf("SELECT id, iduser, titulo, text, genero, src, numerototalLikes, trailer FROM Pelicula WHERE id = '%s'", $conn->real_escape_string($id));
+        $contenido = "";
         $result = $conn->query($query);
         if ($result->num_rows > 0){
             $reg = $result->fetch_assoc();
@@ -219,6 +219,15 @@ class Pelicula
                     <p><iframe width="560" height="315" src="{$reg['trailer']}" frameborder="0" allowfullscreen></iframe></p>
                 </div>
             EOF;
+            $metido = "";
+            if(Aplicacion::getInstance()->usuarioLogueado()) {
+                $metido = <<<EOS
+                    <div class ="botonBorrar">
+                    <button type="button" id="button_title" onclick="borrarPeli({$reg['iduser']}, {$reg['id']})">
+                    </div>
+                EOS;
+                $contenido .= $metido;
+             }
             $result->free();
         } else {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
@@ -226,26 +235,37 @@ class Pelicula
         return $contenido;
     }
 
-
-   public static function conseguirPeliculas(){
+    public static function borrarPeli($idU, $idPeli) {
         $conn = Aplicacion::getInstance()->getConexionBd();
+        $query = sprintf("SELECT idUser, id FROM Pelicula WHERE idUser = $idU AND id = $idPeli");
+        if($result = $conn->query($query)) {
+            $borrar = self::borraPorId($idPeli);
+        }
+    }
+
+    public static function conseguirPeliculas(){
+        $app = Aplicacion::getInstance();
+        $conn = $app->getConexionBd();
         $query = sprintf("SELECT id, src FROM Pelicula");
         $contenido = "";
         if ($result = $conn->query($query)) {
             while ($row = $result->fetch_assoc()) {
                 $id = $row["id"];
                 $cartel = $row["src"];
+                $peliculaUrl = ('./peliIndv.php?id=' . $id);
                 $htmlPeli =<<<EOS
                     <div class="indexPeliculas"></div> 
-                    <img src="{$cartel}" id="image_inicio">
+                    <a href="{$peliculaUrl}"><img src="{$cartel}" id="image_inicio">
                 EOS;
                 $contenido .= $htmlPeli;
             }
             $result->free();
-            
         } else {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
         }
         return $contenido;
     }
+
+
+    
 }

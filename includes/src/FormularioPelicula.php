@@ -25,17 +25,12 @@ class FormularioPelicula extends Formulario
 
         // Se generan los mensajes de error si existen.
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
-        $erroresCampos = self::generaErroresCampos(['idUsuario', 'titulo', 'sinopsis','genero', 'file', 'trailer'], $this->errores, 'span', array('class' => 'error'));
+        $erroresCampos = self::generaErroresCampos(['titulo', 'sinopsis','genero', 'file', 'trailer'], $this->errores, 'span', array('class' => 'error'));
 
         $html = <<<EOF
         $htmlErroresGlobales
         <fieldset>
             <legend>Datos para el registro</legend>
-            <div>
-                <label for="idUsuario">ID de usuario:</label>
-                <input id="idUsuario" type="text" name="idUsuario" value="$idUsuario" />
-                {$erroresCampos['idUsuario']}
-            </div>
             <div>
                 <label for="titulo">Titulo: </label>
                 <input id="titulo" type="text" name="titulo" />
@@ -79,13 +74,6 @@ class FormularioPelicula extends Formulario
     protected function procesaFormulario(&$datos)
     {
         $this->errores = [];
-
-        $idUsuario = trim($datos['idUsuario'] ?? '');
-        $idUsuario = filter_var($idUsuario, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if ( ! $idUsuario) {
-            $this->errores['idUsuario'] = 'Introduce ID de usuario';
-        }
-
         $titulo = trim($datos['titulo'] ?? '');
         $titulo = filter_var($titulo, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         if ( ! $titulo) {
@@ -131,9 +119,9 @@ class FormularioPelicula extends Formulario
             if ($pelicula) {
                 $this->errores[] = "La película ya existe";
             } else {
-                $pelicula = Pelicula::crea($idUsuario, $titulo, $sinopsis, $genero, $file, $trailer);
+                $pelicula = Pelicula::crea(Aplicacion::getInstance()->idUsuario(), $titulo, $sinopsis, $genero, $file, $trailer);
                 move_uploaded_file($file_tmp, $file);
             }
         }
-    }
+    }  
 }

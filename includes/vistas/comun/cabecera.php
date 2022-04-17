@@ -17,21 +17,23 @@ function menu()
         //$htmlLogout = $formLogout->gestiona();
         
         $perfilUrl = $app->buildUrl('/perfil.php', ['id'=> $app->idUsuario()]);
+        $subirPelicula = $app->resuelve('/uploadMovie.php');
         $logout = $app->resuelve('/logout.php');
+
 
         $html = <<<EOS
             <a href='{$perfilUrl}'>$nombreUsuario</a>
+            <a href="{$subirPelicula}"> Subir pelicula</a>
             <a href='{$logout}'>LogOut</a>
+
         EOS;
     } else {
-        $subirPelicula = $app->resuelve('/uploadMovie.php');
         $loginUrl = $app->resuelve('/login.php');
         $registroUrl = $app->resuelve('/registro.php');
 
         $html = <<<EOS
         <a href="{$loginUrl}">Login</a> 
         <a href="{$registroUrl}">Registro</a>
-        <a href="{$subirPelicula}"> Subir pelicula</a>
       EOS;
     }
 

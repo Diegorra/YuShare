@@ -26,7 +26,6 @@ class FormularioSearch extends Formulario
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
         $erroresCampos = self::generaErroresCampos(['search_text'], $this->errores, 'span', array('class' => 'error'));
 
-
         $camposFormulario = <<<EOS
         $htmlErroresGlobales
         <input id="search_text" type="text" name="search_text" placeholder="What are you looking for?" value="$search_text"/>
