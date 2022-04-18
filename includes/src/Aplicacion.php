@@ -257,6 +257,7 @@ class Aplicacion
         $_SESSION['idUsuario'] = $user->getId();
         $_SESSION['role'] = $user->getRole();
         $_SESSION['email'] = $user->getEmail();
+        $_SESSION['image'] = $user->getImage();
 
     }
 
@@ -269,6 +270,7 @@ class Aplicacion
         unset($_SESSION['idUsuario']);
         unset($_SESSION['role']);
         unset($_SESSION['email']);
+        unset($_SESSION['image']);
 
         session_destroy();
         session_start();

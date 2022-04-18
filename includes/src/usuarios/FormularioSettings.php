@@ -111,7 +111,7 @@ class FormularioSettings extends Formulario{
 
        // echo '<pre>' . print_r($nombreUsuario !== $nombreUsuarioForm, TRUE) . '</pre>';
         //echo '<pre>' . print_r($nombreUsuarioForm, TRUE) . '</pre>';
-        echo '<pre>' . print_r($_SESSION, TRUE) . '</pre>';
+        //echo '<pre>' . print_r($_SESSION, TRUE) . '</pre>';
 
         $emailUsuarioForm = trim($datos['email'] ?? '');
         $emailUsuarioForm = filter_var($emailUsuarioForm, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -156,7 +156,6 @@ class FormularioSettings extends Formulario{
         }
 
        
-
 
         if (count($this->errores) === 0) 
         {
@@ -203,6 +202,7 @@ class FormularioSettings extends Formulario{
             
             if ($newUsuario) {
                 $app = Aplicacion::getInstance();
+                $app->logout($usuario);
                 $app->login($newUsuario);
             }
         }
