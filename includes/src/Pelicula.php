@@ -257,6 +257,7 @@ class Pelicula
                     <p><iframe width="560" height="315" src="{$reg['trailer']}" frameborder="0" allowfullscreen></iframe></p>
                 </div>
             EOF;
+            /*
             $borra = "";
             if($app->idUsuario() == $reg['iduser']) {
                 $borrarPeliUrl = $app->buildUrl('/deleteMovie.php', ['id'=> $reg['id'], 'idUser' => $reg['iduser']]);
@@ -267,7 +268,7 @@ class Pelicula
                 EOS;
                 $contenido .= $borrar;
              }
-            $result->free();
+            $result->free();*/
         } else {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
         }

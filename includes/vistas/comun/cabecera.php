@@ -22,7 +22,7 @@ function menu()
 
 
         $html = <<<EOS
-            <a href='{$perfilUrl}'>$nombreUsuario</a>
+            <a href='{$perfilUrl}'>Mi Perfil</a>
             <a href="{$subirPelicula}"> Subir pelicula</a>
             <a href='{$logout}'>LogOut</a>
 
