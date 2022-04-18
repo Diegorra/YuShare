@@ -8,7 +8,11 @@ use es\ucm\fdi\aw\Formulario;
 class FormularioSettings extends Formulario{
     
     public function __construct() {
-        parent::__construct('formSettings', ['urlRedireccion' => Aplicacion::getInstance()->resuelve('/index.php')]);
+        //parent::__construct('formSettings', ['urlRedireccion' => Aplicacion::getInstance()->resuelve('/index.php')]);
+        parent::__construct('formSearch', [
+            'formId' => "settings",
+            'urlRedireccion' => Aplicacion::getInstance()->resuelve('/index.php')
+        ]);
     }
     
     protected function generaCamposFormulario(&$datos)

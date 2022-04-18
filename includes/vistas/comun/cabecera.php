@@ -43,7 +43,7 @@ function menu()
 ?>
 <header>
     <div class="cabecera">
-        <a href="index.php" title="YouShare"><img src="images/granlogo.png" id="logo-cabecera"></a>
+        <a href="index.php" title="YouShare"><img src="images/granlogo.png" id="logo-cabecera" alt="Logo"></a>
         <?php
         require_once 'includes/config.php';
         ?>
