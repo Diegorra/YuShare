@@ -3,7 +3,8 @@
 require_once __DIR__.'/includes/config.php';
 use es\ucm\fdi\aw\Pelicula;
 
-$infoPelicula = Pelicula::todaInfoPeliculas($_GET["id"]);
+$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+$infoPelicula = Pelicula::todaInfoPeliculas($id);
 
 $tituloPagina = 'Info';
 

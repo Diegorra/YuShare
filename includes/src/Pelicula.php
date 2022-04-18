@@ -175,7 +175,8 @@ class Pelicula
     //para mostrar en el perfil las películas asociadas a un usuario
     public static function peliculasPerfil($idUsuario)
     {
-        $conn = Aplicacion::getInstance()->getConexionBd();
+        $app = Aplicacion::getInstance();
+        $conn = $app->getConexionBd();
         $query = sprintf("SELECT * FROM Pelicula P WHERE P.iduser='%s'", $conn->real_escape_string($idUsuario));
         $contenido = "";
         $rs = $conn->query($query);
@@ -186,7 +187,7 @@ class Pelicula
                 $src=$fila['src'];
                 $titulo=$fila['titulo'];
                 $id = $fila['id'];
-                $peliculaUrl = ('./peliIndv.php?id=' . $id);
+                $peliculaUrl = $app->buildUrl('/peliIndv.php', ['id'=> $id]);
                 $cont = <<<EOS
                 <div class="indexPeliculas"></div> 
                 <a href="{$peliculaUrl}"><img src="{$src}" id="image_inicio">
@@ -237,7 +238,7 @@ class Pelicula
 
     public static function borrarPeli($idU, $idPeli) {
         $conn = Aplicacion::getInstance()->getConexionBd();
-        $query = sprintf("SELECT idUser, id FROM Pelicula WHERE idUser = $idU AND id = $idPeli");
+        $query = sprintf("SELECT idUser, id FROM Pelicula WHERE idUser = '%s' AND id = '%s'",$conn->real_escape_string($idU), $conn->real_escape_string($idPeli));
         if($result = $conn->query($query)) {
             $borrar = self::borraPorId($idPeli);
         }
@@ -252,7 +253,7 @@ class Pelicula
             while ($row = $result->fetch_assoc()) {
                 $id = $row["id"];
                 $cartel = $row["src"];
-                $peliculaUrl = ('./peliIndv.php?id=' . $id);
+                $peliculaUrl = $app->buildUrl('/peliIndv.php', ['id'=> $id]);
                 $htmlPeli =<<<EOS
                     <div class="indexPeliculas"></div> 
                     <a href="{$peliculaUrl}"><img src="{$cartel}" id="image_inicio">

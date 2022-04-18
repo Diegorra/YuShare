@@ -7,7 +7,7 @@ use es\ucm\fdi\aw\usuarios\Usuario;
 
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 $usuario = Usuario::buscaPorId($id);
-$peliculasUsuario = Pelicula::peliculasPerfil($app->idUsuario());
+$peliculasUsuario = Pelicula::peliculasPerfil($usuario->getId());
 
 if($usuario->getId() == $app->idUsuario()){
   $settings = "<a href= 'editarPerfil.php' class='botonEditarPerfil'> Editar perfil</a>";
