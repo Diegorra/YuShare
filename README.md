@@ -21,7 +21,7 @@ aplicación es ```http://localhost/ejemplos/estructura-proyecto/``` la constante
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Algunas cosas que mejorar #
--cuentas premium: mensajes en rojo destacados
--botones editar y borrar peli
--boton eliminar cuenta
+- cuentas premium: mensajes en rojo destacados.
+- botones editar y borrar peli.
+- boton eliminar cuenta.
 
