@@ -18,3 +18,10 @@ DocumentRoot) no tienes que hacer nada más. *Si colocas el proyecto en otras ca
 ```RUTA_APP``` para que apunte a la URL donde está colgada la aplicación. Por ejemplo si la URL con la que accedes a la
 aplicación es ```http://localhost/ejemplos/estructura-proyecto/``` la constante debe tomar el valor
 ```define('RUTA_APP', '/ejemplos/estructura-proyecto/');```
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Algunas cosas que mejorar #
+-cuentas premium: mensajes en rojo destacados
+-botones editar y borrar peli
+-boton eliminar cuenta
+
