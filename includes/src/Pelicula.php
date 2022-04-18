@@ -34,9 +34,45 @@ class Pelicula
 
     //Getters y Setters
     //-------------------------------------------------------------------------------------------------------
+    
+    public function getId()
+    {
+        return $this->id;
+    }
+    
+    public function getIdUser()
+    {
+        return $this->idUsuario;
+    }
+    
     public function getTitulo()
     {
         return $this->titulo;
+    }
+
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    public function getGenero()
+    {
+        return $this->genero;
+    }
+
+    public function getSrc()
+    {
+        return $this->src;
+    }
+
+    public function getNumLikes()
+    {
+        return $this->numLikes;
+    }
+
+    public function getTraile()
+    {
+        return $this->trailer;
     }
 
     
@@ -204,7 +240,8 @@ class Pelicula
     
     //obtiene pelicula a través del id para mostrar toda la información
     public static function todaInfoPeliculas($id){ 
-        $conn = Aplicacion::getInstance()->getConexionBd();
+        $app = Aplicacion::getInstance();
+        $conn = $app->getConexionBd();
         $query = sprintf("SELECT id, iduser, titulo, text, genero, src, numerototalLikes, trailer FROM Pelicula WHERE id = '%s'", $conn->real_escape_string($id));
         $contenido = "";
         $result = $conn->query($query);
@@ -220,14 +257,15 @@ class Pelicula
                     <p><iframe width="560" height="315" src="{$reg['trailer']}" frameborder="0" allowfullscreen></iframe></p>
                 </div>
             EOF;
-            $metido = "";
-            if(Aplicacion::getInstance()->usuarioLogueado()) {
-                $metido = <<<EOS
+            $borra = "";
+            if($app->idUsuario() == $reg['iduser']) {
+                $borrarPeliUrl = $app->buildUrl('/deleteMovie.php', ['id'=> $reg['id'], 'idUser' => $reg['iduser']]);
+                $borrar = <<<EOS
                     <div class ="botonBorrar">
-                    <button type="button" id="button_title" onclick="borrarPeli({$reg['iduser']}, {$reg['id']})">
+                        <a href="{$borrarPeliUrl}">Delete</a>
                     </div>
                 EOS;
-                $contenido .= $metido;
+                $contenido .= $borrar;
              }
             $result->free();
         } else {

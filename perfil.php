@@ -18,7 +18,7 @@ if($usuario->getId() == $app->idUsuario()){
 $tituloPagina = 'Perfil';
 $contenidoPrincipal=<<<EOD
   <h1>.</h1>
-  <h1>.</h1>
+  <h1 style="color: black">.</h1>
   <div class='card'>
     <img src='{$usuario->getImage()}' id="image_perfil">
     <br><br><br><br><br><br><br><br><br><br>
@@ -45,14 +45,4 @@ $contenidoPrincipal=<<<EOD
 
 $params = ['tituloPagina' => $tituloPagina, 'contenidoPrincipal' => $contenidoPrincipal];
 $app->generaVista('/plantillas/plantilla.php', $params);
-
-/*<div class="card">
-
-
-    <div class="editarPerfil">
-        <a href="editarPerfil.php">Editar perfil</a>
-    </div>
-
-
-*/
 ?>
