@@ -5,6 +5,12 @@ require_once __DIR__.'/includes/config.php';
 $usuarios = $app->getAtributoPeticion('usuarios');
 $peliculas = $app->getAtributoPeticion('peliculas');
 
-$params = ['tituloPagina' => 'Search', 'usuarios' => $usuarios, 'peliculas' => $peliculas];
-$app->generaVista('/plantillas/search.php', $params);
-        
+$tituloPagina = 'Search';
+
+$contenidoPrincipal=<<<EOF
+    $usuarios
+    $peliculas
+EOF;
+
+$params = ['tituloPagina' => $tituloPagina, 'contenidoPrincipal' =>  $contenidoPrincipal];
+$app->generaVista('/plantillas/plantilla.php', $params);

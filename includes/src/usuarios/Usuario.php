@@ -32,19 +32,34 @@ class Usuario
      */
     public static function buscaUsuarios($nombreUsuario)
     {
-        $conn = Aplicacion::getInstance()->getConexionBd();
+        $app = Aplicacion::getInstance();
+        $conn = $app->getConexionBd();
         $query = sprintf("SELECT * FROM Usuario U WHERE U.userName LIKE '%%%s%%'", $conn->real_escape_string($nombreUsuario));
         $rs = $conn->query($query);
         $result = [];
+        $contenido = "";
         if ($rs) {
             while($fila = $rs->fetch_assoc()) {
-                $result[] = new Usuario($fila['id'], $fila['userName'], $fila['passwd'], $fila['email'], $fila['image'], $fila['role']);
+                //$result[] = new Usuario($fila['id'], $fila['userName'], $fila['passwd'], $fila['email'], $fila['image'], $fila['role']);
+                $nombre = $fila['userName'];
+                $src=$fila['image'];
+                $perfilUrl = $app->buildUrl('/perfil.php', ['id'=> $fila['id']]);
+                $usuario = <<<EOS
+                    <div class="search">
+                        <a href="{$perfilUrl}">
+                            <img src="{$src}" id="imgU_search">
+                            <h1>{$nombre}</h1>
+                        </a>
+                    </div> 
+                    <p></p>
+                EOS;
+                $contenido .=$usuario;
             }
             $rs->free();
         } else {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
         }
-        return $result;
+        return $contenido;
     }
 
     public static function buscaUsuario($nombreUsuario)
