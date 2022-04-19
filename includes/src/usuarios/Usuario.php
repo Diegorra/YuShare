@@ -47,7 +47,7 @@ class Usuario
                 $usuario = <<<EOS
                     <div class="search">
                         <a href="{$perfilUrl}">
-                            <img src="{$src}" id="imgU_search">
+                            <img src="{$src}" id="imgU_search" alt="profilePic">
                             <h1>{$nombre}</h1>
                         </a>
                     </div> 

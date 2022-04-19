@@ -189,7 +189,7 @@ class Pelicula
                 $peli = <<<EOS
                     <div class="search">
                         <a href="{$peliculaUrl}">
-                            <img src="{$src}" id="image_inicio">
+                            <img src="{$src}" id="image_inicio" alt="img_search">
                             <h1>{$titulo}</h1>
                         </a>
                     </div> 
@@ -240,8 +240,11 @@ class Pelicula
                 $id = $fila['id'];
                 $peliculaUrl = $app->buildUrl('/peliIndv.php', ['id'=> $id]);
                 $cont = <<<EOS
-                <div class="indexPeliculas"></div> 
-                <a href="{$peliculaUrl}"><img src="{$src}" id="image_inicio">
+                <div class="indexPeliculas">
+                    <a href="{$peliculaUrl}">
+                        <img src="{$src}" id="image_inicio" alt="img_perfil">
+                    </a>
+                </div> 
                 EOS;
                 $contenido .=$cont;
             }
@@ -268,7 +271,7 @@ class Pelicula
                     <h2><small>Género: {$reg['genero']}</small></h2>
                     <h2><small>Sinopsis: {$reg['text']}</small></h2>
                     <h2><small>Likes: {$reg['numerototalLikes']}</small></h2>
-                    <p><img src="{$reg['src']}"id="image_info"></p>
+                    <p><img src="{$reg['src']}"id="image_info" alt="img_indv"></p>
                     <p><iframe width="560" height="315" src="{$reg['trailer']}" frameborder="0" allowfullscreen></iframe></p>
                 </div>
             EOF;
@@ -309,8 +312,11 @@ class Pelicula
                 $cartel = $row["src"];
                 $peliculaUrl = $app->buildUrl('/peliIndv.php', ['id'=> $id]);
                 $htmlPeli =<<<EOS
-                    <div class="indexPeliculas"></div> 
-                    <a href="{$peliculaUrl}"><img src="{$cartel}" id="image_inicio">
+                    <div class="indexPeliculas">
+                        <a href="{$peliculaUrl}">
+                            <img src="{$cartel}" id="image_inicio" alt="img_index">
+                        </a>
+                    </div> 
                 EOS;
                 $contenido .= $htmlPeli;
             }
