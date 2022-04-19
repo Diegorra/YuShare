@@ -1,8 +1,8 @@
+<!DOCTYPE html>
 <?php
 $params['app']->doInclude('/vistas/helpers/plantilla.php');
 $mensajes = mensajesPeticionAnterior();
 ?>
-<!DOCTYPE html>
 <html lang="es" dir="ltr">
 <head>
 	<meta charset="UTF-8">
