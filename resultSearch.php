@@ -8,6 +8,9 @@ $peliculas = $app->getAtributoPeticion('peliculas');
 $tituloPagina = 'Search';
 
 $contenidoPrincipal=<<<EOF
+    <div class="texto_inicio">
+        <h1>PELICULAS Y USUARIOS ENCONTRADOS</h1>
+    </div> 
     $usuarios
     $peliculas
 EOF;
