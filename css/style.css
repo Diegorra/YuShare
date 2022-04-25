@@ -294,11 +294,12 @@ a:hover {
     border-radius: 1em;
     display: flex;
     justify-content: center;
+    text-align: center;
 }
 
 .search h1 {
     color: white;
-    display: inline-block;
+    text-align: center;
 }
 
 .search #imgU_search {
