@@ -8,7 +8,7 @@ $(document).ready(function () {
             'userID': $("#deleteFilm").attr("userID")
         };
         $.post(ajaxurl, data, function (response) {
-            alert("Deleting the film");
+            window.location = 'http://localhost/yushare/index.php';
         });
     });
 

@@ -154,9 +154,7 @@ class Pelicula
             return false;
         } 
         $conn = Aplicacion::getInstance()->getConexionBd();
-        $query = sprintf("DELETE FROM Pelicula P WHERE P.id = %d"
-            , $idPelicula
-        );
+        $query = sprintf("DELETE FROM `Pelicula` WHERE `Pelicula`.`id` = $idPelicula;");
         if ( ! $conn->query($query) ) {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
             return false;
@@ -278,7 +276,7 @@ class Pelicula
         return $contenido;
     }
 
-    public static function borrarPeli($idU, $idPeli) {
+    public static function borrarPeli($idPeli, $idU) {
         $conn = Aplicacion::getInstance()->getConexionBd();
         $query = sprintf("SELECT idUser, id FROM Pelicula WHERE idUser = '%s' AND id = '%s'",$conn->real_escape_string($idU), $conn->real_escape_string($idPeli));
         if($result = $conn->query($query)) {

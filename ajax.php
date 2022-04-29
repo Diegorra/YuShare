@@ -7,6 +7,7 @@ if (isset($_POST['action'])) {
         switch ($_POST['action']) {
             case 'deleteFilm':
                 Pelicula::borrarPeli($_POST['id'], $_POST['userID']);
+                $app->redirige('/yushare/index.php');
                 break;
             case 'logout':
                 $app->logout();
@@ -14,5 +15,4 @@ if (isset($_POST['action'])) {
             default:
                 break;
             }
-        $app->redirige('/yushare/index.php');
 }
