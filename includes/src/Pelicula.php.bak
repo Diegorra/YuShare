@@ -244,49 +244,31 @@ class Pelicula
     public static function todaInfoPeliculas($id){ 
         $app = Aplicacion::getInstance();
         $conn = $app->getConexionBd();
-        $query = sprintf("SELECT id, iduser, titulo, text, genero, src, trailer FROM Pelicula WHERE id = '%s'", $conn->real_escape_string($id));
+        $query = sprintf("SELECT id, iduser, titulo, text, genero, src, numerototalLikes, trailer FROM Pelicula WHERE id = '%s'", $conn->real_escape_string($id));
         $contenido = "";
         $result = $conn->query($query);
         if ($result->num_rows > 0){
             $reg = $result->fetch_assoc();
             $contenido = <<<EOF
-                <table border="1" width="100%">
-                    <tr>
-                        <th width="30%">Genero</th>
-                        <th width="32%">Sinopsis</th>
-                        <th width="47%"></th>
-                        <th width="40%"></th>
-                    </tr>
-                    <div class ="pelicula">
-                        <h1>{$reg['titulo']}</h1>
-                    </div>
-                    <td><h2><small>{$reg['genero']}</small></h2></td>
-                    <td><h2><small>{$reg['text']}</small></h2></td>
-                    <td><p><img src="{$reg['src']}"id="image_info" alt="img_indv"></p></td>
-                    <td><p><iframe width="560" height="315" src="{$reg['trailer']}" frameborder="0" allowfullscreen></iframe></p></td>
-                </table>
+                <div class ="pelicula">
+                    <h1>{$reg['titulo']}</h1>
+                    <h2><small>Género: {$reg['genero']}</small></h2>
+                    <h2><small>Sinopsis: {$reg['text']}</small></h2>
+                    <h2><small>Likes: {$reg['numerototalLikes']}</small></h2>
+                    <p><img src="{$reg['src']}"id="image_info" alt="img_indv"></p>
+                    <p><iframe width="560" height="315" src="{$reg['trailer']}" frameborder="0" allowfullscreen></iframe></p>
+                </div>
             EOF;
-            $editar = "";
-            if($app->idUsuario() == $reg['iduser']) {
-                //$borrarPeliUrl = $app->buildUrl('/deleteMovie.php', ['id'=> $reg['id'], 'idUser' => $reg['iduser']]);
-                $editar = <<<EOS
-                    <div class ="botonEditaryBorrar">
-                        <button id="editFilm" type="button" filmId="{$reg['id']}" userID="{$reg['iduser']}">Editar</button>
-                    </div>
-                EOS;
-                $contenido .= $editar;
-            }
             $borra = "";
-
             if($app->idUsuario() == $reg['iduser']) {
                 //$borrarPeliUrl = $app->buildUrl('/deleteMovie.php', ['id'=> $reg['id'], 'idUser' => $reg['iduser']]);
                 $borrar = <<<EOS
-                    <div class ="botonEditaryBorrar">
-                        <button id="deleteFilm" type="button" filmId="{$reg['id']}" userID="{$reg['iduser']}">Borrar</button>
+                    <div class ="botonBorrar">
+                        <button id="deleteFilm" type="button" filmId="{$reg['id']}" userID="{$reg['iduser']}">Delete</button>
                     </div>
                 EOS;
                 $contenido .= $borrar;
-            }
+             }
             $result->free();
         } else {
             error_log("Error BD ({$conn->errno}): {$conn->error}");

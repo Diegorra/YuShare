@@ -116,10 +116,6 @@ body{
   justify-content: space-between;
 }
 
-.botonBorrar {
-    color:  black;
-}
-
 #button_title {
     background-color: white;
     border: none;
@@ -232,6 +228,18 @@ div.texto_perfil {
     font-size: 18px;
 }
 
+.botonEditaryBorrar {
+    background-color: white;
+    border: 3px;
+    color: black;
+    width:150px;
+    height:50px;
+    font-size: 16px;
+    font-family: monospace;
+    position:relative;
+    top:45%; 
+    left:45%;
+}
 
 .cardRightText {
     text-indent: 30px;
