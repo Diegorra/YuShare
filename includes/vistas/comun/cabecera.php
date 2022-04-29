@@ -24,7 +24,7 @@ function menu()
         $html = <<<EOS
             <a href='{$perfilUrl}'>Mi Perfil</a>
             <a href="{$subirPelicula}"> Subir pelicula</a>
-            <a href='{$logout}'>LogOut</a>
+            <a id="logout" href="">LogOut</a>
 
         EOS;
     } else {

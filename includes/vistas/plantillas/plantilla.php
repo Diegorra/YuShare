@@ -8,6 +8,8 @@ $mensajes = mensajesPeticionAnterior();
 	<meta charset="UTF-8">
     <title><?= $params['tituloPagina'] ?></title>
 	<link rel="stylesheet" type="text/css" href="<?= $params['app']->resuelve('/css/style.css') ?>" />
+	<script type="text/javascript" src="<?= $params['app']->resuelve('/js/jquery-3.6.0.min.js') ?>"></script>
+	<script type="text/javascript"  src="<?= $params['app']->resuelve('/js/actions.js') ?>"></script>
 	<link rel="icon" type="image/png" href="images/minilogo.png">
 </head>
 <body>
