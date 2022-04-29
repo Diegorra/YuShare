@@ -16,9 +16,3 @@ if (isset($_POST['action'])) {
             }
         $app->redirige('/yushare/index.php');
 }
-
-
-/*
-$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-$idUser = filter_input(INPUT_GET, 'idUser', FILTER_VALIDATE_INT);
-*/
