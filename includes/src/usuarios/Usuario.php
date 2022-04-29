@@ -129,6 +129,13 @@ class Usuario
         return $result;
     }
    
+
+    public static function amigo($usuario) {
+
+
+        
+    }
+
     
     public static function actualiza($usuario, $nombre, $image, $email, $password)
     {

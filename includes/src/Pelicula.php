@@ -162,6 +162,19 @@ class Pelicula
         return true;
     }
 
+    private static function editarPorId($idPelicula) {
+        if (!$idPelicula) {
+            return false;
+        } 
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $query = sprintf("UPDATE FROM `Pelicula` WHERE `Pelicula`.`id` = $idPelicula;");
+        if ( ! $conn->query($query) ) {
+            error_log("Error BD ({$conn->errno}): {$conn->error}");
+            return false;
+        }
+        return true;
+    }
+
     
     //-------------------------------------------------------------------------------------------------------
 
@@ -299,6 +312,14 @@ class Pelicula
         $query = sprintf("SELECT idUser, id FROM Pelicula WHERE idUser = '%s' AND id = '%s'",$conn->real_escape_string($idU), $conn->real_escape_string($idPeli));
         if($result = $conn->query($query)) {
             $borrar = self::borraPorId($idPeli);
+        }
+    }
+
+    public static function editarPeli($idPeli, $idU) {
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $query = sprintf("SELECT idUser, id FROM Pelicula WHERE idUser = '%s' AND id = '%s'",$conn->real_escape_string($idU), $conn->real_escape_string($idPeli));
+        if($result = $conn->query($query)) {
+            $editar = self::editarPorId($idPeli);
         }
     }
 

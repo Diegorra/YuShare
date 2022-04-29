@@ -23,6 +23,15 @@ $(document).ready(function () {
         });
     });
 
-
-
+    $("#editFilm").click(function () {
+        var ajaxurl = 'ajax.php';
+        var data = {
+            'action': "editFilm",
+            'id': $("#editFilm").attr("filmId"),
+            'userID': $("#editFilm").attr("userID")
+        };
+        $.post(ajaxurl, data, function (response) {
+            window.location = 'http://localhost/yushare/index.php';
+        });
+    });
 });

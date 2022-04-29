@@ -12,6 +12,10 @@ if (isset($_POST['action'])) {
             case 'logout':
                 $app->logout();
                 break;
+            case 'editFilm':
+                Pelicula::editarPeli($_POST['id'], $_POST['userID']);
+                $app->redirige('/yushare/perfil.php');
+                break;
             default:
                 break;
             }
