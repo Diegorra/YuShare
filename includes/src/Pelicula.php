@@ -179,29 +179,15 @@ class Pelicula
         $query = sprintf("SELECT * FROM Pelicula P WHERE P.titulo LIKE '%%%s%%'", $conn->real_escape_string($nombrePelicula));
         $rs = $conn->query($query);
         $result = [];
-        $contenido = "";
         if ($rs) {
             while($fila = $rs->fetch_assoc()) {
-                //$result[] = new Pelicula($fila['id'], $fila['iduser'], $fila['titulo'], $fila['text'], $fila['genero'], $fila['src'], $fila['numerototalLikes'], $fila['trailer']);
-                $titulo=$fila['titulo'];
-                $src=$fila['src'];
-                $peliculaUrl = $app->buildUrl('/peliIndv.php', ['id'=> $fila['id']]);
-                $peli = <<<EOS
-                    <div class="search">
-                        <a href="{$peliculaUrl}">
-                            <img src="{$src}" id="image_inicio" alt="img_search">
-                            <h1>{$titulo}</h1>
-                        </a>
-                    </div> 
-                    <p></p>
-                EOS;
-                $contenido .=$peli;
+                $result[] = new Pelicula($fila['id'], $fila['iduser'], $fila['titulo'], $fila['text'], $fila['genero'], $fila['src'], $fila['numerototalLikes'], $fila['trailer']);       
             }
             $rs->free();
         } else {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
         }
-        return $contenido;
+        return $result;
     }
 
     

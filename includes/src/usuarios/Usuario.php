@@ -37,29 +37,15 @@ class Usuario
         $query = sprintf("SELECT * FROM Usuario U WHERE U.userName LIKE '%%%s%%'", $conn->real_escape_string($nombreUsuario));
         $rs = $conn->query($query);
         $result = [];
-        $contenido = "";
         if ($rs) {
             while($fila = $rs->fetch_assoc()) {
-                //$result[] = new Usuario($fila['id'], $fila['userName'], $fila['passwd'], $fila['email'], $fila['image'], $fila['role']);
-                $nombre = $fila['userName'];
-                $src=$fila['image'];
-                $perfilUrl = $app->buildUrl('/perfil.php', ['id'=> $fila['id']]);
-                $usuario = <<<EOS
-                    <div class="search">
-                        <a href="{$perfilUrl}">
-                            <img src="{$src}" id="imgU_search" alt="profilePic">
-                            <h1>{$nombre}</h1>
-                        </a>
-                    </div> 
-                    <p></p>
-                EOS;
-                $contenido .=$usuario;
+                $result[] = new Usuario($fila['id'], $fila['userName'], $fila['passwd'], $fila['email'], $fila['image'], $fila['role']);
             }
             $rs->free();
         } else {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
         }
-        return $contenido;
+        return $result;
     }
 
     public static function buscaUsuario($nombreUsuario)
