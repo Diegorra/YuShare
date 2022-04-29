@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `UsuarioBaneado`(
     id INT NOT NULL,
     fecha datetime,
     PRIMARY KEY (id),
-    FOREIGN KEY (id) REFERENCES usuario(id) ON DELETE CASCADE 
+    FOREIGN KEY (id) REFERENCES Usuario(id) ON DELETE CASCADE 
 
 );
 
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `Pelicula` (
     numerototalLikes Int,
     trailer VARCHAR(256) NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (iduser) REFERENCES usuario(id) ON DELETE CASCADE
+    FOREIGN KEY (iduser) REFERENCES Usuario(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `Comentario` (
@@ -47,16 +47,16 @@ CREATE TABLE IF NOT EXISTS `Comentario` (
     iduser INT NOT NULL,
     text VARCHAR(256) NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (idpubli) REFERENCES pelicula(id) ON DELETE CASCADE,
-    FOREIGN KEY (iduser) REFERENCES usuario(id) ON DELETE CASCADE
+    FOREIGN KEY (idpubli) REFERENCES Pelicula(id) ON DELETE CASCADE,
+    FOREIGN KEY (iduser) REFERENCES Usuario(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `Amigo` (
     iduser1 INT NOT NULL,
     iduser2 INT NOT NULL,
     PRIMARY KEY (iduser1, iduser2),
-    FOREIGN KEY (iduser1) REFERENCES usuario(id) ON DELETE CASCADE,
-    FOREIGN KEY (iduser2) REFERENCES usuario(id) ON DELETE CASCADE
+    FOREIGN KEY (iduser1) REFERENCES Usuario(id) ON DELETE CASCADE,
+    FOREIGN KEY (iduser2) REFERENCES Usuario(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `Mensaje` (
@@ -65,6 +65,6 @@ CREATE TABLE IF NOT EXISTS `Mensaje` (
     iduser2 INT NOT NULL,
     Text VARCHAR(256),
     PRIMARY KEY (id),
-    FOREIGN KEY (iduser1) REFERENCES usuario(id) ON DELETE CASCADE,
-    FOREIGN KEY (iduser2) REFERENCES usuario(id) ON DELETE CASCADE
+    FOREIGN KEY (iduser1) REFERENCES Usuario(id) ON DELETE CASCADE,
+    FOREIGN KEY (iduser2) REFERENCES Usuario(id) ON DELETE CASCADE
 );
