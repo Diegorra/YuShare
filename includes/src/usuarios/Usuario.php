@@ -194,6 +194,21 @@ class Usuario
         return true;
     }
 
+    public static function updateEnabled($idUsuario){
+        $usuario = Usuario::buscaPorId($idUsuario);
+        $enabled = 1;
+        if($usuario->getEnabled()){
+            $enabled = 0;
+        }        
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $query = sprintf("UPDATE Usuario SET enabled='%s' WHERE id=%d", $conn->real_escape_string($enabled), $conn->real_escape_string($usuario->id));
+        if ( ! $conn->query($query) ) {
+            error_log("Error BD ({$conn->errno}): {$conn->error}");
+            return false;
+        }
+        return true;
+    }
+
     private $id;
 
     private $userName;

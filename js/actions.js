@@ -24,6 +24,20 @@ $(document).ready(function () {
         });
     });
 
+    $(".ban").each(function () {
+        $(this).on("click", function () {
+            var ajaxurl = 'ajax.php';
+            var data = {
+                'action': "ban",
+                'id': $(this).attr("idU")
+            };
+            $.post(ajaxurl, data, function (response) {
+                console.log(response);
+                //window.location = 'http://localhost/yushare/admin.php';
+            });
+        });
+    });
+
     $("#logout").click(function () {
         var ajaxurl = 'ajax.php';
         var data = {
