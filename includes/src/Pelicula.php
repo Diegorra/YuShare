@@ -290,7 +290,6 @@ class Pelicula
                 $contenido .= $editar;
             }
             $borra = "";
-
             if($app->idUsuario() === $reg['iduser']) {
                 $borrar = <<<EOS
                     <div class ="botonEditaryBorrar">
@@ -314,12 +313,24 @@ class Pelicula
         }
     }
 
-    public static function editarPeli($idPeli, $idU) {
+    public static function editarPeli($id, $titulo, $sinopsis, $genero, $src, $trailer) {
         $conn = Aplicacion::getInstance()->getConexionBd();
-        $query = sprintf("SELECT idUser, id FROM Pelicula WHERE idUser = '%s' AND id = '%s'",$conn->real_escape_string($idU), $conn->real_escape_string($idPeli));
-        if($result = $conn->query($query)) {
-            $editar = self::editarPorId($idPeli);
+        $result = false;
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $query=sprintf("UPDATE Pelicula P SET titulo= '%s', text='%s',genero='%s', trailer='%s' WHERE P.id=%d"
+            , $conn->real_escape_string($titulo)
+            , $conn->real_escape_string($sinopsis)
+            , $conn->real_escape_string($genero)
+            , $conn->real_escape_string($trailer)
+            , $id
+        );
+
+        if (!$conn->query($query) ) {
+            error_log("Error BD ({$conn->errno}): {$conn->error}");
+        } else {
+            $result = $pelicula;
         }
+        return $result;
     }
 
     public static function conseguirPeliculas(){

@@ -4,7 +4,6 @@ require_once __DIR__.'/includes/config.php';
 use es\ucm\fdi\aw\Pelicula;
 use es\ucm\fdi\aw\usuarios\Usuario;
 
-
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 $usuario = Usuario::buscaPorId($id);
 $peliculasUsuario = Pelicula::peliculasPerfil($usuario->getId());
