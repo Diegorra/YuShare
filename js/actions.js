@@ -32,8 +32,8 @@ $(document).ready(function () {
                 'id': $(this).attr("idU")
             };
             $.post(ajaxurl, data, function (response) {
-                console.log(response);
-                //window.location = 'http://localhost/yushare/admin.php';
+                //console.log(response);
+                window.location = 'http://localhost/yushare/admin.php';
             });
         });
     });

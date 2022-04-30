@@ -316,7 +316,7 @@ class Aplicacion
 
     public function enabled(){
         $this->compruebaInstanciaInicializada();
-        return  $_SESSION['enabled'] ?? '';
+        return  $_SESSION['enabled'] == 1 ?? false;
     }
 
     public function paginaError($codigoRespuesta, $tituloPagina, $mensajeError, $explicacion = '')
