@@ -27,47 +27,51 @@ class FormularioPelicula extends Formulario
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
         $erroresCampos = self::generaErroresCampos(['titulo', 'sinopsis','genero', 'file', 'trailer'], $this->errores, 'span', array('class' => 'error'));
 
-        $html = <<<EOF
-        $htmlErroresGlobales
-        <fieldset>
-            <legend>Datos para el registro</legend>
-            <div>
-                <label for="titulo">Titulo: </label>
-                <input id="titulo" type="text" name="titulo" />
-                {$erroresCampos['titulo']}
+        if(!Aplicacion::getInstance()->enabled()){
+            $html = "<h1>Estas baneado, no puedes subir contenido :(</h1>";
+        }else{
+            $html = <<<EOF
+                $htmlErroresGlobales
+                <fieldset>
+                    <legend>Datos para el registro</legend>
+                    <div>
+                        <label for="titulo">Titulo: </label>
+                        <input id="titulo" type="text" name="titulo" />
+                        {$erroresCampos['titulo']}
 
-            </div>
-            <div>
-                <label for="sinopsis">Sinopsis: </label>
-                <input id="sinopsis" type="text" name="sinopsis" />
-                {$erroresCampos['sinopsis']}
+                    </div>
+                    <div>
+                        <label for="sinopsis">Sinopsis: </label>
+                        <input id="sinopsis" type="text" name="sinopsis" />
+                        {$erroresCampos['sinopsis']}
 
-            </div>
-            <div>
-                <label for="genero">Género: </label>
-                <input id="genero" type="text" name="genero" />
-                {$erroresCampos['genero']}
+                    </div>
+                    <div>
+                        <label for="genero">Género: </label>
+                        <input id="genero" type="text" name="genero" />
+                        {$erroresCampos['genero']}
 
-            </div>
-            <div>
-                <input type="file" id="file" name="file" />
-                {$erroresCampos['file']}
-            </div>
-            <div>
-                <label for="trailer">Trailer: </label>
-                <input id="trailer" type="text" name="trailer" />
-                {$erroresCampos['trailer']}
+                    </div>
+                    <div>
+                        <input type="file" id="file" name="file" />
+                        {$erroresCampos['file']}
+                    </div>
+                    <div>
+                        <label for="trailer">Trailer: </label>
+                        <input id="trailer" type="text" name="trailer" />
+                        {$erroresCampos['trailer']}
 
-            </div>
-            <div>
-                <button type="submit" name="registro">Subir película</button>
-            </div>
-        </fieldset>
-        <script>
+                    </div>
+                    <div>
+                        <button type="submit" name="registro">Subir película</button>
+                    </div>
+                </fieldset>
+                <script>
 
-        </script>
-
-        EOF;
+                </script>
+            EOF;
+        }
+        
         return $html;
     }
     

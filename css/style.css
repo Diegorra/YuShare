@@ -316,3 +316,13 @@ a:hover {
     border-radius: 75px;
     display: inline-block;
 }
+
+td {
+    vertical-align: middle;
+    text-align: center;
+}
+
+td div {
+    vertical-align: middle;
+    display: inline-block;
+}

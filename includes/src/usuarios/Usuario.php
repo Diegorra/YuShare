@@ -8,10 +8,6 @@ class Usuario
 {
     use MagicProperties;
 
-    public const ADMIN_ROLE = 1;
-
-    public const USER_ROLE = 2;
-
     public static function login($nombreUsuario, $password)
     {
         $usuario = self::buscaUsuario($nombreUsuario);
@@ -28,6 +24,26 @@ class Usuario
     }
 
     /**
+     * Devuelve todos los usuarios del sistema, necesario para su administración
+     */
+    public static function Usuarios(){
+        $app = Aplicacion::getInstance();
+        $conn = $app->getConexionBd();
+        $query = sprintf("SELECT * FROM Usuario U");
+        $rs = $conn->query($query);
+        $result = [];
+        if ($rs) {
+            while($fila = $rs->fetch_assoc()) {
+                $result[] = new Usuario($fila['id'], $fila['userName'], $fila['passwd'], $fila['email'], $fila['image'], $fila['role'], $fila['enabled']);
+            }
+            $rs->free();
+        } else {
+            error_log("Error BD ({$conn->errno}): {$conn->error}");
+        }
+        return $result;
+    }
+
+    /**
      * Devuelve todos los usuarios cuyo nombre de usuario contiene $nombreUsuario
      */
     public static function buscaUsuarios($nombreUsuario)
@@ -39,7 +55,7 @@ class Usuario
         $result = [];
         if ($rs) {
             while($fila = $rs->fetch_assoc()) {
-                $result[] = new Usuario($fila['id'], $fila['userName'], $fila['passwd'], $fila['email'], $fila['image'], $fila['role']);
+                $result[] = new Usuario($fila['id'], $fila['userName'], $fila['passwd'], $fila['email'], $fila['image'], $fila['role'], $fila['enabled']);
             }
             $rs->free();
         } else {
@@ -57,7 +73,7 @@ class Usuario
         if ($rs) {
             $fila = $rs->fetch_assoc();
             if ($fila) {
-                $result = new Usuario($fila['id'], $fila['userName'], $fila['passwd'], $fila['email'], $fila['image'], $fila['role']);
+                $result = new Usuario($fila['id'], $fila['userName'], $fila['passwd'], $fila['email'], $fila['image'], $fila['role'], $fila['enabled']);
             }
             $rs->free();
         } else {
@@ -75,7 +91,7 @@ class Usuario
         if ($rs) {
             $fila = $rs->fetch_assoc();
             if ($fila) {
-                $result = new Usuario($fila['id'], $fila['userName'], $fila['passwd'], $fila['email'], $fila['image'], $fila['role']);
+                $result = new Usuario($fila['id'], $fila['userName'], $fila['passwd'], $fila['email'], $fila['image'], $fila['role'], $fila['enabled']);
             }
             $rs->free();
         } else {
@@ -93,7 +109,7 @@ class Usuario
         if ($rs) {
             $fila = $rs->fetch_assoc();
             if ($fila) {
-                $result = new Usuario($fila['id'], $fila['userName'], $fila['passwd'], $fila['email'], $fila['image'], $fila['role']);
+                $result = new Usuario($fila['id'], $fila['userName'], $fila['passwd'], $fila['email'], $fila['image'], $fila['role'], $fila['enabled']);
             }
             $rs->free();
         } else {
@@ -129,13 +145,6 @@ class Usuario
         return $result;
     }
    
-
-    public static function amigo($usuario) {
-
-
-        
-    }
-
     
     public static function actualiza($usuario, $nombre, $image, $email, $password)
     {
@@ -168,7 +177,7 @@ class Usuario
         return self::borraPorId($usuario->id);
     }
     
-    private static function borraPorId($idUsuario)
+    public static function borraPorId($idUsuario)
     {
         if (!$idUsuario) {
             return false;
@@ -177,9 +186,7 @@ class Usuario
          * $result = self::borraRoles($usuario) !== false;
          */
         $conn = Aplicacion::getInstance()->getConexionBd();
-        $query = sprintf("DELETE FROM Usuario U WHERE U.id = %d"
-            , $idUsuario
-        );
+        $query = sprintf("DELETE FROM `Usuario` WHERE `Usuario`.`id` = $idUsuario;");
         if ( ! $conn->query($query) ) {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
             return false;
@@ -199,7 +206,9 @@ class Usuario
 
     private $role;
 
-    private function __construct($id, $userName, $passwd, $email, $image, $role)
+    private $enabled;
+
+    private function __construct($id, $userName, $passwd, $email, $image, $role, $enabled)
     {
         $this->id = $id;
         $this->userName = $userName;
@@ -207,6 +216,7 @@ class Usuario
         $this->email = $email;
         $this->image = $image;
         $this->role = $role;
+        $this->enabled = $enabled;
     }
 
     public function getId()
@@ -232,6 +242,10 @@ class Usuario
     public function getImage()
     {
         return $this->image;
+    }
+
+    public function getEnabled(){
+        return $this->enabled == 1 ?? false;
     }
 
     public function compruebaPassword($password)

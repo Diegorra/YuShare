@@ -1,8 +1,8 @@
---Contraseña: 12345
+-- Contraseña: 12345
 INSERT INTO Usuario (id, userName, passwd, email, image, enabled, role)
-VALUES (100, 'diego', '$2y$10$seKspBx5eZ32ThdWk5/PFuEZ3TvuoTxcjnJBvNnVHcO.qN3RXdDFW', 'die@ucm.es', 'images/defaultProfile.jpg', true, 'USER_ROLE');
+VALUES (100, 'diego', '$2y$10$seKspBx5eZ32ThdWk5/PFuEZ3TvuoTxcjnJBvNnVHcO.qN3RXdDFW', 'die@ucm.es', 'images/defaultProfile.jpg', true, 'ADMIN_ROLE');
 
---Contraseña: rafita
+-- Contraseña: rafita
 INSERT INTO Usuario (id, userName, passwd, email, image, enabled, role)
 VALUES (101, 'rafa123', '$2y$10$bzXdIlWw4DxDwI3XD5U8beZ0pRGUuU99ig42VuJ.cHukDp./iad.q', 'rafa@ucm.es', 'images/defaultProfile.jpg', true, 'USER_ROLE');
 

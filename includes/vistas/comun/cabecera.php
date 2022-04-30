@@ -18,15 +18,18 @@ function menu()
         
         $perfilUrl = $app->buildUrl('/perfil.php', ['id'=> $app->idUsuario()]);
         $subirPelicula = $app->resuelve('/uploadMovie.php');
-        $logout = $app->resuelve('/logout.php');
 
 
         $html = <<<EOS
-            <a href='{$perfilUrl}'>Mi Perfil</a>
-            <a href="{$subirPelicula}"> Subir pelicula</a>
-            <a id="logout" href="">LogOut</a>
+            <a href='{$perfilUrl}'><i class="fa-solid fa-user"></i></a>
+            <a href="{$subirPelicula}"><i class="fa-solid fa-arrow-up-from-bracket"></i></a>
+            <a id="logout" href=""><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
 
         EOS;
+        if($app->esAdmin()){
+            $adminUrl = $app->resuelve('/admin.php');
+            $html .= "<a href='{$adminUrl}'>Admin</a>";
+        }
     } else {
         $loginUrl = $app->resuelve('/login.php');
         $registroUrl = $app->resuelve('/registro.php');

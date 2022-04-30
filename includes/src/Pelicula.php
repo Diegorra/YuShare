@@ -70,7 +70,7 @@ class Pelicula
         return $this->numLikes;
     }
 
-    public function getTraile()
+    public function getTrailer()
     {
         return $this->trailer;
     }

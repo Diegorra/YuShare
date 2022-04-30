@@ -258,6 +258,7 @@ class Aplicacion
         $_SESSION['role'] = $user->getRole();
         $_SESSION['email'] = $user->getEmail();
         $_SESSION['image'] = $user->getImage();
+        $_SESSION['enabled'] = $user->getEnabled();
 
     }
 
@@ -271,6 +272,7 @@ class Aplicacion
         unset($_SESSION['role']);
         unset($_SESSION['email']);
         unset($_SESSION['image']);
+        unset($_SESSION['enabled']);
 
         session_destroy();
         session_start();
@@ -303,13 +305,18 @@ class Aplicacion
     public function esAdmin()
     {
         $this->compruebaInstanciaInicializada();
-        return $this->usuarioLogueado() && (array_search(Usuario::ADMIN_ROLE, $_SESSION['role']) !== false);
+        return $this->usuarioLogueado() && (strcmp("ADMIN_ROLE", $_SESSION['role']) === 0);
     }
 
     public function tieneRol($rol)
     {
         $this->compruebaInstanciaInicializada();
-        return $this->usuarioLogueado() && (array_search($rol, $_SESSION['role']) !== false);
+        return $this->usuarioLogueado() && (array_search($rol, ["ADMIN_ROLE", "USER_ROLE"]) === 0);
+    }
+
+    public function enabled(){
+        $this->compruebaInstanciaInicializada();
+        return  $_SESSION['enabled'] ?? '';
     }
 
     public function paginaError($codigoRespuesta, $tituloPagina, $mensajeError, $explicacion = '')
