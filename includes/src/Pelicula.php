@@ -291,11 +291,10 @@ class Pelicula
             }
             $borra = "";
 
-            if($app->idUsuario() == $reg['iduser']) {
-                //$borrarPeliUrl = $app->buildUrl('/deleteMovie.php', ['id'=> $reg['id'], 'idUser' => $reg['iduser']]);
+            if($app->idUsuario() === $reg['iduser']) {
                 $borrar = <<<EOS
                     <div class ="botonEditaryBorrar">
-                        <button id="deleteFilm" type="button" filmId="{$reg['id']}" userID="{$reg['iduser']}">Borrar</button>
+                        <button id="deleteFilm" type="button" filmId="{$reg['id']}">Borrar</button>
                     </div>
                 EOS;
                 $contenido .= $borrar;
