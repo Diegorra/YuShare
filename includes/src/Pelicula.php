@@ -161,20 +161,6 @@ class Pelicula
         }
         return true;
     }
-
-    private static function editarPorId($idPelicula) {
-        if (!$idPelicula) {
-            return false;
-        } 
-        $conn = Aplicacion::getInstance()->getConexionBd();
-        $query = sprintf("UPDATE FROM `Pelicula` WHERE `Pelicula`.`id` = $idPelicula;");
-        if ( ! $conn->query($query) ) {
-            error_log("Error BD ({$conn->errno}): {$conn->error}");
-            return false;
-        }
-        return true;
-    }
-
     
     //-------------------------------------------------------------------------------------------------------
 
@@ -290,7 +276,6 @@ class Pelicula
                 $contenido .= $editar;
             }
             $borra = "";
-
             if($app->idUsuario() === $reg['iduser']) {
                 $borrar = <<<EOS
                     <div class ="botonEditaryBorrar">
@@ -314,12 +299,22 @@ class Pelicula
         }
     }
 
-    public static function editarPeli($idPeli, $idU) {
+    public static function editarPeli($id, $titulo, $sinopsis, $genero, $trailer) {
+        $result = false;
         $conn = Aplicacion::getInstance()->getConexionBd();
-        $query = sprintf("SELECT idUser, id FROM Pelicula WHERE idUser = '%s' AND id = '%s'",$conn->real_escape_string($idU), $conn->real_escape_string($idPeli));
-        if($result = $conn->query($query)) {
-            $editar = self::editarPorId($idPeli);
+        $query=sprintf("UPDATE Pelicula P SET titulo= '%s', text='%s',genero='%s', trailer='%s' WHERE P.id=%d"
+            , $conn->real_escape_string($titulo)
+            , $conn->real_escape_string($sinopsis)
+            , $conn->real_escape_string($genero)
+            , $conn->real_escape_string($trailer)
+            , $id
+        );
+        if (!$conn->query($query) ) {
+            error_log("Error BD ({$conn->errno}): {$conn->error}");
+        } else {
+            $result = $pelicula;
         }
+        return $result;
     }
 
     public static function conseguirPeliculas(){
@@ -346,8 +341,5 @@ class Pelicula
             error_log("Error BD ({$conn->errno}): {$conn->error}");
         }
         return $contenido;
-    }
-
-
-    
+    }    
 }

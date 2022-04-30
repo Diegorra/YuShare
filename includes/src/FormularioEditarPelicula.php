@@ -7,8 +7,9 @@ use es\ucm\fdi\aw\Pelicula;
 
 class FormularioEditarPelicula extends Formulario{
     public function __construct() {
-        parent::__construct('formUpload', 
+        parent::__construct('formEdit', 
         [
+            'formId' => "editMovie",
             'enctype' => "multipart/form-data",
             'urlRedireccion' => Aplicacion::getInstance()->resuelve('/perfil.php')]);
     }
@@ -22,6 +23,15 @@ class FormularioEditarPelicula extends Formulario{
         $src = $datos['src'] ?? '';
         $trailer = $datos['trailer'] ?? '';
 
+        //obtenemos datos de la película
+        $pelicula = Pelicula::buscaPelicula($titulo);
+
+        $tituloOriginal = $pelicula->getTitulo();
+        $sinopsisOriginal = $pelicula->getText();
+        $generoOriginal = $pelicula->getGenero();
+        $imagenOriginal = $pelicula->getSrc();
+        $trailerOriginal = $pelicula->getTrailer();
+
         // Se generan los mensajes de error si existen.
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
         $erroresCampos = self::generaErroresCampos(['titulo', 'sinopsis','genero', 'file', 'trailer'], $this->errores, 'span', array('class' => 'error'));
@@ -32,45 +42,31 @@ class FormularioEditarPelicula extends Formulario{
             <legend>Datos de la película</legend>
             <div>
                 <label for="titulo">Titulo: </label>
-                <input id="titulo" type="text" name="titulo" />
+                <input id="titulo" type="text" name="titulo value="$tituloOriginal" />
                 {$erroresCampos['titulo']}
             </div>
             <div>
                 <label for="sinopsis">Sinopsis: </label>
-                <input id="sinopsis" type="text" name="sinopsis" />
+                <input id="sinopsis" type="text" name="sinopsis" value="$sinopsisOriginal" />
                 {$erroresCampos['sinopsis']}
 
             </div>
             <div>
-
-                <label>Select a Category</label>
-                <select name="Category">
-                    <?php 
-                        $genres=array("Aventuras","Comedia","Drama", "Terror", "Musical","Documental");
-                        // use a while loop to fetch data 
-                        // from the $all_categories variable 
-                        // and individually display as an option
-                        foreach($genres as &$x) {
-                            echo $genres[$x];
-                        }
-                    ?>
-                </select>
                 <label for="genero">Género: </label>
-                <input id="genero" type="text" name="genero" />
+                <input id="genero" type="text" name="genero" value="$generoOriginal"/>
                 {$erroresCampos['genero']}
             </div>
             <div>
-                <input type="file" id="file" name="file" />
+                <input type="file" id="file" name="file" value="$imagenOriginal" />
                 {$erroresCampos['file']}
             </div>
             <div>
                 <label for="trailer">Trailer: </label>
-                <input id="trailer" type="text" name="trailer" />
+                <input id="trailer" type="text" name="trailer" value="$trailerOriginal" />
                 {$erroresCampos['trailer']}
-
             </div>
             <div>
-                <button type="submit" name="registro">Subir película</button>
+                <button type="submit" name="registro">Editar película</button>
             </div>
         </fieldset>
         <script>
@@ -83,25 +79,47 @@ class FormularioEditarPelicula extends Formulario{
     
     protected function procesaFormulario(&$datos)
     {
+        //obtenemos datos de la película
+        $pelicula = Pelicula::buscaPelicula($titulo);
+        $idPeli = $pelicula->getId();
+        $tituloOriginal = $pelicula->getTitulo();
+        $sinopsisOriginal = $pelicula->getText();
+        $generoOriginal = $pelicula->getGenero();
+        $imagenOriginal = $pelicula->getSrc();
+        $trailerOriginal = $pelicula->getTrailer();
+
+        $cambiarTitulo = false;
+        $cambiarSinopsis = false;
+        $cambiarGenero = false;
+        $cambiarImagen = false;
+        $cambiarTrailer = false;
+
         $this->errores = [];
-        $titulo = trim($datos['titulo'] ?? '');
-        $titulo = filter_var($titulo, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if ( ! $titulo) {
-            $this->errores['titulo'] = 'Introduce un título para la película';
+
+        $tituloForm = trim($datos['titulo'] ?? '');
+        $tituloForm = filter_var($tituloForm, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+         if ($tituloForm !=='') { //Ha cambiado la imagen
+            $cambiarTitulo = true;
         }
 
-        $sinopsis = trim($datos['sinopsis'] ?? '');
-        $sinopsis = filter_var($sinopsis, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if ( ! $sinopsis) {
-            $this->errores['sinopsis'] = 'Introduce una sinopsis para la película';
+        $sinopsisForm = trim($datos['sinopsis'] ?? '');
+        $sinopsisForm = filter_var($sinopsisForm, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        if ( $tituloForm !=='') {
+            $cambiarSinopsis = true;
         }
 
-        $genero = trim($datos['genero'] ?? '');
-        $genero = filter_var($genero, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if ( ! $genero || ($genero != "Aventuras" && $genero != "Comedia" && $genero != "Drama" && $genero != "Terror"
-            && $genero != "Musical" && $genero != "Documental")) {
-            $this->errores['genero'] = 'Introduce un género para la película. Los géneros disponibles son: Acción, Aventuras, Comedia, Drama, Ciencia_Ficción, Musical, Documental.';
+        $generoForm = trim($datos['genero'] ?? '');
+        $generoForm = filter_var($generoForm, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        if ($generoForm  !== '') {
+            $cambiarGenero = true;
+            if ($generoForm != "Aventuras" && $generoForm != "Comedia" && $generoForm != "Drama" && $generoForm != "Terror"
+                && $generoForm != "Musical" && $generoForm != "Documental") {
+                $this->errores['genero'] = 'Introduce un género para la película. Los géneros disponibles son: Acción, Aventuras, Comedia, Drama, Ciencia_Ficción, Musical, Documental.';
+            }
         }
+        
         
         $file_name = $_FILES['file']['name'];
         $file_size = $_FILES['file']['size'];
@@ -117,21 +135,39 @@ class FormularioEditarPelicula extends Formulario{
                 $this->errores['file'] ="extension not allowed, please choose a JPEG or PNG file.";
             }
         }
-    
-        $trailer = trim($datos['trailer'] ?? '');
-        $trailer = filter_var($trailer, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if ( ! $trailer || empty($trailer)) {
-            $this->errores['trailer'] = 'Introduce un link de un vídeo para el trailer de la película';
+
+        $trailerForm = trim($datos['trailer'] ?? '');
+        $trailerForm = filter_var($trailerForm, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        if ($trailerForm  !== '') {
+            $cambiarTrailer = true;
         }
 
         if (count($this->errores) === 0) {
-            $pelicula = Pelicula::buscaPelicula($titulo);
-            if ($pelicula) {
-                $this->errores[] = "La película ya existe";
-            } else {
-                $pelicula = Pelicula::crea(Aplicacion::getInstance()->idUsuario(), $titulo, $sinopsis, $genero, $file, $trailer);
-                move_uploaded_file($file_tmp, $file);
+            if($cambiarTitulo = true) {
+                $newTitulo = $tituloForm;
             }
+            else {
+                $newTitulo = $tituloOriginal;
+            }
+            if ($cambiarSinopsis = true) {
+                $newSinopsis = $sinopsisForm;
+            }
+            else {
+                $newSinopsis = $sinopsisOriginal;
+            }
+            if($cambiarGenero = true) {
+                $newGenero = $generoForm;                
+            }
+            else {
+                $newGenero = $generoOriginal;
+            }
+            if($cambiarTrailer = true) {
+                $newTrailer = $trailerForm;
+            }
+            else {
+                $newTrailer = $trailerOriginal;
+            }
+            $pelicula = Pelicula::editarPeli($idPeli, $titulo, $sinopsis, $genero, $trailer);            
         }
-    }  
-}
+    }
+}  
