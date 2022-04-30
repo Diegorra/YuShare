@@ -26,11 +26,11 @@ class FormularioEditarPelicula extends Formulario{
         //obtenemos datos de la película
         $pelicula = Pelicula::buscaPelicula($titulo);
 
-        $tituloOriginal = $pelicula->getTitulo();
-        $sinopsisOriginal = $pelicula->getText();
-        $generoOriginal = $pelicula->getGenero();
-        $imagenOriginal = $pelicula->getSrc();
-        $trailerOriginal = $pelicula->getTrailer();
+        $tituloOriginal = $pelicula['titulo'];
+        $sinopsisOriginal = $pelicula['text'];
+        $generoOriginal = $pelicula['genero'];
+        $imagenOriginal = $pelicula['src'];
+        $trailerOriginal = $pelicula['trailer'];
 
         // Se generan los mensajes de error si existen.
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
@@ -81,12 +81,14 @@ class FormularioEditarPelicula extends Formulario{
     {
         //obtenemos datos de la película
         $pelicula = Pelicula::buscaPelicula($titulo);
-        $idPeli = $pelicula->getId();
-        $tituloOriginal = $pelicula->getTitulo();
-        $sinopsisOriginal = $pelicula->getText();
-        $generoOriginal = $pelicula->getGenero();
-        $imagenOriginal = $pelicula->getSrc();
-        $trailerOriginal = $pelicula->getTrailer();
+
+        $idPeli = $pelicula['iduser'];
+        $tituloOriginal = $pelicula['titulo'];
+        $sinopsisOriginal = $pelicula['text'];
+        $generoOriginal = $pelicula['genero'];
+        $imagenOriginal = $pelicula['src'];
+        $trailerOriginal = $pelicula['trailer'];
+
 
         $cambiarTitulo = false;
         $cambiarSinopsis = false;

@@ -161,6 +161,20 @@ class Pelicula
         }
         return true;
     }
+
+    private static function editarPorId($idPelicula) {
+        if (!$idPelicula) {
+            return false;
+        } 
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $query = sprintf("UPDATE FROM `Pelicula` WHERE `Pelicula`.`id` = $idPelicula;");
+        if ( ! $conn->query($query) ) {
+            error_log("Error BD ({$conn->errno}): {$conn->error}");
+            return false;
+        }
+        return true;
+    }
+
     
     //-------------------------------------------------------------------------------------------------------
 
@@ -299,7 +313,8 @@ class Pelicula
         }
     }
 
-    public static function editarPeli($id, $titulo, $sinopsis, $genero, $trailer) {
+    public static function editarPeli($id, $titulo, $sinopsis, $genero, $src, $trailer) {
+        $conn = Aplicacion::getInstance()->getConexionBd();
         $result = false;
         $conn = Aplicacion::getInstance()->getConexionBd();
         $query=sprintf("UPDATE Pelicula P SET titulo= '%s', text='%s',genero='%s', trailer='%s' WHERE P.id=%d"
@@ -309,6 +324,7 @@ class Pelicula
             , $conn->real_escape_string($trailer)
             , $id
         );
+
         if (!$conn->query($query) ) {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
         } else {
@@ -341,5 +357,8 @@ class Pelicula
             error_log("Error BD ({$conn->errno}): {$conn->error}");
         }
         return $contenido;
-    }    
+    }
+
+
+    
 }
