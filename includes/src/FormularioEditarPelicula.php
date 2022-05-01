@@ -89,7 +89,6 @@ class FormularioEditarPelicula extends Formulario{
         $imagenOriginal = $pelicula['src'];
         $trailerOriginal = $pelicula['trailer'];
 
-
         $cambiarTitulo = false;
         $cambiarSinopsis = false;
         $cambiarGenero = false;

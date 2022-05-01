@@ -14,13 +14,12 @@ class Pelicula
     private $text;
     private $genero;
     private $src;
-    private $numLikes;
     private $trailer;
     
     /**
      * Constructor
     */
-    private function __construct($id, $idUsuario, $titulo, $text, $genero, $src, $numLikes, $trailer)
+    private function __construct($id, $idUsuario, $titulo, $text, $genero, $src, $trailer)
     {
         $this->id = $id;
         $this->idUsuario = $idUsuario;
@@ -28,7 +27,6 @@ class Pelicula
         $this->text = $text;
         $this->genero = $genero;
         $this->src = $src;
-        $this->numLikes = $numLikes;
         $this->trailer = $trailer;
     }
 
@@ -63,11 +61,6 @@ class Pelicula
     public function getSrc()
     {
         return $this->src;
-    }
-
-    public function getNumLikes()
-    {
-        return $this->numLikes;
     }
 
     public function getTrailer()
@@ -105,13 +98,12 @@ class Pelicula
     {
         $result = false;
         $conn = Aplicacion::getInstance()->getConexionBd();
-        $query=sprintf("INSERT INTO Pelicula (iduser, titulo, text, genero, src, numerototalLikes, trailer) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')"
+        $query=sprintf("INSERT INTO Pelicula (iduser, titulo, text, genero, src, trailer) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')"
             , $conn->real_escape_string($pelicula->idUsuario)
             , $conn->real_escape_string($pelicula->titulo)
             , $conn->real_escape_string($pelicula->text)
             , $conn->real_escape_string($pelicula->genero)
             , $conn->real_escape_string($pelicula->src)
-            , $conn->real_escape_string($pelicula->numLikes)
             , $conn->real_escape_string($pelicula->trailer)
         );
         if ( $conn->query($query) ) {
@@ -127,10 +119,9 @@ class Pelicula
     {
         $result = false;
         $conn = Aplicacion::getInstance()->getConexionBd();
-        $query=sprintf("UPDATE Pelicula P SET titulo= '%s', genero='%s', numerototalLikes='%s' WHERE P.id=%d"
+        $query=sprintf("UPDATE Pelicula P SET titulo= '%s', genero='%s' WHERE P.id=%d"
             , $conn->real_escape_string($pelicula->titulo)
             , $conn->real_escape_string($pelicula->genero)
-            , $conn->real_escape_string($pelicula->numerototalLikes)
             , $pelicula->id
         );
 
@@ -161,20 +152,6 @@ class Pelicula
         }
         return true;
     }
-
-    private static function editarPorId($idPelicula) {
-        if (!$idPelicula) {
-            return false;
-        } 
-        $conn = Aplicacion::getInstance()->getConexionBd();
-        $query = sprintf("UPDATE FROM `Pelicula` WHERE `Pelicula`.`id` = $idPelicula;");
-        if ( ! $conn->query($query) ) {
-            error_log("Error BD ({$conn->errno}): {$conn->error}");
-            return false;
-        }
-        return true;
-    }
-
     
     //-------------------------------------------------------------------------------------------------------
 
@@ -192,7 +169,7 @@ class Pelicula
         $result = [];
         if ($rs) {
             while($fila = $rs->fetch_assoc()) {
-                $result[] = new Pelicula($fila['id'], $fila['iduser'], $fila['titulo'], $fila['text'], $fila['genero'], $fila['src'], $fila['numerototalLikes'], $fila['trailer']);       
+                $result[] = new Pelicula($fila['id'], $fila['iduser'], $fila['titulo'], $fila['text'], $fila['genero'], $fila['src'], $fila['trailer']);  
             }
             $rs->free();
         } else {
@@ -211,7 +188,7 @@ class Pelicula
         if ($rs) {
             $fila = $rs->fetch_assoc();
             if ($fila) {
-                $result = new Pelicula($fila['id'], $fila['iduser'], $fila['titulo'], $fila['text'], $fila['genero'], $fila['src'], $fila['numerototalLikes'], $fila['trailer']);
+                $result = new Pelicula($fila['id'], $fila['iduser'], $fila['titulo'], $fila['text'], $fila['genero'], $fila['src'], $fila['trailer']);
             }
             $rs->free();
         } else {
@@ -231,7 +208,7 @@ class Pelicula
         $result = [];
         if($rs){
             while($fila = $rs->fetch_assoc()){
-                $result[]=new Pelicula($fila['id'], $fila['iduser'], $fila['titulo'], $fila['text'], $fila['genero'], $fila['src'], $fila['numerototalLikes'], $fila['trailer']);
+                $result[]=new Pelicula($fila['id'], $fila['iduser'], $fila['titulo'], $fila['text'], $fila['genero'], $fila['src'], $fila['trailer']);
                 $src=$fila['src'];
                 $titulo=$fila['titulo'];
                 $id = $fila['id'];
@@ -257,51 +234,19 @@ class Pelicula
     public static function todaInfoPeliculas($id){ 
         $app = Aplicacion::getInstance();
         $conn = $app->getConexionBd();
-        $query = sprintf("SELECT id, iduser, titulo, text, genero, src, trailer FROM Pelicula WHERE id = '%s'", $conn->real_escape_string($id));
-        $contenido = "";
-        $result = $conn->query($query);
-        if ($result->num_rows > 0){
-            $reg = $result->fetch_assoc();
-            $contenido = <<<EOF
-                <table border="1" width="100%">
-                    <tr>
-                        <th width="30%">Genero</th>
-                        <th width="32%">Sinopsis</th>
-                        <th width="47%"></th>
-                        <th width="40%"></th>
-                    </tr>
-                    <div class ="pelicula">
-                        <h1>{$reg['titulo']}</h1>
-                    </div>
-                    <td><h2><small>{$reg['genero']}</small></h2></td>
-                    <td><h2><small>{$reg['text']}</small></h2></td>
-                    <td><p><img src="{$reg['src']}"id="image_info" alt="img_indv"></p></td>
-                    <td><p><iframe width="560" height="315" src="{$reg['trailer']}" frameborder="0" allowfullscreen></iframe></p></td>
-                </table>
-            EOF;
-            $editar = "";
-            if($app->idUsuario() == $reg['iduser']) {
-                $editar = <<<EOS
-                    <div class ="botonEditaryBorrar">
-                        <button id="editFilm" type="button" filmId="{$reg['id']}" userID="{$reg['iduser']}">Editar</button>
-                    </div>
-                EOS;
-                $contenido .= $editar;
+        $query = sprintf("SELECT * FROM Pelicula WHERE id = '%s'", $conn->real_escape_string($id));
+        $rs = $conn->query($query);
+        $result = [];
+        if ($rs) {
+            while($fila = $rs->fetch_assoc()) {
+                $result[] = new Pelicula($fila['id'], $fila['iduser'], $fila['titulo'], $fila['text'], $fila['genero'], $fila['src'], $fila['trailer']);
             }
-            $borra = "";
-            if($app->idUsuario() === $reg['iduser']  || $app->esAdmin()) {
-                $borrar = <<<EOS
-                    <div class ="botonEditaryBorrar">
-                        <button id="deleteFilm" type="button" filmId="{$reg['id']}">Borrar</button>
-                    </div>
-                EOS;
-                $contenido .= $borrar;
-            }
-            $result->free();
-        } else {
+        } 
+        else {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
         }
-        return $contenido;
+        $rs->free();
+        return $result;
     }
 
     public static function borrarPeli($idPeli, $idU) {
@@ -323,11 +268,10 @@ class Pelicula
             , $conn->real_escape_string($trailer)
             , $id
         );
-
         if (!$conn->query($query) ) {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
         } else {
-            $result = $pelicula;
+            $result = true;
         }
         return $result;
     }
@@ -335,29 +279,17 @@ class Pelicula
     public static function conseguirPeliculas(){
         $app = Aplicacion::getInstance();
         $conn = $app->getConexionBd();
-        $query = sprintf("SELECT id, src FROM Pelicula");
-        $contenido = "";
-        if ($result = $conn->query($query)) {
-            while ($row = $result->fetch_assoc()) {
-                $id = $row["id"];
-                $cartel = $row["src"];
-                $peliculaUrl = $app->buildUrl('/peliIndv.php', ['id'=> $id]);
-                $htmlPeli =<<<EOS
-                    <div class="indexPeliculas">
-                        <a href="{$peliculaUrl}">
-                            <img src="{$cartel}" id="image_inicio" alt="img_index">
-                        </a>
-                    </div> 
-                EOS;
-                $contenido .= $htmlPeli;
+        $query = sprintf("SELECT * FROM Pelicula");
+        $rs = $conn->query($query);
+        $result = [];
+        if ($rs) {
+            while ($fila = $rs->fetch_assoc()) {
+                $result[] = new Pelicula($fila['id'], $fila['iduser'], $fila['titulo'], $fila['text'], $fila['genero'], $fila['src'], $fila['trailer']);
             }
-            $result->free();
+            $rs->free();
         } else {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
         }
-        return $contenido;
+        return $result;
     }
-
-
-    
 }

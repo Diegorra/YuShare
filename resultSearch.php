@@ -45,7 +45,6 @@ function muestraPeliculas($filmList, $app){
     return $contenido;
 }
 
-
 $muestraU = muestraUsuarios($usuarios, $app);
 $muestraP = muestraPeliculas($peliculas, $app);
 

@@ -7,11 +7,29 @@ $showMovies = Pelicula::conseguirPeliculas();
 
 $tituloPagina = 'Portada';
 
+function muestraPeliculas($filmList, $app){
+    $contenido= "";
+    foreach ($filmList as $film) {
+        $peliculaUrl = $app->buildUrl('/peliIndv.php', ['id'=> $film->getId()]);
+        $peli = <<<EOS
+            <div class="indexPeliculas">
+                <a href="{$peliculaUrl}">
+                    <img src="{$film->getSrc()}" id="image_inicio" alt="img_index">
+                </a>
+            </div> 
+        EOS;
+        $contenido .=$peli;
+    }
+    return $contenido;
+}
+
+$muestraP = muestraPeliculas($showMovies, $app);
+
 $contenidoPrincipal=<<<EOF
     <div class="texto_inicio">
         <h1>Catálogo de películas</h1>
     </div> 
-    $showMovies
+    $muestraP
 EOF;
 
 $params = ['tituloPagina' => $tituloPagina, 'contenidoPrincipal' =>  $contenidoPrincipal];
