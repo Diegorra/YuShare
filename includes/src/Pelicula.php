@@ -184,17 +184,17 @@ class Pelicula
         $conn = Aplicacion::getInstance()->getConexionBd();
         $query = sprintf("SELECT * FROM Pelicula P WHERE P.titulo='%s'", $conn->real_escape_string($nombrePelicula));
         $rs = $conn->query($query);
-        $result = false;
-        if ($rs) {
-            $fila = $rs->fetch_assoc();
-            if ($fila) {
-                $result = new Pelicula($fila['id'], $fila['iduser'], $fila['titulo'], $fila['text'], $fila['genero'], $fila['src'], $fila['trailer']);
-            }
-            $rs->free();
-        } else {
+        $result = $conn->query($query);
+        $peli = "";
+        if ($result->num_rows > 0) {
+            $reg = $result->fetch_assoc();
+            $peli = new Pelicula($reg['id'], $reg['iduser'], $reg['titulo'], $reg['text'], $reg['genero'], $reg['src'], $reg['trailer']);
+        } 
+        else {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
         }
-        return $result;
+        $result->free();
+        return $peli;
     }
     
     //para mostrar en el perfil las películas asociadas a un usuario
@@ -235,18 +235,17 @@ class Pelicula
         $app = Aplicacion::getInstance();
         $conn = $app->getConexionBd();
         $query = sprintf("SELECT * FROM Pelicula WHERE id = '%s'", $conn->real_escape_string($id));
-        $rs = $conn->query($query);
-        $result = [];
-        if ($rs) {
-            while($fila = $rs->fetch_assoc()) {
-                $result[] = new Pelicula($fila['id'], $fila['iduser'], $fila['titulo'], $fila['text'], $fila['genero'], $fila['src'], $fila['trailer']);
-            }
+        $result = $conn->query($query);
+        $peli = "";
+        if ($result->num_rows > 0) {
+            $reg = $result->fetch_assoc();
+            $peli = new Pelicula($reg['id'], $reg['iduser'], $reg['titulo'], $reg['text'], $reg['genero'], $reg['src'], $reg['trailer']);
         } 
         else {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
         }
-        $rs->free();
-        return $result;
+        $result->free();
+        return $peli;
     }
 
     public static function borrarPeli($idPeli, $idU) {

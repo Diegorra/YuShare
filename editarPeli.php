@@ -2,7 +2,11 @@
 
 require_once __DIR__.'/includes/config.php';
 
-$formEdit = new \es\ucm\fdi\aw\FormularioEditarPelicula();
+$titulo = filter_input(INPUT_GET, 'titulo', FILTER_VALIDATE_INT);
+
+$formEdit = new \es\ucm\fdi\aw\FormularioEditarPelicula($titulo);
+
+
 $formEdit = $formEdit->gestiona();
 
 $tituloPagina = 'Editar pelicula';

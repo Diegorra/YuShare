@@ -6,7 +6,11 @@ use es\ucm\fdi\aw\Formulario;
 use es\ucm\fdi\aw\Pelicula;
 
 class FormularioEditarPelicula extends Formulario{
-    public function __construct() {
+    
+    private $titulo;
+
+    public function __construct($titulo) {
+        $this->titulo = $titulo;
         parent::__construct('formEdit', 
         [
             'formId' => "editMovie",
@@ -24,13 +28,15 @@ class FormularioEditarPelicula extends Formulario{
         $trailer = $datos['trailer'] ?? '';
 
         //obtenemos datos de la película
-        $pelicula = Pelicula::buscaPelicula($titulo);
-
-        $tituloOriginal = $pelicula['titulo'];
-        $sinopsisOriginal = $pelicula['text'];
-        $generoOriginal = $pelicula['genero'];
-        $imagenOriginal = $pelicula['src'];
-        $trailerOriginal = $pelicula['trailer'];
+        $pelicula = Pelicula::buscaPelicula($this->titulo);
+        
+        if($pelicula !== ""){
+            $tituloOriginal = $pelicula->getTitulo();
+            $sinopsisOriginal = $pelicula->getText();
+            $generoOriginal = $pelicula->getGenero();
+            $imagenOriginal = $pelicula->getSrc();
+            $trailerOriginal = $pelicula->getTrailer();
+        }
 
         // Se generan los mensajes de error si existen.
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
