@@ -74,7 +74,7 @@ class Pelicula
     
     public static function crea($idUsuario, $titulo, $text, $genero, $src, $trailer)
     {
-        $peli = new Pelicula(null, $idUsuario, $titulo, $text, $genero, $src, 0, $trailer);
+        $peli = new Pelicula(null, $idUsuario, $titulo, $text, $genero, $src, $trailer);
         return $peli->guarda();
     }
     
