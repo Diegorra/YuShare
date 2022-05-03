@@ -34,7 +34,7 @@ function muestraPeliculas($filmList, $app){
         $peli = <<<EOS
             <div class="search">
                 <a href="{$peliculaUrl}">
-                    <img src="{$film->getSrc()}" id="image_inicio" alt="img_search">
+                    <img src="{$film->getSrc()}" id="imgU_search" alt="img_search">
                     <h1>{$film->getTitulo()}</h1>
                 </a>
             </div> 
