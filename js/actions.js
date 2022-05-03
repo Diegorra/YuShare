@@ -24,6 +24,17 @@ $(document).ready(function () {
         });
     });
 
+    $("#deleteFriend").click(function () {
+        var ajaxurl = 'ajax.php';
+        var data = {
+            'action': "deleteFriend",
+            'id': $(this).attr("friendId")
+        };
+        $.post(ajaxurl, data, function (response) {
+            window.location = 'http://localhost/yushare/perfil.php';
+        });
+    });
+
     $(".ban").each(function () {
         $(this).on("click", function () {
             var ajaxurl = 'ajax.php';
