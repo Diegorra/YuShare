@@ -49,7 +49,7 @@ $muestraU = muestraUsuarios($usuarios, $app);
 $muestraP = muestraPeliculas($peliculas, $app);
 
 $contenidoPrincipal=<<<EOF
-    <div class="texto_inicio">
+    <div class="texto_search">
         <h1>PELICULAS Y USUARIOS ENCONTRADOS</h1>
     </div> 
     $muestraU
