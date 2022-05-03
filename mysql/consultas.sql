@@ -6,6 +6,10 @@ VALUES (100, 'diego', '$2y$10$seKspBx5eZ32ThdWk5/PFuEZ3TvuoTxcjnJBvNnVHcO.qN3RXd
 INSERT INTO Usuario (id, userName, passwd, email, image, enabled, role)
 VALUES (101, 'rafa123', '$2y$10$bzXdIlWw4DxDwI3XD5U8beZ0pRGUuU99ig42VuJ.cHukDp./iad.q', 'rafa@ucm.es', 'images/defaultProfile.jpg', true, 'USER_ROLE');
 
+--1 es no agregado (false), 0 es agregado (true)
+INSERT INTO Amigo (idAmigo, nombreAmigo, agregado, idUsuario)
+VALUES (101, 'rafa123', 1, 100);
+
 INSERT INTO Pelicula (id, iduser, titulo, text, genero, src, numerototalLikes, trailer)
 VALUES (1, 100, 'Clifford el gran perro rojo', 'El amor de una niña por su muñeco llamado Clifford hace que el perro crezca en tamaño.', 
 	'Aventuras', 'images/peliculas/clifford.jpg', 100000, 

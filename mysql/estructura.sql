@@ -52,11 +52,13 @@ CREATE TABLE IF NOT EXISTS `Comentario` (
 );
 
 CREATE TABLE IF NOT EXISTS `Amigo` (
-    iduser1 INT NOT NULL,
-    iduser2 INT NOT NULL,
-    PRIMARY KEY (iduser1, iduser2),
-    FOREIGN KEY (iduser1) REFERENCES Usuario(id) ON DELETE CASCADE,
-    FOREIGN KEY (iduser2) REFERENCES Usuario(id) ON DELETE CASCADE
+    idAmigo INT NOT NULL,
+    nombreAmigo VARCHAR(256) NOT NULL,
+    agregado bit NOT NULL,
+    idUsuario INT NOT NULL,
+    PRIMARY KEY (idAmigo, idUsuario),
+    FOREIGN KEY (idAmigo) REFERENCES Usuario(id) ON DELETE CASCADE,
+    FOREIGN KEY (idUsuario) REFERENCES Usuario(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `Mensaje` (
