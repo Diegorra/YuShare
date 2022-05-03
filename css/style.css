@@ -75,6 +75,7 @@ body {font: normal 62.5%/1.7em "Lucida Grande", "Lucida Sans Unicode", "Lucida S
     text-align: right;
     font-size: 20px;
     padding: 1px;
+    margin: 7px;
 }
 
     /*---FIN CABECERA---*/
@@ -92,7 +93,8 @@ body {font: normal 62.5%/1.7em "Lucida Grande", "Lucida Sans Unicode", "Lucida S
 #logout  {
     background: transparent;
     color: white;
-    float: right;
+    float: middle;
+    margin: 7px;
 }
 
 /*---FIN DE PIE---*/
