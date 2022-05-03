@@ -299,24 +299,22 @@ a:hover {
 }
 .search {
     border: 5px solid #0400ff;
-    border-radius: 1em;
-    display: flex;
-    justify-content: center;
-    text-align: center;
+    border-radius: 1em; 
+
 }
 
 .search h1 {
     color: white;
-    text-align: center;
+margin: 250px 100px 50px 50px;
+display: inline-block;
+vertical-align: top;
 }
 
 .search #imgU_search {
-    width: 150px;
-    height: 150px;
-    border-radius: 75px;
-    display: inline-block;
+margin: 50px 1em 50px 200px;
+    width: 220px;
+    height: 360px;
 }
-
 td {
     vertical-align: middle;
     text-align: center;
