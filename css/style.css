@@ -134,7 +134,13 @@ div.texto_inicio {
     font-size: 45px;
     font-family: monospace;
 }
-
+div.texto_search {
+    text-align: center;
+    color: white;
+    font-size: 40px;
+    font-family: monospace;
+    margin: 55px 0 0 0;
+}
 div.texto_perfil {
     margin-top: 100px;
     text-align: center;
@@ -298,22 +304,25 @@ a:hover {
     padding-right: 20px;
 }
 .search {
-    border: 5px solid #0400ff;
-    border-radius: 1em; 
-
+    border: 8px solid #0400ff;
+    border-radius: 1em;
+height: 275px;
+width: 1500px;
+margin: 2% 5% 2% 20%;
 }
 
 .search h1 {
     color: white;
-margin: 250px 100px 50px 50px;
+margin: 130px 150px 50px 80px;
 display: inline-block;
 vertical-align: top;
 }
 
 .search #imgU_search {
-margin: 50px 1em 50px 200px;
-    width: 220px;
-    height: 360px;
+margin: 12px 1em 50px 8%;
+    width: 150px;
+    height: 250px;
+
 }
 td {
     vertical-align: middle;
