@@ -19,7 +19,7 @@ class Usuario
     
     public static function crea($nombreUsuario, $password, $email)
     {
-        $user = new Usuario(null, $nombreUsuario, self::hashPassword($password), $email, "images/defaultProfile.jpg", self::USER_ROLE);
+        $user = new Usuario(null, $nombreUsuario, self::hashPassword($password), $email, "images/defaultProfile.jpg", "USER_ROLE");
         return $user->guarda();
     }
 
