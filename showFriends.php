@@ -12,7 +12,7 @@ $tituloPagina = 'All friends';
 function muestraInfo($friendList){
     $contenido = "";
     foreach ($friendList as $friend) {
-		$borrar = "<i id='deleteFriend' friendId='{$friend->getIdAmigo()}' class='fa-solid fa-circle-xmark'></i>";
+		$borrar = "<i button id='deleteFriend' class='fa-solid fa-circle-xmark' friendId='{$friend->getIdAmigo()}'></i>";
 		$amigo = <<<EOS
 			<div class="friends">
 				<h1>{$friend->getNombreAmigo()} {$borrar}</h1>

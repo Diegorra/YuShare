@@ -15,7 +15,6 @@ if($usuario->getId() == $app->idUsuario()){
   $settings .= $manageFriends;
 }else{
   $settings = "";
-  $manageFriends="";
 }
 
 $tituloPagina = 'Perfil';

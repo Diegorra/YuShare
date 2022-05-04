@@ -10,6 +10,17 @@ $(document).ready(function () {
             window.location = 'http://localhost/yushare/index.php';
         });
     });
+	
+    $("#deleteFriend").click(function () {
+        var ajaxurl = 'ajax.php';
+        var data = {
+            'action': "deleteFriend",
+            'id': $(this).attr("friendId")
+        };
+        $.post(ajaxurl, data, function (response) {
+            window.location = 'http://localhost/yushare/index.php';
+        });
+    });
 
     $(".deleteU").each(function () {
         $(this).on("click", function () {
@@ -24,16 +35,6 @@ $(document).ready(function () {
         });
     });
 
-    $("#deleteFriend").click(function () {
-        var ajaxurl = 'ajax.php';
-        var data = {
-            'action': "deleteFriend",
-            'id': $(this).attr("friendId")
-        };
-        $.post(ajaxurl, data, function (response) {
-            window.location = 'http://localhost/yushare/showFriends.php';
-        });
-    });
 	
     $(".ban").each(function () {
         $(this).on("click", function () {

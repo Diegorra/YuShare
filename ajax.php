@@ -9,11 +9,11 @@ if (isset($_POST['action'])) {
             case 'deleteFilm':
                 Pelicula::borrarPeli($_POST['id'], $app->idUsuario());
                 break;
+			case 'deleteFriend':
+                Amigos::borrarAmigo($_POST['id'], $app->idUsuario());
+                break;
             case 'deleteUser':
                 Usuario::borraPorId($_POST['id']);
-                break;
-            case 'manageFriend':
-                Amigos::listaAmigos($app->idUsuario);
                 break;
             case 'ban':
                 Usuario::updateEnabled($_POST['id']);

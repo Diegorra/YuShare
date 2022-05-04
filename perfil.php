@@ -9,9 +9,9 @@ $usuario = Usuario::buscaPorId($id);
 $peliculasUsuario = Pelicula::peliculasPerfil($usuario->getId());
 
 if($usuario->getId() == $app->idUsuario()){
-  $settings = "<a href= 'editarPerfil.php' class='botonEditarPerfil'> Editar perfil</a>";
+  $settings = "<a href= 'editarPerfil.php' class='botonEditarPerfil'>Editar perfil</a>";
   $amigoUrl = $app->buildUrl('/showFriends.php', ['id'=> $app->idUsuario()]);
-  $manageFriends = "<a href= '$amigoUrl' class='botonEditarPerfil'> Gestionar amigos</a>";
+  $manageFriends = "<a href= '$amigoUrl' class='botonEditarPerfil'>Gestionar amigos</a>";
   $settings .= $manageFriends;
 }else{
   $settings = "";

@@ -169,7 +169,8 @@ class Amigos
     //borra un amigo
     public static function borrarAmigo($idAmigo, $idUsuario) {
 		$conn = Aplicacion::getInstance()->getConexionBd();
-        $query=sprintf("UPDATE amigo A SET A.estado = 'No' WHERE A.idAmigo=$idAmigo AND A.idUsuario = $idUser");
+        $query=sprintf("UPDATE amigo A SET A.estado = 'No' WHERE idUsuario = '%s' AND idAmigo = '%s'",
+		$conn->real_escape_string($idUsuario), $conn->real_escape_string($idAmigo));
         if (!$conn->query($query) ) {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
             return false;
