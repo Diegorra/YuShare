@@ -10,7 +10,7 @@ $peliculas = $app->getAtributoPeticion('peliculas');
 $tituloPagina = 'Search';
 
 function muestraUsuarios($userList, $app){
-    $contenido = "";
+    $contenido = "<h1>". strval(count($userList)) . " resultados para usuarios del sistema</h1>";
     foreach ($userList as $user) {
         $perfilUrl = $app->buildUrl('/perfil.php', ['id'=> $user->getId()]);
         $usuario = <<<EOS
@@ -28,7 +28,7 @@ function muestraUsuarios($userList, $app){
 }
 
 function muestraPeliculas($filmList, $app){
-    $contenido= "";
+    $contenido= "<h1>" . strval(count($filmList)) . " resultados para peliculas del sistema</h1>";
     foreach ($filmList as $film) {
         $peliculaUrl = $app->buildUrl('/peliIndv.php', ['id'=> $film->getId()]);
         $peli = <<<EOS
