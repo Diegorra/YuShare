@@ -6,6 +6,7 @@ use es\ucm\fdi\aw\Pelicula;
 $idPeli = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 $infoPelicula = Pelicula::todaInfoPeliculas($idPeli);
 
+
 $tituloPagina = 'Info';
 
 function muestraInfo($film){

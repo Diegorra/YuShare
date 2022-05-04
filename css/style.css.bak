@@ -249,6 +249,7 @@ div.texto_perfil {
     left:45%;
 }
 
+
 .botonAmigos {
 	background-color: blue;
     border: 3px;

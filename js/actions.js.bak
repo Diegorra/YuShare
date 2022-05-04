@@ -24,14 +24,14 @@ $(document).ready(function () {
         });
     });
 
-    $("#deleteFriend").click(function () {
+    $("#manageFriend").click(function () {
         var ajaxurl = 'ajax.php';
         var data = {
-            'action': "deleteFriend",
+            'action': "manageFriend",
             'id': $(this).attr("friendId")
         };
         $.post(ajaxurl, data, function (response) {
-            window.location = 'http://localhost/yushare/showFriends.php';
+            window.location = 'http://localhost/yushare/perfil.php';
         });
     });
 	

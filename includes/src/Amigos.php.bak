@@ -126,6 +126,10 @@ class Amigos
         return true;
     }
 
+    private static function unfriend($idAmigo, $idUsuario) {
+        
+    }
+    
     //-------------------------------------------------------------------------------------------------------
 
     //Devuelve la lista de amigos del usuario

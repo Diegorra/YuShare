@@ -15,6 +15,9 @@ if (isset($_POST['action'])) {
             case 'manageFriend':
                 Amigos::listaAmigos($app->idUsuario);
                 break;
+			case 'addFriend':
+                Amigos::borrarAmigo($_POST['id'], $app->idUsuario);
+                break;
             case 'ban':
                 Usuario::updateEnabled($_POST['id']);
                 break;

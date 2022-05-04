@@ -337,6 +337,7 @@ class Aplicacion
         }
     }
 	
+	
 	public function esPerfil($url) {
 		if($url == './perfil.php')
 			return true;
