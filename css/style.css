@@ -261,14 +261,6 @@ div.texto_perfil {
     left:45%;
 }
 
-
-.friends h1{
-	text-align: left;
-    color: white;
-    font-size: 30px;
-    font-family: monospace;
-}
-
 .cardRightText {
     text-indent: 30px;
 }
@@ -354,4 +346,62 @@ td {
 td div {
     vertical-align: middle;
     display: inline-block;
+}
+
+
+#contenedorAmigos {
+    text-align: left;
+    color: white;
+    font-size: 30px;
+    font-family: monospace;
+}
+
+
+#contenedorNoAmigos {
+    text-align: left;
+    color: white;
+    font-size: 30px;
+    font-family: monospace;
+}
+
+.friends h1{
+    text-align: left;
+    color: white;
+    font-size: 30px;
+    font-family: monospace;
+}
+
+.friends h2 {
+    text-align: left;
+    color: white;
+    font-size: 20px;
+    font-family: monospace;
+}
+
+.addFriends h1 {
+    text-align: right;
+    color: white;
+    font-size: 30px;   
+}
+
+.addFriends {
+    text-align: right;
+    color: white;
+    font-size: 20px;
+    font-family: monospace;
+}
+
+.flexbox-container {
+        display: -ms-flex;
+        display: -webkit-flex;
+        display: flex;
+}
+
+.flexbox-container > div {
+        width: 50%;
+        padding: 10px;
+}
+
+.flexbox-container > div:first-child {
+        margin-right: 20px;
 }

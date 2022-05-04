@@ -42,16 +42,16 @@ class Amigos
         return $this->idUsuario;
     }
     
-    public function getAgregado()
+    public function getEstado()
     {
-        return $this->agregado;
+        return $this->estado;
     }
     
     //-------------------------------------------------------------------------------------------------------
 
     public static function agrega($idAmigo, $nombreAmigo, $idUsuario)
     {
-        $amigo = new Amigo($idAmigo, $nombreAmigo, $idUsuario, true);
+        $amigo = new Amigos($idAmigo, $nombreAmigo, $idUsuario, true);
         return $amigo->guarda();
     }
     
@@ -79,7 +79,7 @@ class Amigos
             , $conn->real_escape_string($amigo->idAmigo)
             , $conn->real_escape_string($amigo->nombreAmigo)
             , $conn->real_escape_string($amigo->idUsuario)
-            , $amigo->agregado
+            , $conn->real_escape_string($amigo->estado)
         );
         if ( $conn->query($query) ) {
             $result = $amigo;
@@ -93,11 +93,11 @@ class Amigos
     {
         $result = false;
         $conn = Aplicacion::getInstance()->getConexionBd();
-        $query=sprintf("UPDATE Amigo A SET idAmigo= '%s', nombreAmigo='%s', idUsuario='%s', agregado='%s',  WHERE A.id=%d"
+        $query=sprintf("UPDATE Amigo A SET idAmigo= '%s', nombreAmigo='%s', idUsuario='%s', estado='%s',  WHERE A.id=%d"
             , $conn->real_escape_string($amigo->idAmigo)
             , $conn->real_escape_string($amigo->nombreAmigo)
             , $conn->real_escape_string($amigo->idUsuario)
-            , $amigo->idAmigo 
+            , $conn->real_escape_string($amigo->estado)
         );
         if (!$conn->query($query) ) {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
@@ -147,17 +147,18 @@ class Amigos
         return $result;
     }
 
-    //busca los amigos del usuario segun el nombre (idk si hace falta lol)
-    public static function buscaAmigos($nombreAmigos)
+    //Saca a todos los usuarios no agregados
+    public static function obtenerUsuarios($idUsuario)
     {
         $app = Aplicacion::getInstance();
         $conn = $app->getConexionBd();
-        $query = sprintf("SELECT * FROM Amigos A WHERE A.nombreAmigo LIKE '%%%s%%'", $conn->real_escape_string($nombreAmigos));
+        $query = sprintf("SELECT idAmigo, idUsuario, nombreAmigo, estado FROM Amigo A WHERE A.idUsuario ='%s' AND A.estado ='No'", 
+            $conn->real_escape_string($idUsuario));
         $rs = $conn->query($query);
         $result = [];
         if ($rs) {
             while($fila = $rs->fetch_assoc()) {
-                $result[] = new Amigos($fila['idAmigo'], $fila['idUser'], $fila['agregado']);  
+                $result[] = new Amigos($fila['idAmigo'], $fila['idUsuario'], $fila['nombreAmigo'], $fila['estado']);  
             }
             $rs->free();
         } else {
@@ -170,7 +171,9 @@ class Amigos
     public static function borrarAmigo($idAmigo, $idUsuario) {
 		$conn = Aplicacion::getInstance()->getConexionBd();
         $query=sprintf("UPDATE amigo A SET A.estado = 'No' WHERE idUsuario = '%s' AND idAmigo = '%s'",
-		$conn->real_escape_string($idUsuario), $conn->real_escape_string($idAmigo));
+    		$conn->real_escape_string($idUsuario), 
+            $conn->real_escape_string($idAmigo)
+        );
         if (!$conn->query($query) ) {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
             return false;
@@ -178,4 +181,59 @@ class Amigos
             return true;
         }
     }
+
+    //agrega un amigo
+    public static function agregarAmigo($idAmigo, $idUsuario) {
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $query=sprintf("UPDATE amigo A SET A.estado = 'Agregado' WHERE idUsuario = '%s' AND idAmigo = '%s'",
+            $conn->real_escape_string($idUsuario), 
+            $conn->real_escape_string($idAmigo)
+        );
+        $returnear = returnearAmigo($idUsuario, $idAmigo);
+        if (!$conn->query($query) || !$returnear ) {
+            error_log("Error BD ({$conn->errno}): {$conn->error}");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    //Amistad automatica
+    public static function returnearAmigo($idAmigo, $idUsuario) {
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $query=sprintf("UPDATE amigo A SET A.estado = 'Agregado' WHERE idUsuario = '%s' AND idAmigo = '%s'",
+            $conn->real_escape_string($idUsuario), 
+            $conn->real_escape_string($idAmigo)
+        );
+        if (!$conn->query($query) ) {
+            error_log("Error BD ({$conn->errno}): {$conn->error}");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public static function esAmigo($idAmigo, $idUsuario) {
+        $app = Aplicacion::getInstance();
+        $conn = $app->getConexionBd();
+        $query = sprintf("SELECT idAmigo, idUsuario, nombreAmigo, estado FROM Amigo A WHERE A.idUsuario ='%s' AND A.idAmigo='%s' AND A.estado ='Agregado'"
+            , $conn->real_escape_string($idUsuario)
+            , $conn->real_escape_string($idAmigo)
+
+        );
+        $result = $conn->query($query);
+        $solucion = true;
+        if($result->num_rows > 0) {
+             return $solucion;
+        }
+        else if($result->num_rows == 0){
+            $solucion = false;
+            return $solucion;
+        } 
+        else{
+            error_log("Error BD ({$conn->errno}): {$conn->error}");
+            return false;
+        }
+    }
+
 }

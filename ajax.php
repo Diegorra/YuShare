@@ -12,6 +12,9 @@ if (isset($_POST['action'])) {
 			case 'deleteFriend':
                 Amigos::borrarAmigo($_POST['id'], $app->idUsuario());
                 break;
+            case 'addFriend':
+                Amigos::agregarAmigo($_POST['id'], $app->idUsuario());
+                break;
             case 'deleteUser':
                 Usuario::borraPorId($_POST['id']);
                 break;

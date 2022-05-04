@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `Amigo` (
     idAmigo INT NOT NULL,
     idUsuario INT NOT NULL,
     nombreAmigo VARCHAR(256) NOT NULL,
-    estado ENUM('Agregado', 'No', 'Solicitud'),
+    estado ENUM('Agregado', 'No'),
     PRIMARY KEY (idAmigo, idUsuario),
     FOREIGN KEY (idAmigo) REFERENCES Usuario(id) ON DELETE CASCADE,
     FOREIGN KEY (idUsuario) REFERENCES Usuario(id) ON DELETE CASCADE
