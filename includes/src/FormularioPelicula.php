@@ -27,7 +27,10 @@ class FormularioPelicula extends Formulario
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
         $erroresCampos = self::generaErroresCampos(['titulo', 'sinopsis','genero', 'file', 'trailer'], $this->errores, 'span', array('class' => 'error'));
 
-        if(!Aplicacion::getInstance()->enabled()){
+        if(!Aplicacion::getInstance()->usuarioLogueado()){
+            $html = "<h1>Inicia sesión para subir contenido :(</h1>";
+        }
+        else if(!Aplicacion::getInstance()->enabled()){
             $html = "<h1>Estas baneado, no puedes subir contenido :(</h1>";
         }else{
             $html = <<<EOF
