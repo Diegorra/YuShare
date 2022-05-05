@@ -10,17 +10,6 @@ $(document).ready(function () {
             window.location = 'http://localhost/yushare/index.php';
         });
     });
-	
-    $("#deleteFriend").click(function () {
-        var ajaxurl = 'ajax.php';
-        var data = {
-            'action': "deleteFriend",
-            'id': $(this).attr("friendId")
-        };
-        $.post(ajaxurl, data, function (response) {
-            window.location = 'http://localhost/yushare/index.php';
-        });
-    });
 
     $("#addFriend").click(function () {
         var ajaxurl = 'ajax.php';
@@ -29,7 +18,34 @@ $(document).ready(function () {
             'id': $(this).attr("addFriendId")
         };
         $.post(ajaxurl, data, function (response) {
-            window.location = 'http://localhost/yushare/index.php';
+            console.log(response);
+            //alert("Tu solicitud se ha mandado con éxito");
+        });
+    });
+
+    $(".deleteFriend").each(function () {
+        $(this).on("click", function () {
+            var ajaxurl = 'ajax.php';
+            var data = {
+                'action': "deleteFriend",
+                'id': $(this).attr("friendId")
+            };
+            $.post(ajaxurl, data, function (response) {
+                window.location = 'http://localhost/yushare/showFriends.php';
+            });
+        });
+    });
+
+    $(".acceptFriend").each(function () {
+        $(this).on("click", function () {
+            var ajaxurl = 'ajax.php';
+            var data = {
+                'action': "acceptFriend",
+                'id': $(this).attr("addFriendId")
+            };
+            $.post(ajaxurl, data, function (response) {
+                window.location = 'http://localhost/yushare/showFriends.php';
+            });
         });
     });
 

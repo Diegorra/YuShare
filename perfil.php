@@ -2,7 +2,7 @@
 
 require_once __DIR__.'/includes/config.php';
 use es\ucm\fdi\aw\Pelicula;
-use es\ucm\fdi\aw\Amigos;
+use es\ucm\fdi\aw\Amigo;
 use es\ucm\fdi\aw\usuarios\Usuario;
 
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
@@ -11,13 +11,13 @@ $peliculasUsuario = Pelicula::peliculasPerfil($usuario->getId());
 
 if($usuario->getId() == $app->idUsuario()){
     $settings = "<a href= 'editarPerfil.php' class='botonEditarPerfil'>Editar perfil</a>";
-    $amigoUrl = $app->buildUrl('/showFriends.php', ['id'=> $app->idUsuario()]);
+    $amigoUrl = $app->resuelve('/showFriends.php');
     $manageFriends = "<a href= '$amigoUrl' class='botonEditarPerfil'>Gestionar amigos</a>";
     $settings .= $manageFriends;
 }else{
   if($app->usuarioLogueado()) {
-    if(Amigos::esAmigo($usuario->getId(), $app->idUsuario())) {  
-      $settings = "<button id='deleteFriend' class='botonEditarPerfil' addFriendId='{$usuario->getId()}'>Desagregar</button>";
+    if(Amigo::esAmigo($usuario->getId(), $app->idUsuario())) {  
+      $settings = "<button id='deleteFriend' class='botonEditarPerfil deleteFriend' addFriendId='{$usuario->getId()}'>Desagregar</button>";
     }else {
       $settings = "<button id='addFriend' class='botonEditarPerfil' addFriendId='{$usuario->getId()}'>Agregar</button>";
     }

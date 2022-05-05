@@ -1,19 +1,18 @@
 <?php
 
 require_once __DIR__.'/includes/config.php';
-use es\ucm\fdi\aw\Amigos;
-use es\ucm\fdi\aw\usuarios\Usuario;
 
-$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-$allFriends = Amigos::listaAmigos($id);
-$noFriends = Amigos::obtenerUsuarios($id);
+use es\ucm\fdi\aw\Amigo;
+
+$allFriends = Amigo::listaAmigos($app->idUsuario());
+$noFriends = Amigo::obtenerUsuarios($app->idUsuario());
 
 $tituloPagina = 'All friends';
 
 function muestraAmigos($friendList){
     $contenido = "";
     foreach ($friendList as $friend) {
-			$estatus = "<i button id='deleteFriend' class='fa-solid fa-circle-xmark' friendId='{$friend->getIdAmigo()}'></i>";
+			$estatus = "<i button class='fa-solid fa-circle-xmark deleteFriend' friendId='{$friend->getIdAmigo()}'></i>";
 			$amigo = <<<EOS
 			<div class="friends">
 				<h2>{$friend->getNombreAmigo()} {$estatus}</h2>
@@ -28,7 +27,7 @@ function muestraAmigos($friendList){
 function muestraSolicitudes($friendList){
     $contenido = "";
     foreach ($friendList as $friend) {
-		$estatus = "<i button id='addFriend' class='fa-solid fa-circle-check' addFriendId='{$friend->getIdAmigo()}'></i>";
+		$estatus = "<i button class='fa-solid fa-circle-check acceptFriend' addFriendId='{$friend->getIdAmigo()}'></i>";
 		$amigo = <<<EOS
 		<div class="friends">
 			<h2>{$friend->getNombreAmigo()} {$estatus}</h2>
