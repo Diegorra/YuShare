@@ -18,7 +18,7 @@ $(document).ready(function () {
             'id': $(this).attr("addFriendId")
         };
         $.post(ajaxurl, data, function (response) {
-            console.log(response);
+            window.location = 'http://localhost/yushare/index.php';
             //alert("Tu solicitud se ha mandado con éxito");
         });
     });

@@ -50,19 +50,20 @@ class Amigo
     
     //-------------------------------------------------------------------------------------------------------
     /**
-     * Crea una solicitud de amistad 
+     * Crea una solicitud de amistad DESDE PERFIL
      */
-    public static function peticionAmistad($idReceptor, $idSolicitante){
+    public static function peticionAmistad($idAmigo, $idUsuario){
         $conn = Aplicacion::getInstance()->getConexionBd();
         $query = sprintf("INSERT INTO Amigo(idAmigo, idUsuario, nombreAmigo, estado) VALUES ('%s', '%s', '%s', '%s')"
-            , $conn->real_escape_string($idReceptor)
-            , $conn->real_escape_string($idSolicitante)
-            , Usuario::buscaPorId($idReceptor)->getNombreUsuario()
+            , $conn->real_escape_string($idAmigo)
+            , $conn->real_escape_string($idUsuario)
+            , Usuario::buscaPorId($idAmigo)->getNombreUsuario()
             , 'Pendiente'
         );
         $result = false;
         if ( $conn->query($query) ) {
             $result = true;
+            self::amistadInversa($idUsuario, $idAmigo);
         } else {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
         }
@@ -70,7 +71,7 @@ class Amigo
     }
 
     /**
-     * Cuando el usuario decide aceptar la solicitud de amistad del usuario con idAmigo
+     * Cuando el usuario decide aceptar la solicitud de amistad del usuario con idAmigo DESDE LA LISTA DE AMIGOS
      */
     public static function agregarAmigo($idAmigo, $idUsuario) {
         $conn = Aplicacion::getInstance()->getConexionBd();
@@ -78,13 +79,45 @@ class Amigo
             $conn->real_escape_string($idUsuario), 
             $conn->real_escape_string($idAmigo)
         );
+        if (!$conn->query($query)) {
+            error_log("Error BD ({$conn->errno}): {$conn->error}");
+            return false;
+        } else {
+            self::aceptacionMutua($idAmigo, $idUsuario);
+            return true;
+        }
+    }
 
+   public static function amistadInversa($id1, $id2) {
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $query = sprintf("INSERT INTO Amigo(idAmigo, idUsuario, nombreAmigo, estado) VALUES ('%s', '%s', '%s', '%s')"
+            , $conn->real_escape_string($id1)
+            , $conn->real_escape_string($id2)
+            , Usuario::buscaPorId($id1)->getNombreUsuario()
+            , 'Pendiente'
+        );
         if (!$conn->query($query)) {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
             return false;
         } else {
             return true;
         }
+    }
+
+
+   public static function aceptacionMutua($id1, $id2) {
+        $conn = Aplicacion::getInstance()->getConexionBd();
+        $query=sprintf("UPDATE Amigo A SET A.estado = 'Agregado' WHERE idUsuario = '%s' AND idAmigo = '%s'",
+            $conn->real_escape_string($id1), 
+            $conn->real_escape_string($id2)
+        );
+        if (!$conn->query($query)) {
+            error_log("Error BD ({$conn->errno}): {$conn->error}");
+            return false;
+        } else {
+            return true;
+        }
+
     }
 
     /**
@@ -97,7 +130,7 @@ class Amigo
         } 
         $conn = Aplicacion::getInstance()->getConexionBd();
         $query = sprintf("DELETE FROM `Amigo`  WHERE `Amigo`.`idAmigo` = $idAmigo AND `Amigo`.`idUsuario` = $idUser;");
-        if ( ! $conn->query($query) ) {
+        if ( ! $conn->query($query) || ! $conn->query($query2)) {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
             return false;
         }

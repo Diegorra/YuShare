@@ -27,16 +27,6 @@ class FormularioEditarPelicula extends Formulario{
         $src = $datos['src'] ?? '';
         $trailer = $datos['trailer'] ?? '';
 
-        //obtenemos datos de la película
-        $pelicula = Pelicula::buscaPelicula($this->titulo);
-        
-        if($pelicula !== ""){
-            $tituloOriginal = $pelicula->getTitulo();
-            $sinopsisOriginal = $pelicula->getText();
-            $generoOriginal = $pelicula->getGenero();
-            $imagenOriginal = $pelicula->getSrc();
-            $trailerOriginal = $pelicula->getTrailer();
-        }
 
         // Se generan los mensajes de error si existen.
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
@@ -48,27 +38,27 @@ class FormularioEditarPelicula extends Formulario{
             <legend>Datos de la película</legend>
             <div>
                 <label for="titulo">Titulo: </label>
-                <input id="titulo" type="text" name="titulo value="$tituloOriginal" />
+                <input id="titulo" type="text" name="titulo" />
                 {$erroresCampos['titulo']}
             </div>
             <div>
                 <label for="sinopsis">Sinopsis: </label>
-                <input id="sinopsis" type="text" name="sinopsis" value="$sinopsisOriginal" />
+                <input id="sinopsis" type="text" name="sinopsis" />
                 {$erroresCampos['sinopsis']}
 
             </div>
             <div>
                 <label for="genero">Género: </label>
-                <input id="genero" type="text" name="genero" value="$generoOriginal"/>
+                <input id="genero" type="text" name="genero"/>
                 {$erroresCampos['genero']}
             </div>
             <div>
-                <input type="file" id="file" name="file" value="$imagenOriginal" />
+                <input type="file" id="file" name="file"/>
                 {$erroresCampos['file']}
             </div>
             <div>
                 <label for="trailer">Trailer: </label>
-                <input id="trailer" type="text" name="trailer" value="$trailerOriginal" />
+                <input id="trailer" type="text" name="trailer" />
                 {$erroresCampos['trailer']}
             </div>
             <div>
@@ -86,7 +76,7 @@ class FormularioEditarPelicula extends Formulario{
     protected function procesaFormulario(&$datos)
     {
         //obtenemos datos de la película
-        $pelicula = Pelicula::buscaPelicula($titulo);
+        $pelicula = Pelicula::buscaPelicula($this->titulo);
 
         $idPeli = $pelicula['iduser'];
         $tituloOriginal = $pelicula['titulo'];
@@ -174,7 +164,7 @@ class FormularioEditarPelicula extends Formulario{
             else {
                 $newTrailer = $trailerOriginal;
             }
-            $pelicula = Pelicula::editarPeli($idPeli, $titulo, $sinopsis, $genero, $trailer);            
+            $pelicula = Pelicula::editarPeli($idPeli, $newTitulo, $newSinopsis, $newGenero, $newTrailer);            
         }
     }
 }  

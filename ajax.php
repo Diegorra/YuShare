@@ -10,7 +10,7 @@ if (isset($_POST['action'])) {
                 Pelicula::borrarPeli($_POST['id'], $app->idUsuario());
                 break;
             case 'addFriend':
-                 Amigo::peticionAmistad($_POST['id'], $app->idUsuario());
+                 Amigo::peticionAmistad($_POST['id'], $app->idUsuario()); //amigo y usuario
                 break;
 			case 'deleteFriend':
                 Amigo::borraAmigo($_POST['id'], $app->idUsuario());

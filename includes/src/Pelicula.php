@@ -185,7 +185,7 @@ class Pelicula
         $query = sprintf("SELECT * FROM Pelicula P WHERE P.titulo='%s'", $conn->real_escape_string($nombrePelicula));
         $rs = $conn->query($query);
         $result = $conn->query($query);
-        $peli = "";
+        $peli="";
         if ($result->num_rows > 0) {
             $reg = $result->fetch_assoc();
             $peli = new Pelicula($reg['id'], $reg['iduser'], $reg['titulo'], $reg['text'], $reg['genero'], $reg['src'], $reg['trailer']);
@@ -256,7 +256,7 @@ class Pelicula
         }
     }
 
-    public static function editarPeli($id, $titulo, $sinopsis, $genero, $src, $trailer) {
+    public static function editarPeli($id, $titulo, $sinopsis, $genero, $trailer) {
         $conn = Aplicacion::getInstance()->getConexionBd();
         $result = false;
         $conn = Aplicacion::getInstance()->getConexionBd();

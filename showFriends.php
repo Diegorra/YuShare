@@ -27,7 +27,7 @@ function muestraAmigos($friendList){
 function muestraSolicitudes($friendList){
     $contenido = "";
     foreach ($friendList as $friend) {
-		$estatus = "<i button class='fa-solid fa-circle-check acceptFriend' addFriendId='{$friend->getIdAmigo()}'></i>";
+		$estatus = "<i button class='fa-solid fa-clock-rotate-left acceptFriend' addFriendId='{$friend->getIdAmigo()}'></i>";
 		$amigo = <<<EOS
 		<div class="friends">
 			<h2>{$friend->getNombreAmigo()} {$estatus}</h2>
