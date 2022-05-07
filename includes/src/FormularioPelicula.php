@@ -56,7 +56,8 @@ class FormularioPelicula extends Formulario
 
                     </div>
                     <div>
-                        <input type="file" id="file" name="file" />
+                        <label for="file">Photo: </label>
+                        <input type="file" id="file" name="file" accept="image/png, image/jpeg"/>
                         {$erroresCampos['file']}
                     </div>
                     <div>
@@ -65,6 +66,7 @@ class FormularioPelicula extends Formulario
                         {$erroresCampos['trailer']}
 
                     </div>
+                    <img id="imagePreview" src="$imagenOriginal" style="max-width: 300px"/>
                     <div>
                         <button type="submit" name="registro">Subir película</button>
                     </div>

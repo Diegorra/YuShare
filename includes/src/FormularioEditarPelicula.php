@@ -16,7 +16,7 @@ class FormularioEditarPelicula extends Formulario{
         [
             'formId' => "editMovie",
             'enctype' => "multipart/form-data",
-            'urlRedireccion' => Aplicacion::getInstance()->resuelve('/perfil.php')]);
+            'urlRedireccion' => Aplicacion::getInstance()->resuelve('/index.php')]);
     }
     
     protected function generaCamposFormulario(&$datos)
@@ -27,14 +27,14 @@ class FormularioEditarPelicula extends Formulario{
         $tituloOriginal = $pelicula->getTitulo();
         $sinopsisOriginal = $pelicula->getText();
         $generoOriginal = $pelicula->getGenero();
-        //$imagenOriginal = $pelicula->getSrc();
+        $imagenOriginal = $pelicula->getSrc();
         $trailerOriginal = $pelicula->getTrailer();
 
         $idUsuario = $datos['idUsuario'] ?? '';
         $titulo = $datos['titulo'] ?? '';
         $sinopsis = $datos['sinopsis'] ?? '';
         $genero = $datos['genero'] ?? '';
-        //$src = $datos['src'] ?? '';
+        $src = $datos['src'] ?? '';
         $trailer = $datos['trailer'] ?? '';
 
 
@@ -63,18 +63,20 @@ class FormularioEditarPelicula extends Formulario{
                 {$erroresCampos['genero']}
             </div>
             <div>
+                <label for="file">Photo: </label>
+                <input type="file" id="file" name="file" accept="image/png, image/jpeg"/>
+            </div>
+            <div>
                 <label for="trailer">Trailer: </label>
-                <input id="trailer" type="text" name="trailer" value="trailerOriginal"/>
+                <input id="trailer" type="text" name="trailer" value="$trailerOriginal"/>
                 {$erroresCampos['trailer']}
             </div>
+            <img id="imagePreview" src="$imagenOriginal" style="max-width: 300px"/>
             <div>
                 <button type="submit" name="registro">Editar película</button>
             </div>
         </fieldset>
-        <script>
-
-        </script>
-
+        
         EOF;
         return $html;
     }
@@ -88,7 +90,7 @@ class FormularioEditarPelicula extends Formulario{
             $tituloOriginal = $pelicula->getTitulo();
             $sinopsisOriginal = $pelicula->getText();
             $generoOriginal = $pelicula->getGenero();
-           // $imagenOriginal = $pelicula->getSrc();
+            $imagenOriginal = $pelicula->getSrc();
             $trailerOriginal = $pelicula->getTrailer();
         
             $cambiarTitulo = false;
@@ -122,7 +124,7 @@ class FormularioEditarPelicula extends Formulario{
                 }
             }
             
-       /*     
+            
             $file_name = $_FILES['file']['name'];
             $file_size = $_FILES['file']['size'];
             $file_tmp = $_FILES['file']['tmp_name'];
@@ -136,7 +138,9 @@ class FormularioEditarPelicula extends Formulario{
                 if(in_array($file_ext,$expensions) === false){
                     $this->errores['file'] ="extension not allowed, please choose a JPEG or PNG file.";
                 }
-            }*/
+            }else{
+                $file = $imagenOriginal;
+            }
 
             $trailerForm = trim($datos['trailer'] ?? '');
             $trailerForm = filter_var($trailerForm, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -169,7 +173,8 @@ class FormularioEditarPelicula extends Formulario{
                 else {
                     $newTrailer = $trailerOriginal;
                 }
-                $pelicula = Pelicula::editarPeli($idPeli, $newTitulo, $newSinopsis, $newGenero, $newTrailer);            
+                $pelicula = Pelicula::editarPeli($idPeli, $newTitulo, $newSinopsis, $newGenero, $file, $newTrailer);            
+                move_uploaded_file($file_tmp, $file);
             }
         }
         else {

@@ -18,8 +18,7 @@ $(document).ready(function () {
             'id': $(this).attr("addFriendId")
         };
         $.post(ajaxurl, data, function (response) {
-            window.location = 'http://localhost/yushare/index.php';
-            //alert("Tu solicitud se ha mandado con éxito");
+            alert("Tu solicitud se ha mandado con éxito");
         });
     });
 
@@ -86,4 +85,18 @@ $(document).ready(function () {
             console.log("logged out");
         });
     });
+
+    $("#file").change(function () {
+        console.log("File changed");
+        const file = $("#file")[0].files[0];
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+            localStorage.setItem("image", reader.result);
+            $("#imagePreview").attr("src", localStorage.getItem("image"))
+        };
+        if (localStorage.getItem("image"))
+            $("#imagePreview").attr("src", localStorage.getItem("image"))
+
+    })
 });

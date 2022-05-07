@@ -98,7 +98,7 @@ class Pelicula
     {
         $result = false;
         $conn = Aplicacion::getInstance()->getConexionBd();
-        $query=sprintf("INSERT INTO Pelicula (iduser, titulo, text, genero, src, trailer) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')"
+        $query=sprintf("INSERT INTO Pelicula (iduser, titulo, text, genero, src, trailer) VALUES ('%s', '%s', '%s', '%s', '%s', '%s')"
             , $conn->real_escape_string($pelicula->idUsuario)
             , $conn->real_escape_string($pelicula->titulo)
             , $conn->real_escape_string($pelicula->text)
@@ -256,14 +256,15 @@ class Pelicula
         }
     }
 
-    public static function editarPeli($id, $titulo, $sinopsis, $genero, $trailer) {
+    public static function editarPeli($id, $titulo, $sinopsis, $genero, $src, $trailer) {
         $conn = Aplicacion::getInstance()->getConexionBd();
         $result = false;
         $conn = Aplicacion::getInstance()->getConexionBd();
-        $query=sprintf("UPDATE Pelicula P SET titulo= '%s', text='%s',genero='%s', trailer='%s' WHERE P.id=%d"
+        $query=sprintf("UPDATE Pelicula P SET titulo= '%s', text='%s',genero='%s', src='%s', trailer='%s' WHERE P.id=%d"
             , $conn->real_escape_string($titulo)
             , $conn->real_escape_string($sinopsis)
             , $conn->real_escape_string($genero)
+            , $conn->real_escape_string($src)
             , $conn->real_escape_string($trailer)
             , $id
         );
