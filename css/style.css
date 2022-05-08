@@ -320,22 +320,22 @@ a:hover {
 .search {
     border: 8px solid #0400ff;
     border-radius: 1em;
-	height: 275px;
-	width: 1500px;
-	margin: 2% 5% 2% 20%;
+height: 3%;
+width: 60%;
+margin: 5% 20%;
 }
 
 .search h1 {
     color: white;
-	margin: 130px 150px 50px 80px;
-	display: inline-block;
-	vertical-align: top;
+margin: 10% 12%;
+display: inline-block;
+vertical-align: top;
 }
 
 .search #imgU_search {
-margin: 12px 1em 50px 8%;
-    width: 150px;
-    height: 250px;
+margin: 3% 1em;
+    width: 12%;
+    height: 15%;
 
 }
 td {
