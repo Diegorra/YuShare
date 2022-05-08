@@ -40,7 +40,7 @@ if($infoPelicula !== ""){
     }
 
     if($app->idUsuario() === $infoPelicula->getIdUser() || $app->esAdmin()){
-        $borrar = "<button id='deleteFilm' class ='botonEditaryBorrar' type='button' filmId='{$idPeli}'>Borrar</button>";
+        $borrar = "<button id='deleteFilm' class ='botonEditarPerfil' type='button' filmId='{$idPeli}'>Borrar</button>";
     }
 
 }else{
@@ -52,8 +52,10 @@ $contenidoPrincipal=<<<EOF
     <div class="texto_inicio">
         <h1></h1>
     </div> 
-    $editar
-    $borrar
+    <div class="botones">
+        $editar
+        $borrar
+    </div>
     $muestraP
 EOF;
 
