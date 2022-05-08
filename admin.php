@@ -10,11 +10,13 @@ function muestraUsuario(){
   foreach ($list as $usuario) {
     
     if($usuario->getEnabled()){
-      $enabled = "<i class='fa-solid fa-check'></i>";
-      $button = "<button class='ban' type='button' idU='{$usuario->id}'><i class='fa-solid fa-ban'></i></button>";
+      $enabled = "<span style='font-size: 2em; color: green;'><i class='fa-solid fa-check fa-beat'></i></span>";
+      $button = "<button class='ban' type='button' idU='{$usuario->id}'><span style='vertical-align: top; font-size: 1.5em; color: Tomato;'>
+      <i class='fa-solid fa-ban fa-border fa-fw '></i></span></button>";
     }else{
-      $enabled = "<i class='fa-solid fa-xmark'></i>";
-      $button = "<button class='ban' type='button' idU='{$usuario->id}'><i class='fa-solid fa-circle-check'></i></button>";
+      $enabled = "<span style='font-size: 2em; color: red;'><i class='fa-solid fa-xmark fa-beat'></i></span>";
+      $button = "<button class='ban' type='button' idU='{$usuario->id}'><span style='vertical-align: top; font-size: 1.5em; color: Mediumslateblue;'>
+      <i class='fa-solid fa-circle-check fa-border fa-fw'></i></span></button>";
     }
     
     $userHtml = <<<EOS
@@ -24,7 +26,8 @@ function muestraUsuario(){
         <td>{$enabled}</td>
         <td>
           <div class="btn-group">
-            <button class="deleteU" type="button"  idU="{$usuario->id}"><i class='fa-solid fa-trash-can'></i></button>
+            <button class="deleteU" type="button"  idU="{$usuario->id}"><span style='vertical-align: top; font-size: 1.5em; color: yellow;'>
+            <i class='fa-solid fa-trash-can fa-border fa-fw'></i></span></button>
             $button
           </div>
         </td>
