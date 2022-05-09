@@ -2,14 +2,52 @@
 
 require_once __DIR__.'/includes/config.php';
 use es\ucm\fdi\aw\Pelicula;
+use es\ucm\fdi\aw\Comentario;
 
 $idPeli = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 $infoPelicula = Pelicula::todaInfoPeliculas($idPeli);
 
 $formComent = new \es\ucm\fdi\aw\FormularioComent;
 $formComent = $formComent->gestiona();
+$comentarios = Comentario::mostrarComentarios($idPeli);
 
 $tituloPagina = 'Info';
+
+function mostrarComentarios()
+{
+    //HTML: https://codepen.io/Creaticode/pen/yLWqXo
+
+    $htmlComentarios=<<<EOF
+
+    <div class="comments-container">
+    <h1>Comentarios <a href="http://creaticode.com">creaticode.com</a></h1>
+
+    <ul id="comments-list" class="comments-list">
+        <li>
+            <div class="comment-main-level">
+                <!-- Avatar -->
+                <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt=""></div>
+                <!-- Contenedor del Comentario -->
+                <div class="comment-box">
+                    <div class="comment-head">
+                        <h6 class="comment-name by-author"><a href="http://creaticode.com/blog">Agustin Ortiz</a></h6>
+                        <span>hace 20 minutos</span>
+                        <i class="fa fa-reply"></i>
+                        <i class="fa fa-heart"></i>
+                    </div>
+                    <div class="comment-content">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
+                    </div>
+                </div>
+            </div>   
+        </li>
+    </ul>
+
+    </div>
+
+    EOF;
+    return $htmlComentarios;
+}
 
 function muestraInfo($film){
     $peli = <<<EOS
@@ -50,6 +88,7 @@ if($infoPelicula !== ""){
     $muestraP = "An error took place :(";
     
 }
+$comentarios = mostrarComentarios();
 
 $contenidoPrincipal=<<<EOF
     <div class="texto_inicio">
@@ -62,6 +101,7 @@ $contenidoPrincipal=<<<EOF
     $muestraP
     
     $formComent
+    $comentarios
 EOF;
 
 $params = ['tituloPagina' => $tituloPagina, 'contenidoPrincipal' => $contenidoPrincipal];
