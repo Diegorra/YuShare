@@ -4,6 +4,9 @@ require_once __DIR__.'/includes/config.php';
 use es\ucm\fdi\aw\Pelicula;
 use es\ucm\fdi\aw\usuarios\Usuario;
 use es\ucm\fdi\aw\Comentario;
+use es\ucm\fdi\aw\Aplicacion;
+
+
 
 $idPeli = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 $infoPelicula = Pelicula::todaInfoPeliculas($idPeli);
@@ -18,7 +21,7 @@ function mostrarComentarios()
 {
     $idPeli = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
     $comentarios = Comentario::mostrarComentarios($idPeli);
-
+    $app = Aplicacion::getInstance();
     //HTML: https://codepen.io/Creaticode/pen/yLWqXo
     if(count($comentarios) > 0){
     $htmlComentarios = <<<EOT
@@ -28,19 +31,17 @@ function mostrarComentarios()
     EOT;
 
     foreach($comentarios as $comentario) {
-        
-        $usuario = Usuario::buscaUsuario($comentario->getIdUsuario());
+        $usuario = Usuario::buscaPorId($comentario->getIdUsuario());
         $htmlComentarios=$htmlComentarios.<<<EOF
             <div class="comment-main-level">
                 <!-- Avatar -->
                 <!-- Contenedor del Comentario -->
                 <div class="comment-box">
                     <div class="comment-head">
-                        <h6 class="comment-name by-author"><img src="{$usuario->getImage()}" alt="" class="comment-imagen"><a href="{$app->buildUrl('/perfil.php', ['id'=> $usuario->getId()])}}">Agustin Ortiz</a></h6>
-                        <span>hace 20 minutos</span>
+                        <h6 class="comment-name by-author"><img src="{$usuario->getImage()}" alt="" class="comment-imagen"><a>{$usuario->getNombreUsuario()}</a></h6>
                     </div>
                     <div class="comment-content">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
+                        {$comentario->getText()}
                     </div>
                 </div>
             </div>   
