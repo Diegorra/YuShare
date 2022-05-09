@@ -9,10 +9,10 @@ use es\ucm\fdi\aw\Pelicula;
 
 class FormularioComent extends Formulario
 {
-    public function __construct() {
+    public function __construct($idPeli) {
         parent::__construct('formComent', [
             'formId' => "formComent",
-            'urlRedireccion' => Aplicacion::getInstance()->resuelve('/peliIndv.php')
+            'urlRedireccion' => Aplicacion::getInstance()->resuelve(Aplicacion::getInstance()->buildUrl('/peliIndv.php', ['id'=> $idPeli]))
         ]);
     }
 

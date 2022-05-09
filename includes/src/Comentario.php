@@ -71,7 +71,7 @@ class Comentario
     public static function insertComentario($coment_text,$idPeli,$idUsuario){
         $app = Aplicacion::getInstance();
         $conn = $app->getConexionBd();
-        $query = sprintf("INSERT INTO comentario(id, idpubli, iduser, text) VALUES ('%s', '%s', '%s', '%s')"
+        $query = sprintf("INSERT INTO comentario (id, idpubli, iduser, text) VALUES ('%s', '%s', '%s', '%s')"
             , $conn->insert_id
             , $conn->real_escape_string($idPeli)
             , $conn->real_escape_string($idUsuario)

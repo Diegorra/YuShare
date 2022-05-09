@@ -7,13 +7,14 @@ use es\ucm\fdi\aw\Comentario;
 use es\ucm\fdi\aw\Aplicacion;
 
 
-
+$app = Aplicacion::getInstance();
 $idPeli = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 $infoPelicula = Pelicula::todaInfoPeliculas($idPeli);
 
-$formComent = new \es\ucm\fdi\aw\FormularioComent;
-$formComent = $formComent->gestiona();
-
+if($app->usuarioLogueado()){
+    $formComent = new \es\ucm\fdi\aw\FormularioComent($idPeli);
+    $formComent = $formComent->gestiona();
+}
 
 $tituloPagina = 'Info';
 
@@ -109,7 +110,10 @@ $contenidoPrincipal=<<<EOF
     </div>
     $muestraP
     
+
     $formComent
+    
+    
     $comentarios
 EOF;
 
