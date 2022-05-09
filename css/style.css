@@ -314,33 +314,59 @@ a:hover {
 .search {
     border: 8px solid #0400ff;
     border-radius: 1em;
-	height: 275px;
-	width: 1500px;
-	margin: 2% 5% 2% 20%;
+height: 3%;
+width: 60%;
+margin: 5% 20%;
 }
 
 .search h1 {
     color: white;
-	margin: 130px 150px 50px 80px;
-	display: inline-block;
-	vertical-align: top;
+margin: 10% 12%;
+display: inline-block;
+vertical-align: top;
 }
 
 .search #imgU_search {
-margin: 12px 1em 50px 8%;
-    width: 150px;
-    height: 250px;
+margin: 3% 1em;
+    width: 12%;
+    height: 15%;
 
 }
-td {
-    vertical-align: middle;
+
+.admin h1{
+    margin-top: 100px;
     text-align: center;
-}
+    font-size: 40px;
+    text-shadow: 0 0 2px #de812a;
+    color: red;
+    font-family: serif;
+  }
+.admin table{
+    color: white;
+    table-layout: fixed;
+    width: 100%;
+    margin: 20px auto;
+    padding: 10px;
+    border-collapse: collapse;
+    border: 5px solid red;
+  }
+.admin td{
+    background-color: black;
+    border: 2px solid #5a330e;
+    text-align: center;
+ font-size: 20px;
+  }
 
-td div {
-    vertical-align: middle;
-    display: inline-block;
-}
+.admin th{
+    background-color: blue;
+    border: 2px solid red;
+    border-spacing: 0;
+    padding: 20px;
+    text-align: center;
+ font-size: 25px;
+
+  }
+
 
 
 #contenedorAmigos {
