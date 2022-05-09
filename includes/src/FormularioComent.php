@@ -18,6 +18,9 @@ class FormularioComent extends Formulario
 
     protected function generaCamposFormulario(&$datos)
     {
+        $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
+        $erroresCampos = self::generaErroresCampos([], $this->errores, 'span', array('class' => 'error'));
+
         // Se reutiliza el campo introducido previamente o se deja en blanco
         $coment_text = $datos['coment_text'] ?? '';
 
@@ -39,6 +42,8 @@ class FormularioComent extends Formulario
      */
     protected function procesaFormulario(&$datos)
     {
+        $this->errores = [];
+
         $app = Aplicacion::getInstance();
         $this->errores = [];
         $coment_text = trim($datos['coment_text'] ?? '');
@@ -51,6 +56,7 @@ class FormularioComent extends Formulario
             $idPeli = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
             $idUsuario = $_SESSION['idUsuario'];
             $usuarios = Comentario::insertComentario($coment_text,$idPeli,$idUsuario);
+            $this->errores[] = "Comentario creado correctamente";
         }
     }
 }
