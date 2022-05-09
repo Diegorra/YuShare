@@ -59,7 +59,7 @@ class Comentario
         $result = [];
         if ($rs) {
             while($fila = $rs->fetch_assoc()) {
-                $result[] = new Comentario($fila['id'], $fila['iduser'], $fila['titulo'], $fila['text'], $fila['genero'], $fila['src'], $fila['trailer']);  
+                $result[] = new Comentario($fila['id'], $fila['idPeli'], $fila['idUsuario'], $fila['text']);  
             }
             $rs->free();
         } else {
