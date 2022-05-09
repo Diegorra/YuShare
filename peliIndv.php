@@ -6,6 +6,9 @@ use es\ucm\fdi\aw\Pelicula;
 $idPeli = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 $infoPelicula = Pelicula::todaInfoPeliculas($idPeli);
 
+$formComent = new \es\ucm\fdi\aw\FormularioComent;
+$formComent = $formComent->gestiona();
+
 $tituloPagina = 'Info';
 
 function muestraInfo($film){
@@ -57,6 +60,8 @@ $contenidoPrincipal=<<<EOF
         $borrar
     </div>
     $muestraP
+    
+    $formComent
 EOF;
 
 $params = ['tituloPagina' => $tituloPagina, 'contenidoPrincipal' => $contenidoPrincipal];
