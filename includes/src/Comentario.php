@@ -68,5 +68,22 @@ class Comentario
         return $result;
     }
 
+    public static function insertComentario($coment_text){
+        $app = Aplicacion::getInstance();
+        $conn = $app->getConexionBd();
+        $query = sprintf("SELECT * FROM comentario WHERE idpubli = %s", $idPeli);
+        $rs = $conn->query($query);
+        $result = [];
+        if ($rs) {
+            while($fila = $rs->fetch_assoc()) {
+                $result[] = new Comentario($fila['id'], $fila['idPeli'], $fila['idUsuario'], $fila['text']);  
+            }
+            $rs->free();
+        } else {
+            error_log("Error BD ({$conn->errno}): {$conn->error}");
+        }
+        return $result;
+    }
+
 
 }

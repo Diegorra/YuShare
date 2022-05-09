@@ -4,7 +4,7 @@ namespace es\ucm\fdi\aw;
 
 use es\ucm\fdi\aw\Aplicacion;
 use es\ucm\fdi\aw\Formulario;
-use es\ucm\fdi\aw\usuarios\Usuario;
+use es\ucm\fdi\aw\Comentario;
 use es\ucm\fdi\aw\Pelicula;
 
 class FormularioComent extends Formulario
@@ -48,7 +48,7 @@ class FormularioComent extends Formulario
         }
         
         if (count($this->errores) === 0) {
-            $usuarios = Usuario::insertComentario($coment_text);
+            $usuarios = Comentario::insertComentario($coment_text);
         }
     }
 }
