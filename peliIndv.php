@@ -2,6 +2,7 @@
 
 require_once __DIR__.'/includes/config.php';
 use es\ucm\fdi\aw\Pelicula;
+use es\ucm\fdi\aw\usuarios\Usuario;
 use es\ucm\fdi\aw\Comentario;
 
 $idPeli = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
@@ -9,25 +10,33 @@ $infoPelicula = Pelicula::todaInfoPeliculas($idPeli);
 
 $formComent = new \es\ucm\fdi\aw\FormularioComent;
 $formComent = $formComent->gestiona();
-$comentarios = Comentario::mostrarComentarios($idPeli);
+
 
 $tituloPagina = 'Info';
 
 function mostrarComentarios()
 {
+    $idPeli = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+    $comentarios = Comentario::mostrarComentarios($idPeli);
+
     //HTML: https://codepen.io/Creaticode/pen/yLWqXo
-
-    $htmlComentarios=<<<EOF
-
+    if(count($comentarios) > 0){
+    $htmlComentarios = <<<EOT
     <div class="comments-container">
     <ul id="comments-list" class="comments-list">
-        <li>
+    <li>
+    EOT;
+
+    foreach($comentarios as $comentario) {
+        
+        $usuario = Usuario::buscaUsuario($comentario->getIdUsuario());
+        $htmlComentarios=$htmlComentarios.<<<EOF
             <div class="comment-main-level">
                 <!-- Avatar -->
                 <!-- Contenedor del Comentario -->
                 <div class="comment-box">
                     <div class="comment-head">
-                        <h6 class="comment-name by-author"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt="" class="comment-imagen"><a href="http://creaticode.com/blog">Agustin Ortiz</a></h6>
+                        <h6 class="comment-name by-author"><img src="{$usuario->getImage()}" alt="" class="comment-imagen"><a href="{$app->buildUrl('/perfil.php', ['id'=> $usuario->getId()])}}">Agustin Ortiz</a></h6>
                         <span>hace 20 minutos</span>
                     </div>
                     <div class="comment-content">
@@ -35,12 +44,16 @@ function mostrarComentarios()
                     </div>
                 </div>
             </div>   
+        EOF;
+    }
+
+    $htmlComentarios=$htmlComentarios.<<<EOT
         </li>
-    </ul>
+        </ul>
+        </div>
+    EOT;
+}
 
-    </div>
-
-    EOF;
     return $htmlComentarios;
 }
 

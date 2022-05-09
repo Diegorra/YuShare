@@ -68,13 +68,13 @@ class Comentario
         return $result;
     }
 
-    public static function insertComentario($coment_text){
+    public static function insertComentario($coment_text,$idPeli,$idusuario){
         $app = Aplicacion::getInstance();
         $conn = $app->getConexionBd();
         $query = sprintf("INSERT INTO comentario(id, idPeli, idUsuario, coment_text) VALUES ('%s', '%s', '%s', '%s')"
-            , $conn->real_escape_string($this->id)
-            , $conn->real_escape_string($this->idPeli)
-            , $conn->real_escape_string($this->idUsuario)
+            , $conn->insert_id
+            , $conn->real_escape_string($idPeli)
+            , $conn->real_escape_string(idUsuario)
             , $conn->real_escape_string($coment_text)
         );
         $rs = $conn->query($query);
