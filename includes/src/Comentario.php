@@ -49,27 +49,24 @@ class Comentario
     }
     
     //-------------------------------------------------------------------------------------------------------
-    /**
-     * Crea una solicitud de amistad DESDE PERFIL
-     */
-    public static function peticionAmistad($idAmigo, $idUsuario){
-        $conn = Aplicacion::getInstance()->getConexionBd();
-        $query = sprintf("INSERT INTO Amigo(idAmigo, idUsuario, nombreAmigo, estado) VALUES ('%s', '%s', '%s', '%s')"
-            , $conn->real_escape_string($idAmigo)
-            , $conn->real_escape_string($idUsuario)
-            , Usuario::buscaPorId($idAmigo)->getNombreUsuario()
-            , 'Pendiente'
-        );
-        $result = false;
-        if ( $conn->query($query) ) {
-            $result = true;
-            self::amistadInversa($idUsuario, $idAmigo);
+
+    public static function mostrarComentarios($idPeli)
+    {
+        $app = Aplicacion::getInstance();
+        $conn = $app->getConexionBd();
+        $query = sprintf("SELECT * FROM 'comentario' WHERE 'idpubli = %s'", $idPeli);
+        $rs = $conn->query($query);
+        $result = [];
+        if ($rs) {
+            while($fila = $rs->fetch_assoc()) {
+                $result[] = new Comentario($fila['id'], $fila['iduser'], $fila['titulo'], $fila['text'], $fila['genero'], $fila['src'], $fila['trailer']);  
+            }
+            $rs->free();
         } else {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
         }
         return $result;
     }
-
 
 
 }
