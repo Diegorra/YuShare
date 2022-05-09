@@ -152,6 +152,25 @@ class Pelicula
         }
         return true;
     }
+
+    public static function mostrarComentarios($id)
+    {
+        $app = Aplicacion::getInstance();
+        $conn = $app->getConexionBd();
+        $query = sprintf("SELECT * FROM 'comentario' WHERE 'idpubli = %s'", $id);
+        $rs = $conn->query($query);
+        $result = [];
+        if ($rs) {
+            while($fila = $rs->fetch_assoc()) {
+                $result[] = new Comentario($fila['id'], $fila['iduser'], $fila['titulo'], $fila['text'], $fila['genero'], $fila['src'], $fila['trailer']);  
+            }
+            $rs->free();
+        } else {
+            error_log("Error BD ({$conn->errno}): {$conn->error}");
+        }
+        return $result;
+    }
+
     
     //-------------------------------------------------------------------------------------------------------
 
