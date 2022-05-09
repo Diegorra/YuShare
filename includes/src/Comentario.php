@@ -71,18 +71,13 @@ class Comentario
     public static function insertComentario($coment_text){
         $app = Aplicacion::getInstance();
         $conn = $app->getConexionBd();
-        $query = sprintf("SELECT * FROM comentario WHERE idpubli = %s", $idPeli);
+        $query = sprintf("INSERT INTO comentario(id, idPeli, idUsuario, coment_text) VALUES ('%s', '%s', '%s', '%s')"
+            , $conn->real_escape_string($this->id)
+            , $conn->real_escape_string($this->idPeli)
+            , $conn->real_escape_string($this->idUsuario)
+            , $conn->real_escape_string($coment_text)
+        );
         $rs = $conn->query($query);
-        $result = [];
-        if ($rs) {
-            while($fila = $rs->fetch_assoc()) {
-                $result[] = new Comentario($fila['id'], $fila['idPeli'], $fila['idUsuario'], $fila['text']);  
-            }
-            $rs->free();
-        } else {
-            error_log("Error BD ({$conn->errno}): {$conn->error}");
-        }
-        return $result;
     }
 
 

@@ -29,7 +29,7 @@ class FormularioComent extends Formulario
         $htmlErroresGlobales
         <input id="coment_text" type="text" name="coment_text" placeholder="Escribe tu comentario..." value="$coment_text"/>
         {$erroresCampos['coment_text']}
-        <button type="submit" id="search_button">Search</button>
+        <button type="submit" id="search_button">Comentar</button>
         EOS;
         return $camposFormulario;
     }
@@ -41,9 +41,9 @@ class FormularioComent extends Formulario
     {
         $app = Aplicacion::getInstance();
         $this->errores = [];
-        $search_text = trim($datos['coment_text'] ?? '');
-        $search_text = filter_var($coment_text, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        if ( ! $search_text || empty($coment_text) ) {
+        $coment_text = trim($datos['coment_text'] ?? '');
+        $coment_text = filter_var($coment_text, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        if ( ! $coment_text || empty($coment_text) ) {
             $this->errores['coment_text'] = 'El comentario no puede estar vacío';
         }
         
