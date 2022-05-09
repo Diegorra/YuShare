@@ -47,8 +47,9 @@ if (!$app->tieneRol("ADMIN_ROLE")) {
   //Administramos!!
   $muestraUsuarios = muestraUsuario();
   $contenidoPrincipal=<<<EOS
+   <div class="admin">
     <h1>Administración Usuarios</h1>
-    <table class="table" border="1" width="100%">
+    <table>
       <tr>
         <th>UserName</th>
         <th>email</th>
@@ -57,6 +58,7 @@ if (!$app->tieneRol("ADMIN_ROLE")) {
       </tr>
       $muestraUsuarios
     </table>
+    </div>
   EOS;
 }
 
