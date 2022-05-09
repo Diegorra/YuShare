@@ -74,7 +74,7 @@ class Comentario
         $query = sprintf("INSERT INTO comentario(id, idPeli, idUsuario, coment_text) VALUES ('%s', '%s', '%s', '%s')"
             , $conn->insert_id
             , $conn->real_escape_string($idPeli)
-            , $conn->real_escape_string(idUsuario)
+            , $conn->real_escape_string($idUsuario)
             , $conn->real_escape_string($coment_text)
         );
         $rs = $conn->query($query);

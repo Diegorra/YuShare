@@ -48,7 +48,9 @@ class FormularioComent extends Formulario
         }
         
         if (count($this->errores) === 0) {
-            $usuarios = Comentario::insertComentario($coment_text);
+            $idPeli = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+            $idUsuario = $_SESSION['id'];
+            $usuarios = Comentario::insertComentario($coment_text,$idPeli,$idUsuario);
         }
     }
 }
