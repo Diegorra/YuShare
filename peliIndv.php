@@ -45,6 +45,7 @@ function mostrarComentarios()
                         {$comentario->getText()}
                     </div>
                 </div>
+                <p></p>
             </div>   
         EOF;
     }
@@ -110,6 +111,9 @@ $contenidoPrincipal=<<<EOF
     </div>
     $muestraP
     
+    <h1>Comentarios sobre la película</h1>
+
+    <p>Añade tu comentario!<p>
 
     $formComent
     

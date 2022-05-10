@@ -30,7 +30,7 @@ class FormularioComent extends Formulario
 
         $camposFormulario = <<<EOS
         $htmlErroresGlobales
-        <input id="coment_text" type="text" name="coment_text" placeholder="Escribe tu comentario..." value="$coment_text"/>
+        <textarea id="coment_text" type="text" name="coment_text" placeholder="Escribe tu comentario..." value="$coment_text"> </textarea>
         {$erroresCampos['coment_text']}
         <button type="submit" id="search_button">Comentar</button>
         EOS;

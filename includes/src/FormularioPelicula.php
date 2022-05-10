@@ -45,7 +45,7 @@ class FormularioPelicula extends Formulario
                     </div>
                     <div>
                         <label for="sinopsis">Sinopsis: </label>
-                        <input id="sinopsis" type="text" name="sinopsis" />
+                        <textarea id="sinopsis" type="text" name="sinopsis"></textarea>
                         {$erroresCampos['sinopsis']}
 
                     </div>
@@ -66,7 +66,7 @@ class FormularioPelicula extends Formulario
                         {$erroresCampos['trailer']}
 
                     </div>
-                    <img id="imagePreview" src="$imagenOriginal" style="max-width: 300px"/>
+                    <img id="imagePreview" src="$src" style="max-width: 300px"/>
                     <div>
                         <button type="submit" name="registro">Subir película</button>
                     </div>

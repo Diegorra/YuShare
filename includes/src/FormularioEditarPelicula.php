@@ -53,7 +53,7 @@ class FormularioEditarPelicula extends Formulario{
             </div>
             <div>
                 <label for="sinopsis">Sinopsis: </label>
-                <input id="sinopsis" type="text" name="sinopsis" value="$sinopsisOriginal"/>
+                <textarea id="sinopsis" type="text" name="sinopsis" value="$sinopsisOriginal"></textarea>
                 {$erroresCampos['sinopsis']}
 
             </div>
