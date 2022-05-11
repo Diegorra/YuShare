@@ -204,30 +204,17 @@ class Pelicula
         $app = Aplicacion::getInstance();
         $conn = $app->getConexionBd();
         $query = sprintf("SELECT * FROM Pelicula P WHERE P.iduser='%s'", $conn->real_escape_string($idUsuario));
-        $contenido = "";
         $rs = $conn->query($query);
         $result = [];
         if($rs){
             while($fila = $rs->fetch_assoc()){
                 $result[]=new Pelicula($fila['id'], $fila['iduser'], $fila['titulo'], $fila['text'], $fila['genero'], $fila['src'], $fila['trailer']);
-                $src=$fila['src'];
-                $titulo=$fila['titulo'];
-                $id = $fila['id'];
-                $peliculaUrl = $app->buildUrl('/peliIndv.php', ['id'=> $id]);
-                $cont = <<<EOS
-                <div class="indexPeliculas">
-                    <a href="{$peliculaUrl}">
-                        <img src="{$src}" id="image_inicio" alt="img_perfil">
-                    </a>
-                </div> 
-                EOS;
-                $contenido .=$cont;
             }
             $rs->free();
         } else {
             error_log("Error BD ({$conn->errno}): {$conn->error}");
         }
-        return $contenido;
+        return $result;
         
     }
     

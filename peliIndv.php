@@ -10,6 +10,7 @@ use es\ucm\fdi\aw\Aplicacion;
 $app = Aplicacion::getInstance();
 $idPeli = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 $infoPelicula = Pelicula::todaInfoPeliculas($idPeli);
+$formComent = "";
 
 if($app->usuarioLogueado()){
     $formComent = new \es\ucm\fdi\aw\FormularioComent($idPeli);

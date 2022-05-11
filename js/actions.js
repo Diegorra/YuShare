@@ -61,6 +61,16 @@ $(document).ready(function () {
         });
     });
 
+    $("#deleteProfile").click(function () {
+        console.log("botón pulsado");
+        var ajaxurl = 'ajax.php';
+        var data = {
+            'action': 'deleteProfile'
+        };
+        $.post(ajaxurl, data, function (response) {
+            console.log(response);
+        });
+    });
 	
     $(".ban").each(function () {
         $(this).on("click", function () {
@@ -93,10 +103,10 @@ $(document).ready(function () {
         reader.readAsDataURL(file);
         reader.onload = function () {
             localStorage.setItem("image", reader.result);
-            $("#imagePreview").attr("src", localStorage.getItem("image"))
+            $("#imagePreview").attr("src", localStorage.getItem("image"));
         };
         if (localStorage.getItem("image"))
-            $("#imagePreview").attr("src", localStorage.getItem("image"))
+            $("#imagePreview").attr("src", localStorage.getItem("image"));
 
-    })
+    });
 });

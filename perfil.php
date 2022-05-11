@@ -7,22 +7,42 @@ use es\ucm\fdi\aw\usuarios\Usuario;
 
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 $usuario = Usuario::buscaPorId($id);
-$peliculasUsuario = Pelicula::peliculasPerfil($usuario->getId());
+$listaPeliculas = Pelicula::peliculasPerfil($usuario->getId());
+$settings = "";
+
+function muestraPeliculas($filmList, $app){
+  $contenido= "";
+    foreach ($filmList as $film) {
+        $peliculaUrl = $app->buildUrl('/peliIndv.php', ['id'=> $film->getId()]);
+        $peli = <<<EOS
+            <div class="indexPeliculas">
+                <a href="{$peliculaUrl}">
+                    <img src="{$film->getSrc()}" id="image_inicio" alt="img_perfil">
+                </a>
+            </div> 
+        EOS;
+        $contenido .=$peli;
+    }
+    return $contenido;
+}
 
 if($usuario->getId() == $app->idUsuario()){
     $settings = "<a href= 'editarPerfil.php' class='botonEditarPerfil'>Editar perfil</a>";
     $amigoUrl = $app->resuelve('/showFriends.php');
-    $manageFriends = "<a href= '$amigoUrl' class='botonEditarPerfil'>Gestionar amigos</a>";
-    $settings .= $manageFriends;
+    $manageFriends = "<p></p><a href= '$amigoUrl' class='botonEditarPerfil'>Gestionar amigos</a>";
+    $deleteProfile = "<p></p><a id='deleteProfile' class='botonEditarPerfil' href='index.php'>Borrar Perfil</a>";
+    $settings .= $manageFriends . $deleteProfile;
 }else{
   if($app->usuarioLogueado()) {
     if(Amigo::esAmigo($usuario->getId(), $app->idUsuario())) {  
-      $settings = "<button id='deleteFriend' class='botonEditarPerfil deleteFriend' addFriendId='{$usuario->getId()}'>Desagregar</button>";
+      $settings = "<button id='deleteFriend' class='botonEditarPerfil deleteFriend' friendId='{$usuario->getId()}'>Desagregar</button>";
     }else {
       $settings = "<button id='addFriend' class='botonEditarPerfil' addFriendId='{$usuario->getId()}'>Agregar</button>";
     }
   }
 }
+
+$peliculasUsuario = muestraPeliculas($listaPeliculas, $app);
 
 $tituloPagina = 'Perfil';
 
@@ -32,7 +52,7 @@ $contenidoPrincipal=<<<EOD
   <div class='card'>
     <img src='{$usuario->getImage()}' id="image_perfil">
     <br><br><br><br><br><br><br><br><br><br>
-    {$settings}   
+    {$settings} 
   </div>
   
   <div class='cardRightText'>

@@ -21,6 +21,11 @@ if (isset($_POST['action'])) {
             case 'deleteUser':
                 Usuario::borraPorId($_POST['id']);
                 break;
+            case 'deleteProfile':
+                $id = $app->idUsuario();
+                $app->logout();
+                Usuario::borraPorId($id);
+                break;
             case 'ban':
                 Usuario::updateEnabled($_POST['id']);
                 break;
