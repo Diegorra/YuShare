@@ -34,6 +34,12 @@ function mostrarComentarios()
     EOT;
 
     foreach($comentarios as $comentario) {
+        if($app->idUsuario() === $comentario->getIdUsuario()) {
+            $botonBorrar = "<button id='comment_deleteButton' type='button' >Borrar</button>>";
+        }
+        else{
+            $botonBorrar="";
+        }
         $usuario = Usuario::buscaPorId($comentario->getIdUsuario());
         $htmlComentarios=$htmlComentarios.<<<EOF
             <div class="comment-main-level">
@@ -42,6 +48,7 @@ function mostrarComentarios()
                 <div class="comment-box">
                     <div class="comment-head">
                         <h6 class="comment-name by-author"><img src="{$usuario->getImage()}" alt="" class="comment-imagen"><a>{$usuario->getNombreUsuario()}</a></h6>
+                        $botonBorrar
                     </div>
                     <div class="comment-content">
                         {$comentario->getText()}

@@ -39,6 +39,10 @@ body {font: normal 62.5%/1.7em "Lucida Grande", "Lucida Sans Unicode", "Lucida S
 #comment_button {background: #ff0019; background: -moz-linear-gradient(top, #ff0019 0%, #ff0019 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff0019), color-stop(100%,#ff0019)); background: -webkit-linear-gradient(top, #ff0019 0%,#bd2b39 100%); background: -o-linear-gradient(top, #ff0019 0%,#bd2b39 100%); background: -ms-linear-gradient(top, #ff0019 0%,#bd2b39 100%); background: linear-gradient(top, #ff0019 0%,#bd2b39 100%); font-size: 20px; line-height: 40px; color: #ffffff; text-shadow: 0px 1px 1px #641010; float: center; width: 150px; height: 40px; margin: 0 0 0 15px; padding: 0; border: 1px solid #ff0019; -webkit-border-radius: 5px; -moz-border-radius: 5px; -o-border-radius: 5px; border-radius: 5px; -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);}
 
 #comment_button:hover {background: #ff0019; cursor: pointer;}
+
+#comment_deleteButton {background: #ff0019; background: -moz-linear-gradient(top, #ff0019 0%, #ff0019 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff0019), color-stop(100%,#ff0019)); background: -webkit-linear-gradient(top, #ff0019 0%,#bd2b39 100%); background: -o-linear-gradient(top, #ff0019 0%,#bd2b39 100%); background: -ms-linear-gradient(top, #ff0019 0%,#bd2b39 100%); background: linear-gradient(top, #ff0019 0%,#bd2b39 100%);float:right; font-size: 15px; line-height: 30px; color: #ffffff; text-shadow: 0px 1px 1px #641010; float: center; width: 100px; height: 30px; margin: 0 0 0 10px; padding: 0; border: 1px solid #ff0019; -webkit-border-radius: 5px; -moz-border-radius: 5px; -o-border-radius: 5px; border-radius: 5px; -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);}
+
+#comment_deleteButton:hover {background: #ff0019; cursor: pointer;}
    
    /*---CABECERA---*/
 .cabecera {
