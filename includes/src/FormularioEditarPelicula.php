@@ -40,7 +40,7 @@ class FormularioEditarPelicula extends Formulario{
 
         // Se generan los mensajes de error si existen.
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
-        $erroresCampos = self::generaErroresCampos(['titulo', 'sinopsis','genero', 'trailer'], $this->errores, 'span', array('class' => 'error'));
+        $erroresCampos = self::generaErroresCampos(['titulo', 'sinopsis','genero', 'file', 'trailer'], $this->errores, 'span', array('class' => 'error'));
 
         $html = <<<EOF
         $htmlErroresGlobales
@@ -53,7 +53,7 @@ class FormularioEditarPelicula extends Formulario{
             </div>
             <div>
                 <label for="sinopsis">Sinopsis: </label>
-                <textarea id="sinopsis" type="text" name="sinopsis" value="$sinopsisOriginal"></textarea>
+                <textarea id="sinopsis" type="text" name="sinopsis">{$sinopsisOriginal}</textarea>
                 {$erroresCampos['sinopsis']}
 
             </div>
@@ -65,6 +65,7 @@ class FormularioEditarPelicula extends Formulario{
             <div>
                 <label for="file">Photo: </label>
                 <input type="file" id="file" name="file" accept="image/png, image/jpeg"/>
+                {$erroresCampos['file']}
             </div>
             <div>
                 <label for="trailer">Trailer: </label>
@@ -103,7 +104,7 @@ class FormularioEditarPelicula extends Formulario{
             $tituloForm = trim($datos['titulo'] ?? '');
             $tituloForm = filter_var($tituloForm, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-             if ($tituloForm !=='') { //Ha cambiado la imagen
+             if ($tituloForm !=='') { 
                 $cambiarTitulo = true;
             }
 
@@ -124,21 +125,13 @@ class FormularioEditarPelicula extends Formulario{
                 }
             }
             
-            
             $file_name = $_FILES['file']['name'];
             $file_size = $_FILES['file']['size'];
             $file_tmp = $_FILES['file']['tmp_name'];
             $file_type = $_FILES['file']['type'];
             $file = "images/peliculas/".$file_name;
-            //$this->errores['file'] = "Nombre: ".$_FILES['file']['name'];
             
-            if(isset($_FILES['file'])){
-                $file_ext= strtolower(end(explode('.',$_FILES['file']['name'])));
-                $expensions= array("jpeg","jpg","png");
-                if(in_array($file_ext,$expensions) === false){
-                    $this->errores['file'] ="extension not allowed, please choose a JPEG or PNG file.";
-                }
-            }else{
+            if($_FILES['file']['name'] == null){
                 $file = $imagenOriginal;
             }
 
