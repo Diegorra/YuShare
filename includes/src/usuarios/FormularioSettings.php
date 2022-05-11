@@ -43,8 +43,8 @@ class FormularioSettings extends Formulario{
                 {$erroresCampos['nombreUsuario']}
             </div>
             <div>
-                <label for="image">Imagen:</label>
-                <input id="image" type="file" name="image"/>
+                <label for="image">Link imagen:</label>
+                <input id="image" type="text" name="image"/>
                 {$erroresCampos['image']}
             </div>
             <div>
@@ -78,78 +78,10 @@ class FormularioSettings extends Formulario{
         $emailUsuario = $_SESSION['email'] ?? '';
 
 
-
-        $target_dir = "images/";
-
-
         $cambiarNombre = false;
         $cambiarEmail = false;
         $cambiarPassword = false;
         $cambiarImagen = false;
-
-        if(isset($_FILES['image']['tmp_name']))
-        {
-            $target_file = $target_dir . basename($_FILES["image"]["name"]);
-            $uploadOk = 1;
-            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-
-            // Check if image file is a actual image or fake image
-            if(isset($_POST["submit"])) 
-            {
-                $check = getimagesize($_FILES["image"]["tmp_name"]);
-                if($check !== false) 
-                {
-                    $uploadOk = 1;
-                } 
-                else 
-                {
-                    $this->errores[] = "El archivo no es una imagen.";
-                    $uploadOk = 0;
-                }
-            }
-
-            // Check if file already exists
-            if (file_exists($target_file)) 
-            {
-                $this->errores['image'] = "El archivo ya existe.";
-                $uploadOk = 0;
-            }
-
-            // Check file size
-            if ($_FILES["image"]["size"] > 500000) 
-            {
-                $this->errores['image'] = "El archivo es demasiado grande.";
-                $uploadOk = 0;
-            }
-
-            // Allow certain file formats
-            if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) 
-            {
-                $this->errores['image'] = "Solo se permiten archivos JPG, JPEG, PNG & GIF.";
-                $uploadOk = 0;
-            }
-
-            // Check if $uploadOk is set to 0 by an error
-            if ($uploadOk == 0) {
-                $this->errores['image'] = "El archivo no se ha podido subir.";
-                // if everything is ok, try to upload file
-            } 
-            else 
-            {
-                if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-                    echo("El archivo ". basename( $_FILES["image"]["tmp_name"]). " ha sido subido.");
-                    $cambiarImagen = true;
-                } 
-                else 
-                {
-                    $this->errores['image'] = "Ha habido un error al subir el archivo.";
-                }
-            }
-
-
-
-
-        }
 
         $nombreUsuarioForm = trim($datos['nombreUsuario'] ?? '');
         $nombreUsuarioForm = filter_var($nombreUsuarioForm, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -170,12 +102,12 @@ class FormularioSettings extends Formulario{
 
 
         
-        /*$imageUsuarioForm = trim($datos['image'] ?? '');
+        $imageUsuarioForm = trim($datos['image'] ?? '');
         $imageUsuarioForm = filter_var($imageUsuarioForm, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         
         if ($imageUsuarioForm !=='') { //Ha cambiado la imagen
             $cambiarImagen = true;
-        }*/
+        }
 
        // echo '<pre>' . print_r($nombreUsuario !== $nombreUsuarioForm, TRUE) . '</pre>';
         //echo '<pre>' . print_r($nombreUsuarioForm, TRUE) . '</pre>';
@@ -248,7 +180,7 @@ class FormularioSettings extends Formulario{
 
             if($cambiarImagen)
             {
-                $newImagen = $target_file;
+                $newImagen = $imageUsuarioForm;
             }
             else
             {
@@ -274,7 +206,9 @@ class FormularioSettings extends Formulario{
                 $app->login($newUsuario);
             }
         }
+        else{
 
+        }
 
 
     }
