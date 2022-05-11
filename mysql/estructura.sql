@@ -20,13 +20,6 @@ CREATE TABLE IF NOT EXISTS `Usuario` (
     UNIQUE (userName)
 );
 
-CREATE TABLE IF NOT EXISTS `UsuarioBaneado`(
-    id INT NOT NULL,
-    fecha datetime,
-    PRIMARY KEY (id),
-    FOREIGN KEY (id) REFERENCES Usuario(id) ON DELETE CASCADE 
-
-);
 
 CREATE TABLE IF NOT EXISTS `Pelicula` (
     id INT NOT NULL AUTO_INCREMENT,
@@ -59,14 +52,4 @@ CREATE TABLE IF NOT EXISTS `Amigo` (
     PRIMARY KEY (idAmigo, idUsuario),
     FOREIGN KEY (idAmigo) REFERENCES Usuario(id) ON DELETE CASCADE,
     FOREIGN KEY (idUsuario) REFERENCES Usuario(id) ON DELETE CASCADE
-);
-
-CREATE TABLE IF NOT EXISTS `Mensaje` (
-    id INT NOT NULL AUTO_INCREMENT,
-    iduser1 INT NOT NULL,
-    iduser2 INT NOT NULL,
-    Text VARCHAR(256),
-    PRIMARY KEY (id),
-    FOREIGN KEY (iduser1) REFERENCES Usuario(id) ON DELETE CASCADE,
-    FOREIGN KEY (iduser2) REFERENCES Usuario(id) ON DELETE CASCADE
 );
