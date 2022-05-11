@@ -11,6 +11,18 @@ $(document).ready(function () {
         });
     });
 
+    $("#comment_deleteButton").click(function () {
+        var ajaxurl = 'ajax.php';
+        var data = {
+            'action': "deleteComment",
+            'id': $(this).attr("commentId"),
+            'idPeli': $(this).attr("filmId")
+        };
+        $.post(ajaxurl, data, function (response) {
+            window.location = 'http://localhost/yushare/peliIndv.php?id=' + data.idPeli;
+        });
+    });
+
     $("#addFriend").click(function () {
         var ajaxurl = 'ajax.php';
         var data = {

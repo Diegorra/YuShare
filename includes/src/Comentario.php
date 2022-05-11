@@ -54,7 +54,7 @@ class Comentario
     {
         $app = Aplicacion::getInstance();
         $conn = $app->getConexionBd();
-        $query = sprintf("SELECT * FROM comentario WHERE idpubli = %s", $idPeli);
+        $query = sprintf("SELECT * FROM comentario WHERE idpubli = %s ORDER BY `comentario`.`id` DESC", $idPeli);
         $rs = $conn->query($query);
         $result = [];
         if ($rs) {
