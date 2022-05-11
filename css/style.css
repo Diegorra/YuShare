@@ -208,6 +208,10 @@ div.texto_perfil {
     padding:  10px;
 }
 
+.contenedor {
+    font-family:  italic;
+}
+
 /* perfil */
 
 .editarPerfil{

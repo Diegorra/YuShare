@@ -62,20 +62,21 @@ function mostrarComentarios()
 
 function muestraInfo($film){
     $peli = <<<EOS
-                <table border="1" width="100%">
+                <table width="100%">
                 <tr>
-                <th width="30%">Genero</th>
-                <th width="32%">Sinopsis</th>
-                <th width="47%"></th>
-                <th width="40%"></th>
+                <th width="25%"></th>
+                <th width="10%"></th>
+                <th width="25%"></th>
+                <th width="25%"></th>
                 </tr>
                 <div class ="pelicula">
                     <h1>{$film->getTitulo()}</h1>
-                    </div>
-                    <td><h2><small>{$film->getGenero()}</small></h2></td>
-                <td><h2><small>{$film->getText()}</small></h2></td>
-                <td><p><img src="{$film->getSrc()}"id="image_info" alt="img_indv"></p></td>
-                <td><p><iframe width="560" height="315" src="{$film->getTrailer()}" frameborder="0" allowfullscreen></iframe></p></td>
+                </div>
+                <td><img src="{$film->getSrc()}"id="image_info" alt="img_indv"></td>
+
+                <td><h3>{$film->getGenero()}</h3></td>
+                <td><h3>{$film->getText()}</h3></td>
+                <td><p><iframe width="500" height="315" src="{$film->getTrailer()}" frameborder="0" allowfullscreen></iframe></p></td>
                 </table>
     EOS;
     return $peli;
@@ -109,11 +110,13 @@ $contenidoPrincipal=<<<EOF
         $editar
         $borrar
     </div>
-    $muestraP
+    <div class="contenedor">
+        $muestraP
+    <div>
     
     <h1>Comentarios sobre la película</h1>
 
-    <p>Añade tu comentario!<p>
+    <h2>Añade tu comentario!<h2>
 
     $formComent
     $comentarios
