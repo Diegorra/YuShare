@@ -2,12 +2,16 @@
 require_once __DIR__.'/includes/config.php';
 use es\ucm\fdi\aw\Pelicula;
 use es\ucm\fdi\aw\Amigo;
+use es\ucm\fdi\aw\Comentario;
 use es\ucm\fdi\aw\usuarios\Usuario;
 
 if (isset($_POST['action'])) {
         switch ($_POST['action']) {
             case 'deleteFilm':
                 Pelicula::borrarPeli($_POST['id'], $app->idUsuario());
+                break;
+            case 'deleteComment':
+                Comentario::borrarComentario($_POST['id']);
                 break;
             case 'addFriend':
                  Amigo::peticionAmistad($_POST['id'], $app->idUsuario()); //amigo y usuario

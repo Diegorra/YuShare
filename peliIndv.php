@@ -21,6 +21,7 @@ $tituloPagina = 'Info';
 
 function mostrarComentarios()
 {
+    $htmlComentarios = "";
     $idPeli = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
     $comentarios = Comentario::mostrarComentarios($idPeli);
     $app = Aplicacion::getInstance();
@@ -32,8 +33,15 @@ function mostrarComentarios()
     <ul id="comments-list" class="comments-list">
     <li>
     EOT;
-
     foreach($comentarios as $comentario) {
+        
+        if($app->idUsuario() === $comentario->getIdUsuario()) {
+            //button Onclick to call js function 'borrarComentario'
+            $botonBorrar = "<button class='deleteButton' type='button' commentId='{$comentario->getID()}' filmId='{$idPeli}'>Borrar</button>>";
+        }
+        else{
+            $botonBorrar="";
+        }
         $usuario = Usuario::buscaPorId($comentario->getIdUsuario());
         $htmlComentarios=$htmlComentarios.<<<EOF
             <div class="comment-main-level">
@@ -42,6 +50,7 @@ function mostrarComentarios()
                 <div class="comment-box">
                     <div class="comment-head">
                         <h6 class="comment-name by-author"><img src="{$usuario->getImage()}" alt="" class="comment-imagen"><a>{$usuario->getNombreUsuario()}</a></h6>
+                        $botonBorrar
                     </div>
                     <div class="comment-content">
                         {$comentario->getText()}
@@ -117,7 +126,7 @@ $contenidoPrincipal=<<<EOF
     <div>
     
 
-    <h2>Añade tu comentario!<h2>
+
     $formComent
     
     $comentarios

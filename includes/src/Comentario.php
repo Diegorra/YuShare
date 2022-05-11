@@ -54,7 +54,7 @@ class Comentario
     {
         $app = Aplicacion::getInstance();
         $conn = $app->getConexionBd();
-        $query = sprintf("SELECT * FROM comentario WHERE idpubli = %s", $idPeli);
+        $query = sprintf("SELECT * FROM comentario WHERE idpubli = %s ORDER BY `comentario`.`id` DESC", $idPeli);
         $rs = $conn->query($query);
         $result = [];
         if ($rs) {
@@ -77,6 +77,13 @@ class Comentario
             , $conn->real_escape_string($idUsuario)
             , $conn->real_escape_string($coment_text)
         );
+        $rs = $conn->query($query);
+    }
+
+    public static function borrarComentario($id){
+        $app = Aplicacion::getInstance();
+        $conn = $app->getConexionBd();
+        $query = sprintf("DELETE FROM comentario WHERE id = %s", $id);
         $rs = $conn->query($query);
     }
 
