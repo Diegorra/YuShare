@@ -116,8 +116,6 @@ $contenidoPrincipal=<<<EOF
     <p>Añade tu comentario!<p>
 
     $formComent
-    
-    
     $comentarios
 EOF;
 
