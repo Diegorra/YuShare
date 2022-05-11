@@ -33,10 +33,11 @@ function mostrarComentarios()
     <ul id="comments-list" class="comments-list">
     <li>
     EOT;
-
     foreach($comentarios as $comentario) {
+        
         if($app->idUsuario() === $comentario->getIdUsuario()) {
-            $botonBorrar = "<button id='comment_deleteButton' class='deleteButton' type='button' commentId='{$comentario->getID()}' filmId='{$idPeli}'>Borrar</button>>";
+            //button Onclick to call js function 'borrarComentario'
+            $botonBorrar = "<button class='deleteButton' type='button' commentId='{$comentario->getID()}' filmId='{$idPeli}'>Borrar</button>>";
         }
         else{
             $botonBorrar="";
