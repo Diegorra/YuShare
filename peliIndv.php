@@ -27,6 +27,7 @@ function mostrarComentarios()
     //HTML: https://codepen.io/Creaticode/pen/yLWqXo
     if(count($comentarios) > 0){
     $htmlComentarios = <<<EOT
+    <h1>Comentarios sobre la película</h1>
     <div class="comments-container">
     <ul id="comments-list" class="comments-list">
     <li>
@@ -115,11 +116,10 @@ $contenidoPrincipal=<<<EOF
         $muestraP
     <div>
     
-    <h1>Comentarios sobre la película</h1>
 
     <h2>Añade tu comentario!<h2>
-
     $formComent
+    
     $comentarios
 EOF;
 
