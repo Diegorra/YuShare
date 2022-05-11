@@ -80,5 +80,12 @@ class Comentario
         $rs = $conn->query($query);
     }
 
+    public static function borrarComentario($id){
+        $app = Aplicacion::getInstance();
+        $conn = $app->getConexionBd();
+        $query = sprintf("DELETE FROM comentario WHERE id = %s", $id);
+        $rs = $conn->query($query);
+    }
+
 
 }
