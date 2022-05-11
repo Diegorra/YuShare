@@ -29,7 +29,7 @@ class Usuario
     public static function Usuarios(){
         $app = Aplicacion::getInstance();
         $conn = $app->getConexionBd();
-        $query = sprintf("SELECT * FROM Usuario U");
+        $query = sprintf("SELECT * FROM Usuario U WHERE U.id != '%s'", $app->idUsuario());
         $rs = $conn->query($query);
         $result = [];
         if ($rs) {
