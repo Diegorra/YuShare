@@ -10,6 +10,7 @@ class FormularioSettings extends Formulario{
     public function __construct() {
         //parent::__construct('formSettings', ['urlRedireccion' => Aplicacion::getInstance()->resuelve('/index.php')]);
         parent::__construct('formSearch', [
+            'enctype' => "multipart/form-data",
             'formId' => "settings",
             'urlRedireccion' => Aplicacion::getInstance()->resuelve('/index.php')
         ]);
@@ -30,7 +31,7 @@ class FormularioSettings extends Formulario{
 
         // Se generan los mensajes de error si existen.
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
-        $erroresCampos = self::generaErroresCampos(['nombreUsuario', 'image', 'email', 'password', 'password2'], $this->errores, 'span', array('class' => 'error'));
+        $erroresCampos = self::generaErroresCampos(['nombreUsuario', 'file', 'email', 'password', 'password2'], $this->errores, 'span', array('class' => 'error'));
 
         // Se genera el HTML asociado a los campos del formulario y los mensajes de error.
         $html = <<<EOF
@@ -44,8 +45,8 @@ class FormularioSettings extends Formulario{
             </div>
             <div>
                 <label for="image">Link imagen:</label>
-                <input id="image" type="text" name="image"/>
-                {$erroresCampos['image']}
+                <input type="file" id="file" name="file" accept="image/png, image/jpeg"/>
+                {$erroresCampos['file']}
             </div>
             <div>
             <label for="email">Email:</label>
@@ -78,10 +79,31 @@ class FormularioSettings extends Formulario{
         $emailUsuario = $_SESSION['email'] ?? '';
 
 
+
+
         $cambiarNombre = false;
         $cambiarEmail = false;
         $cambiarPassword = false;
         $cambiarImagen = false;
+
+
+        $file_name = $_FILES['file']['name'];
+        $file_size = $_FILES['file']['size'];
+        $file_tmp = $_FILES['file']['tmp_name'];
+        $file_type = $_FILES['file']['type'];
+        $file = "images/".$file_name;
+        //$this->errores['file'] = "Nombre: ".$_FILES['file']['name'];
+        
+        if(isset($_FILES['file'])){
+            $cambiarImagen = true;
+            $file_ext= strtolower(end(explode('.',$_FILES['file']['name'])));
+            $expensions= array("jpeg","jpg","png");
+            if(in_array($file_ext,$expensions) === false){
+                $this->errores['file'] ="Formato de imagen no valido";
+            }
+        }
+
+
 
         $nombreUsuarioForm = trim($datos['nombreUsuario'] ?? '');
         $nombreUsuarioForm = filter_var($nombreUsuarioForm, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -102,12 +124,12 @@ class FormularioSettings extends Formulario{
 
 
         
-        $imageUsuarioForm = trim($datos['image'] ?? '');
+        /*$imageUsuarioForm = trim($datos['image'] ?? '');
         $imageUsuarioForm = filter_var($imageUsuarioForm, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         
         if ($imageUsuarioForm !=='') { //Ha cambiado la imagen
             $cambiarImagen = true;
-        }
+        }*/
 
        // echo '<pre>' . print_r($nombreUsuario !== $nombreUsuarioForm, TRUE) . '</pre>';
         //echo '<pre>' . print_r($nombreUsuarioForm, TRUE) . '</pre>';
@@ -180,7 +202,8 @@ class FormularioSettings extends Formulario{
 
             if($cambiarImagen)
             {
-                $newImagen = $imageUsuarioForm;
+                $newImagen = $file;
+                move_uploaded_file($file_tmp, $file);
             }
             else
             {
@@ -193,10 +216,10 @@ class FormularioSettings extends Formulario{
             {
                 $newPass = $password;
                 //$newUsuario = Usuario::crea($usuario, $newNombre, $newPass, $newEmail);
-                $newUsuario = Usuario::actualiza($usuario, $newNombre, $newImagen, $newEmail, Usuario::hashPassword($newPass));
+                $newUsuario = Usuario::actualiza($usuario, $newNombre, $file, $newEmail, Usuario::hashPassword($newPass));
             }
             else{
-                $newUsuario = Usuario::actualizaSetting($usuario, $newNombre, $newEmail, $newImagen);
+                $newUsuario = Usuario::actualizaSetting($usuario, $newNombre, $file, $newImagen);
             }
 
             
